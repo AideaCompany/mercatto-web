@@ -1,0 +1,102 @@
+$mainGrey: #EEEEEE;
+$darkGrey: #8D8D8D;
+
+.mainLayout{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+
+    .leftContainer{
+        width: 30%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+
+        .containerLogos{
+            position: relative;
+            width: 100%;
+            height: 20%;
+
+            .mainLogo, .logoBack{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+            }
+            .mainLogo{
+                transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
+            }
+            .logoBack{
+                transform: translate(-50%, -60%) scale(1.5);
+                -webkit-transform: translate(-50%, -60%) scale(1.5);
+                opacity: 0.4;
+            }  
+        }
+        
+    }
+    .rigthContainer{
+        width: 70%;
+        height: 100%;
+        overflow: hidden;
+        .topContainer{
+            width: 100%;
+            height: 10%;
+            display: flex;
+            >div{
+                height: 100%;
+            }
+            .searchBar{
+                width: 40%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .ant-select{
+                    width: 80%;
+                    height: 5vh;
+
+                    .ant-input-affix-wrapper{
+                        background-color: $mainGrey;
+                        height: 5vh;
+                        border-radius: 2.5vh;
+                        border: none;
+
+                        input{
+                            background-color: transparent;
+                        }
+                    }
+                }
+            }
+            .socialMedia{
+                width: 20%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                a{
+                    margin: 10px;
+                    float: right;
+                }
+            }
+            .menu{
+                width: 40%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                a{
+                    color: $darkGrey;
+                    font-size: 1.2em;
+                    margin: 10px;
+                }
+                .iconCart{
+                    font-size: 2em;
+                    color: $darkGrey;
+                }
+
+                .profileUser{
+                    margin-left: 20px;
+                }
+            }
+        }
+    }
+}
