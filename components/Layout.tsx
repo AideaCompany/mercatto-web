@@ -3,20 +3,23 @@ import Link from 'next/link'
 //antD
 import {AutoComplete, Input, Badge, Avatar} from 'antd'
 import {SearchOutlined, ShoppingCartOutlined, UserOutlined} from '@ant-design/icons';
-const Layout = ():JSX.Element =>{
+const Layout = (props: {children:JSX.Element, title:string, color:string, background: string }):JSX.Element =>{
+
+    //Props
+    const {children, title ,color, background} = props
+
     return(
         <main>
             <div className='mainLayout'>
-                <div style={{backgroundColor:'#EEEEEE'}} className='leftContainer'>
+                <div style={{backgroundColor:background}} className='leftContainer'>
                     <div className='containerLogos'>
-                        <img className='logoBack' src="./images/Layout/mercatto-white.svg" alt="mercatto logo"/>
                         <Link href='/'>
                             <a >
                                 <img className='mainLogo' src="./images/Layout/mercatto-logo-large.svg" alt="mercatto logo"/>
                             </a>
                         </Link>
-                        
                     </div>
+                    <h1 style={{color: color}}>{title}</h1>
                 </div>
                 <div className='rigthContainer'>
                     <div className='topContainer'>
@@ -48,6 +51,9 @@ const Layout = ():JSX.Element =>{
                             </Avatar>
                         </div>
                     </div>
+                </div>
+                <div className='mainContent'>
+                    {children}
                 </div>
             </div>
         </main>

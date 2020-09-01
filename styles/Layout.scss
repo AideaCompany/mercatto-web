@@ -6,6 +6,7 @@ $darkGrey: #8D8D8D;
     height: 100vh;
     overflow: hidden;
     display: flex;
+    position: relative;
 
     .leftContainer{
         width: 30%;
@@ -26,12 +27,16 @@ $darkGrey: #8D8D8D;
             .mainLogo{
                 transform: translate(-50%, -50%);
                 -webkit-transform: translate(-50%, -50%);
-            }
-            .logoBack{
-                transform: translate(-50%, -60%) scale(1.5);
-                -webkit-transform: translate(-50%, -60%) scale(1.5);
-                opacity: 0.4;
-            }  
+                width: 25vw;
+            } 
+        }
+        >h1{
+            top: 30%;
+            left: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
+            font-size: 4vw;
         }
         
     }
@@ -98,5 +103,14 @@ $darkGrey: #8D8D8D;
                 }
             }
         }
+    }
+
+    .mainContent{
+        position: absolute;
+        width: 100vw;
+        height: 80vh;
+        top: 20vh;
+        left: 0;
+        border: 1px solid black;
     }
 }
