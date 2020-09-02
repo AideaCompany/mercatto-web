@@ -25,7 +25,7 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Productos[], urlB
   const {dataCategoria, urlBack, dataProductos} = props
   return (
     <div>
-      <Layout title='Categorías' color='#8D8D8D' background='#EEEEEE'>
+      <Layout urlBack={urlBack} title='Categorías' color='#8D8D8D' background='#EEEEEE'>
         <>
           <div className='offer'>
             <h2>Ofertas y recomendaciones</h2>
@@ -38,6 +38,8 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Productos[], urlB
                 </div>
               ))}
             </Carousel>
+            {dataProductos.length>6 ? <span className='alertDrag'>Arrastra hacia la izquierda</span>: null}
+            
           </div>
           <div className='categoriesTargets'>
             <Carousel minDraggableOffset={15} draggable={dataCategoria.length>3? true : false} slidesPerPage={3} infinite={false}>

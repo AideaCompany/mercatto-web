@@ -1,14 +1,31 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 //nextjs
 import Link from 'next/link'
 //antD
 import {AutoComplete, Input, Badge, Avatar} from 'antd'
 import {SearchOutlined, ShoppingCartOutlined, UserOutlined} from '@ant-design/icons';
-const Layout = (props: {children:JSX.Element, title:string, color:string, background: string }):JSX.Element =>{
+//Axios
+import axios from 'axios'
+const Layout = (props: {children:JSX.Element, title:string, color:string, background: string, urlBack:string }):JSX.Element =>{
 
     //Props
-    const {children, title ,color, background} = props
+    const {children, title ,color, background, urlBack} = props
 
+    //state
+    const [dataSearch, setDataSearch] = useState([])
+    
+    //Effect
+    useEffect(() => {
+        axios.get(`${urlBack}/productos?search`).then(res=>{
+            var tempDataSearch = []
+            for (let k = 0; k < res.data.length; k++) {
+                tempDataSearch.push({
+                    value: res.data[k].nombre
+                })
+            }
+            setDataSearch(tempDataSearch)
+        }).catch(err=>console.log(err))
+    }, [])
     return(
         <main>
             <div className='mainLayout'>
@@ -25,7 +42,11 @@ const Layout = (props: {children:JSX.Element, title:string, color:string, backgr
                 <div className='rigthContainer'>
                     <div className='topContainer'>
                         <div className='searchBar'>
-                            <AutoComplete>
+                            <AutoComplete 
+                                options={dataSearch}
+                                filterOption={(inputValue, option) =>
+                                    option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                                }>
                                 <Input prefix={<SearchOutlined />} placeholder={"Buscar"}></Input>
                             </AutoComplete>
                         </div>

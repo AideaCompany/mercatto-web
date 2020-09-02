@@ -10,6 +10,10 @@ $darkGrey: #6c6c6c;
         left: 30vw;
         padding: 1vw;
 
+        .alertDrag{
+            float: right;
+            margin: 0 1vw 0 0;
+        }
         .BrainhubCarousel__container{
             overflow-x: hidden ;
             overflow-y: inherit;    
