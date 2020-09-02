@@ -1,3 +1,4 @@
+import React from 'react'
 //nextjs
 import Link from 'next/link'
 //antD
@@ -60,4 +61,4 @@ const Layout = (props: {children:JSX.Element, title:string, color:string, backgr
     )
 }
 
-export default Layout
+export default React.memo(Layout)
