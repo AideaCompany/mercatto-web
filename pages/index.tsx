@@ -21,11 +21,12 @@ type Productos = {
   nombre: string
 }
 
-function Home(props:{dataCategoria:Categorias[], dataProductos:Productos[], urlBack:string}):JSX.Element {
-  const {dataCategoria, urlBack, dataProductos} = props
+function Home(props:{dataCategoria:Categorias[], dataProductos:Productos[], urlBack:string, confirmed:boolean, code?:string}):JSX.Element {
+  const {dataCategoria, urlBack, dataProductos, confirmed, code} = props
+
   return (
     <div>
-      <Layout urlBack={urlBack} title='Categorías' color='#8D8D8D' background='#EEEEEE'>
+      <Layout code={code} confirmed={confirmed} urlBack={urlBack} title='Categorías' color='#8D8D8D' background='#EEEEEE'>
         <>
           <div className='offer'>
             <h2>Ofertas y recomendaciones</h2>
@@ -39,7 +40,6 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Productos[], urlB
               ))}
             </Carousel>
             {dataProductos.length>6 ? <span className='alertDrag'>Arrastra hacia la izquierda</span>: null}
-            
           </div>
           <div className='categoriesTargets'>
             <Carousel minDraggableOffset={15} draggable={dataCategoria.length>3? true : false} slidesPerPage={3} infinite={false}>
@@ -58,13 +58,15 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Productos[], urlB
 }
 
 
-Home.getInitialProps = async (ctx) =>{
+export async function getServerSideProps (ctx) {
+  var confirmed:boolean = ctx.query.confirmed === "true" ? true : false
+  var code:string = ctx.query.resetPassword  ? ctx.query.code : ""
   const URL = process.env.URL_STRAPI;
   const resCategorias = await fetch(`${URL}/categorias`,{method: 'GET'})
   const resProductos = await fetch(`${URL}/productos?recomended`,{method: 'GET'})
   const jsonCategorias = await resCategorias.json()
   const jsonProdcutos = await resProductos.json()
-  return {dataCategoria : jsonCategorias, urlBack: URL, dataProductos:jsonProdcutos}
+  return {props:{dataCategoria : jsonCategorias, urlBack: URL, dataProductos:jsonProdcutos, confirmed: confirmed, code: code } }
 }
 
 export default Home

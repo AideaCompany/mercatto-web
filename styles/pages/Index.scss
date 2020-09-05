@@ -129,3 +129,13 @@ $darkGrey: #6c6c6c;
 
         
 }
+
+//message verificacion
+.messageVerification{
+    position: absolute;
+    left: 3%;
+    margin-top: 90vh;
+    .ant-message-notice-content{
+        border-radius: 50px;
+    }
+}

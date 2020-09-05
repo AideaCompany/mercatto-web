@@ -1,6 +1,7 @@
 $mainGrey: #EEEEEE;
 $darkGrey: #8D8D8D;
-
+$colorText : #5e5e5e;
+$mainBlue: #2FAFFF;
 .mainLayout{
     width: 100vw;
     height: 100vh;
@@ -44,6 +45,7 @@ $darkGrey: #8D8D8D;
         width: 70%;
         height: 100%;
         overflow: hidden;
+        
         .topContainer{
             width: 100%;
             height: 10%;
@@ -52,7 +54,7 @@ $darkGrey: #8D8D8D;
                 height: 100%;
             }
             .searchBar{
-                width: 40%;
+                width: 35%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -73,20 +75,24 @@ $darkGrey: #8D8D8D;
                 }
             }
             .socialMedia{
-                width: 20%;
+                width: 15%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 a{
                     margin: 10px;
                     float: right;
+                    img{
+                        width: 30px;
+                    }
                 }
             }
             .menu{
-                width: 40%;
+                width: 50%;
                 display: flex;
-                justify-content: center;
+                flex-direction: row-reverse;;
                 align-items: center;
+                
 
                 a{
                     color: $darkGrey;
@@ -99,7 +105,8 @@ $darkGrey: #8D8D8D;
                 }
 
                 .profileUser{
-                    margin-left: 20px;
+                    cursor: pointer;
+                    margin: 20px;
                 }
             }
         }
@@ -112,5 +119,30 @@ $darkGrey: #8D8D8D;
         top: 20vh;
         left: 0;
     }
+    button{
+        border-radius: 50px ;
+        background-color: $mainBlue;
+        color: #ffffff;
+        border: none;
+    }
+    button:active, button:focus{
+        background-color: $mainBlue;
+        color: #ffffff; 
+    }
+    button:hover {
+        background-color: rgba($color: $mainBlue, $alpha: 0.8);
+        color: #ffffff;
+    }
 }
 
+.ant-dropdown{
+    border-radius: 25px;
+    ul{
+        border-radius: 15px;
+        padding: 10px;
+    }
+    .logOutButton{
+        color: #FC3740;
+        
+    }
+}
