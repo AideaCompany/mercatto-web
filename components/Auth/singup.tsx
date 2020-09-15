@@ -4,8 +4,8 @@ import axios from 'axios'
 import {Form, Input, Button, Modal} from 'antd'
 
 
-const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, setModalAuthSignIn, urlBack:string}):JSX.Element =>{
-    const {modalAuthSignUp, setModalAuthSignUp, setModalAuthSignIn, urlBack} = props
+const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, setModalAuthSignIn, urlBack:string, pathPublic:string}):JSX.Element =>{
+    const {modalAuthSignUp, setModalAuthSignUp, setModalAuthSignIn, urlBack, pathPublic} = props
 
     //States
     const [okeyRegister, setOkeyRegister] = useState(false)
@@ -33,7 +33,7 @@ const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, set
     return(
         <Modal centered onCancel={HandleClose} visible={modalAuthSignUp}>
                 <div className='containerForm'> 
-                    <img className='mainLogo' src="./images/Layout/mercatto-logo-large.svg" alt="mercatto logo"/>
+                    <img className='mainLogo' src={`${pathPublic}images/Layout/mercatto-large.svg`} alt="mercatto logo"/>
                     {!okeyRegister ? 
                     <>
                     <h2>Registrate</h2>

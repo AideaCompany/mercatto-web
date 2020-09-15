@@ -6,5 +6,5 @@ export function hexToRgb(hex:string): string {
         b: parseInt(result[3], 16)
     } 
 
-    return `linear-gradient(0deg, rgba(${rgb.r},${rgb.g},${rgb.b},1) 0%, rgba(${rgb.r},${rgb.g},${rgb.b},0.8) 100%);`
+    return `linear-gradient(0deg, rgba(${rgb.r},${rgb.g},${rgb.b},1) 0%, rgba(${rgb.r},${rgb.g},${rgb.b},0.8) 100%)`
 }

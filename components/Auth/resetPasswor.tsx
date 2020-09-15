@@ -5,9 +5,8 @@ import {Form, Input, Button, Modal, Checkbox, message} from 'antd'
 //axios
 import axios from 'axios'
 
-const ResetPasswordComponent = (props:{modalResetPassword:boolean ,setModalResetPassword, setModalAuthSignIn, urlBack:string, code:string}):JSX.Element =>{
-    const {modalResetPassword, setModalResetPassword , urlBack, setModalAuthSignIn, code} = props
-    console.log(code)
+const ResetPasswordComponent = (props:{modalResetPassword:boolean ,setModalResetPassword, setModalAuthSignIn, urlBack:string, code:string, pathPublic:string}):JSX.Element =>{
+    const {modalResetPassword, setModalResetPassword , urlBack, setModalAuthSignIn, code, pathPublic} = props
     //functions
     const HandleClose = ()=>{
         setModalResetPassword(false)
@@ -21,20 +20,18 @@ const ResetPasswordComponent = (props:{modalResetPassword:boolean ,setModalReset
             password: data.password,
             passwordConfirmation: data.passwordConfirmation
         }).then(res=>{
-            console.log(res)
-            message.success({content:'Contraseña reestablecida', className:'messageVerification', duration:10})
+            message.success({content:'Contraseña restablecida', className:'messageVerification', duration:10})
             HandleClose()
             setModalAuthSignIn(true)
         }).catch(err=>{
-            console.log(err)
-            message.error({content:'Error al reestablecer la contraseña, por favor verifica tu código secreto', className:'messageVerification', duration:10})
+            message.error({content:'Error al restablecer la contraseña, por favor verifica tu código secreto', className:'messageVerification', duration:10})
         })
     }
 
     return(
         <Modal centered onCancel={HandleClose} visible={modalResetPassword}>
                 <div className='containerForm'>
-                    <img className='mainLogo' src="./images/Layout/mercatto-logo-large.svg" alt="mercatto logo"/>
+                    <img className='mainLogo' src={`${pathPublic}images/Layout/mercatto-large.svg`} alt="mercatto logo"/>
                     <>
                     <h2>Restaurar Contraseña</h2>
                     <Form name='signIn' onFinish={submitForget}>

@@ -13,11 +13,22 @@ import axios from 'axios'
 //context
 import useAuth from '../providers/AuthProvider'
 
+type propsLayout ={
+    children: JSX.Element
+    title: string
+    color: string
+    background: string
+    urlBack?:string
+    confirmed?:boolean
+    code?:string
+    pathPublic:string
+    logoWhite?:boolean
+}
 
-const Layout = (props: {children:JSX.Element, title:string, color:string, background: string, urlBack:string, confirmed?:boolean, code?:string }):JSX.Element =>{
+const Layout = (props: propsLayout):JSX.Element =>{
 
     //Props
-    const {children, title ,color, background, urlBack, confirmed, code} = props
+    const {children, title ,color, background, urlBack, confirmed, code, pathPublic, logoWhite} = props
 
 
     //state
@@ -35,7 +46,8 @@ const Layout = (props: {children:JSX.Element, title:string, color:string, backgr
             message.success({content:"Activación de cuenta concretada",className: 'messageVerification',duration: '5'})
             setModalAuthSignIn(true)
         }
-        if (code !== '') {
+
+        if (code !== '' && code) {
             setModalResetPassword(true)
         }
         axios.get(`${urlBack}/productos?search`).then(res=>{
@@ -67,7 +79,7 @@ const Layout = (props: {children:JSX.Element, title:string, color:string, backgr
                     <div className='containerLogos'>
                         <Link href='/'>
                             <a >
-                                <img className='mainLogo' src="./images/Layout/mercatto-logo-large.svg" alt="mercatto logo"/>
+                                <img className='mainLogo' src={`${pathPublic}images/Layout/mercatto-${!logoWhite ? 'large' : 'white'}.svg`} alt="mercatto logo"/>
                             </a>
                         </Link>
                     </div>
@@ -85,9 +97,9 @@ const Layout = (props: {children:JSX.Element, title:string, color:string, backgr
                             </AutoComplete>
                         </div>
                         <div className='socialMedia'>
-                                <a href="/"><img src="./images/Layout/facebook.svg" alt="facebook mercatto"/></a>
-                                <a href="/"><img src="./images/Layout/instagram.svg" alt="facebook mercatto"/></a>
-                                <a href="/"><img src="./images/Layout/whatsapp.svg" alt="facebook mercatto"/></a>
+                                <a href="/"><img src={`${pathPublic}images/Layout/facebook.svg`} alt="facebook mercatto"/></a>
+                                <a href="/"><img src={`${pathPublic}images/Layout/instagram.svg`} alt="instagram mercatto"/></a>
+                                <a href="/"><img src={`${pathPublic}images/Layout/whatsapp.svg`} alt="whatsapp mercatto"/></a>
                         </div>
                         <div className='menu'>
                             {
@@ -106,12 +118,12 @@ const Layout = (props: {children:JSX.Element, title:string, color:string, backgr
                             </Badge>
                             <Link href='/'>
                                 <a>
-                                    Categorías
+                                    Productos
                                 </a>
                             </Link>
                             <Link href='/'>
                                 <a>
-                                    Productos
+                                    Categorías
                                 </a>
                             </Link>
                         </div>
@@ -120,9 +132,13 @@ const Layout = (props: {children:JSX.Element, title:string, color:string, backgr
                 <div className='mainContent'>
                     {children}
                 </div>
-                <SignInComponent urlBack={urlBack} modalAuthSignIn={modalAuthSignIn} setModalAuthSignIn={setModalAuthSignIn} setModalAuthSignUp={setModalAuthSignUp}/>
-                <SignUpcomponent urlBack={urlBack} modalAuthSignUp={modalAuthSignUp} setModalAuthSignUp={setModalAuthSignUp} setModalAuthSignIn={setModalAuthSignIn}/>
-                <ResetPasswordComponent code={code} setModalResetPassword={setModalResetPassword} modalResetPassword={modalResetPassword} setModalAuthSignIn={setModalAuthSignIn} urlBack={urlBack}/>
+                <div className='footer'>
+                    <span>Terminos de uso</span>
+                    <span>Politicas de privacidad</span>
+                </div>
+                <SignInComponent pathPublic={pathPublic} urlBack={urlBack} modalAuthSignIn={modalAuthSignIn} setModalAuthSignIn={setModalAuthSignIn} setModalAuthSignUp={setModalAuthSignUp}/>
+                <SignUpcomponent pathPublic={pathPublic} urlBack={urlBack} modalAuthSignUp={modalAuthSignUp} setModalAuthSignUp={setModalAuthSignUp} setModalAuthSignIn={setModalAuthSignIn}/>
+                <ResetPasswordComponent pathPublic={pathPublic} code={code} setModalResetPassword={setModalResetPassword} modalResetPassword={modalResetPassword} setModalAuthSignIn={setModalAuthSignIn} urlBack={urlBack}/>
             </div>
         </main>
     )

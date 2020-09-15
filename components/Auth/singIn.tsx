@@ -6,8 +6,8 @@ import useAuth from '../../providers/AuthProvider'
 //axios
 import axios from 'axios'
 
-const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, setModalAuthSignUp, urlBack:string}):JSX.Element =>{
-    const {modalAuthSignIn, setModalAuthSignIn, setModalAuthSignUp, urlBack} = props
+const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, setModalAuthSignUp, urlBack:string, pathPublic:string}):JSX.Element =>{
+    const {modalAuthSignIn, setModalAuthSignIn, setModalAuthSignUp, urlBack, pathPublic} = props
 
     //usestate
     const [errorMessage, setErrorMessage] = useState('')
@@ -27,17 +27,18 @@ const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, set
     }
 
     const submitForget = async (data)=>{
+        message.loading({content:'Cargando...', className:'messageVerification', key:"forget"})
         axios.post(`${urlBack}/auth/forgot-password`,{
             email: data.identifier
         }).then(res=>{
-            message.success({content:'Revisa tu correo eléctronico para restaurar tu contraseña', className:'messageVerification', duration:10})
+            message.success({content:'Revisa tu correo eléctronico para restaurar tu contraseña', className:'messageVerification', duration:5, key:"forget"})
         }).catch(err=>console.log(err))
     }
 
     return(
         <Modal centered onCancel={HandleClose} visible={modalAuthSignIn}>
                 <div className='containerForm'>
-                    <img className='mainLogo' src="./images/Layout/mercatto-logo-large.svg" alt="mercatto logo"/>
+                    <img className='mainLogo' src={`${pathPublic}images/Layout/mercatto-large.svg`} alt="mercatto logo"/>
                     {!forgotPassword?
                     <>
                     <h2>Iniciar Sesión</h2>
@@ -74,7 +75,7 @@ const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, set
                     }
                     {!forgotPassword?
                     <>
-                        <img className='facebookAuth' src="./images/Layout/facebook.svg" alt="facebook mercatto"/>
+                        <img className='facebookAuth' src={`${pathPublic}images/Layout/facebook.svg`} alt="facebook mercatto"/>
                         <br/>
                         <span><a>Políticas de privacidad</a></span>
                         <br/>

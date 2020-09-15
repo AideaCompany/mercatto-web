@@ -24,3 +24,23 @@ a {
 :focus {
   outline: 0px;
 }
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+background: #ffffff; 
+border-radius: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #8d8d8d;
+border-radius: none; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #a0a0a0; 
+}

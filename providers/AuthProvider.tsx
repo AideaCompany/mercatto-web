@@ -23,7 +23,7 @@ export const AuthProvider = ({children})=>{
     useEffect(() => {
         const url = process.env.NEXT_PUBLIC_URL_STRAPI
 
-        if(Cookie.get('authTokenMercatto') !== undefined){
+        if(Cookie.get('authTokenMercatto') !== undefined && user.nombre){
             axios.get(`${url}/users/me`, {
                 headers: {
                     Authorization: `Bearer ${Cookie.get('authTokenMercatto')}`
