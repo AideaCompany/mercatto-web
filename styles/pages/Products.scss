@@ -33,15 +33,23 @@
             .productPrice{
                 display: flex;
                 flex-direction: row;
-                font-size: 2.5vw;
-                margin: auto;
+                font-size: 3vw;
+                justify-content: space-between;
                 .simbols{
                     display: flex;
                     justify-content: center;
+                    align-items: center;
                     .circle{
-                        height: 5vh;
-                        width: 5vh;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 3vh;
+                        width: 3vh;
                         border-radius: 50%;
+                        cursor: pointer;
+                    }
+                    .number{
+                        margin:5%;
                     }
                 }
             }
@@ -55,6 +63,7 @@
 
         .targetSubProduct{
             // height: 80vh;
+            cursor: pointer;
             padding: 2em;
             display: flex;
             justify-content: center;

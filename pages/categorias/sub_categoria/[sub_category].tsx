@@ -28,45 +28,31 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
 
     const { dataSubCategory ,background, contrast,  url,  dataProducts } = props
     //state
-    const [left, setleft] = useState<JSX.Element>()
+    const [left, setleft] = useState<Boolean>()
     const [title, settitle] = useState<string>()
-    const [queantity, setqueantity] = useState(0)
+    const [quantity, setquantity] = useState(0)
+    const [selectedProduct, setselectedProduct] = useState<Products>()
     //router
     const router = useRouter()
 
     useEffect(() => {
-        setleft(
-            <>
-                <img src={`${url}${dataSubCategory.portada.url}`} alt={`mercatto ${dataSubCategory.titulo}`}/>
-
-            </>
-        )
+        setleft(true)
         settitle(dataSubCategory.titulo)
     }, [])
-
+    
+    const plus = ()=>{
+        const actual  = quantity+1
+        setquantity(actual)
+    }   
+    const minus = ()=>{
+        if(quantity>0){
+            const actual  = quantity-1
+            setquantity(actual)
+        }
+    }
     const handleClickProduct= (product:Products)=>{
-        console.log(background);
-        setleft(
-            <>  
-                <div className="productElements">
-                    <img src={`${url}${product.imagenes.url}`} alt={`mercatto ${product.nombre}`}/>
-                    <div  className="productPrice" style={{color:!contrast ? "#ffffff" :"#8D8D8D"}}>
-                        <div>
-                            {`$${product.precio} cop`}
-                        </div>
-                        <div className="simbols" > 
-                            <div className="circle"  style={{color:`#${background}`,background:!contrast ? "#ffffff" :"#8D8D8D"}}>
-                                <PlusOutlined  />
-                            </div>
-                                {queantity}
-                            <div className="circle" style={{color:`#${background}`,background:!contrast ? "#ffffff" :"#8D8D8D"}}>
-                                <MinusOutlined   />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </>
-        )
+        setselectedProduct(product)
+        setleft(false)
         settitle(product.nombre)
     }
     // const category = dataCategory[0]
@@ -75,8 +61,29 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
         <Layout urlBack={url}  logoWhite={!contrast} pathPublic={'../../'} title={title} color={!contrast ? "#ffffff" :"#8D8D8D"}  background={`#${background}`}>
             <div className='productMain'>
                 <div className='productLeft'>
-                   {left}
-                   <a onClick={()=>router.back()} style={{color: `${!contrast ? "#ffffff" :"#8D8D8D"}`}} className='backArrow'>
+                    {left?<img src={`${url}${dataSubCategory.portada.url}`} alt={`mercatto ${dataSubCategory.titulo}`}/>:
+                        <div className="productElements">
+                            <img src={`${url}${selectedProduct?.imagenes.url}`} alt={`mercatto ${selectedProduct?.nombre}`}/>
+                            <div  className="productPrice" style={{color:!contrast ? "#ffffff" :"#8D8D8D"}}>
+                                <div>
+                                    {`$${selectedProduct?.precio} cop`}
+                                </div>
+                                <div className="simbols" > 
+                                    <div onClick={plus} className="circle"  style={{color:`#${background}`,background:!contrast ? "#ffffff" :"#8D8D8D"}}>
+                                        +
+                                    </div>
+                                        <div className="number">
+                                            {quantity}
+                                        </div>
+                                    <div  onClick={minus} className="circle" style={{color:`#${background}`,background:!contrast ? "#ffffff" :"#8D8D8D"}}>
+                                        -
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+
+                    <a onClick={()=>router.back()} style={{color: `${!contrast ? "#ffffff" :"#8D8D8D"}`}} className='backArrow'>
                             <ArrowLeftOutlined />
                     </a>
                 </div>
