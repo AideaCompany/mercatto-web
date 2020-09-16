@@ -62,10 +62,13 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], background:
 
 export async function getServerSideProps (ctx) {
     const URL = process.env.URL_STRAPI;
+
     const subCategoria = await fetch(`${URL}/sub-categorias?id=${ctx.query.id}`,{method: 'GET'})
     const dataCategory = await fetch(`${URL}/categorias?id=${ctx.query.id}`,{method: 'GET'})
+
     const dataCategoryJson  = await dataCategory.json()
     const jsonSubCategoria = await subCategoria.json()
+    console.log(jsonSubCategoria);
     const background = ctx.query.cr
     const contrast = ctx.query.cn === "true" ? true : false
     return {props: {dataSubCategoria:jsonSubCategoria,background:background, contrast: contrast, url:URL, dataCategory: dataCategoryJson}}
