@@ -60,6 +60,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
             setDataSearch(tempDataSearch)
         }).catch(err=>console.log(err))
     }, [])
+    
     useEffect(() => {
         const cantidad = user?.pedidos?.find(e=>e.Terminado?false:true)?.carrito.length
         setcartCount(cantidad?cantidad:0)
