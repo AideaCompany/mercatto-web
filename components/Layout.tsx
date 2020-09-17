@@ -36,7 +36,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
     const [modalAuthSignIn, setModalAuthSignIn] = useState<boolean>(false)
     const [modalAuthSignUp, setModalAuthSignUp] = useState<boolean>(false)
     const [modalResetPassword, setModalResetPassword] = useState<boolean>(false)
-
+    const [cartCount, setcartCount] = useState<Number>(0)
     //context
     const {user, logout} = useAuth()
 
@@ -60,7 +60,10 @@ const Layout = (props: propsLayout):JSX.Element =>{
             setDataSearch(tempDataSearch)
         }).catch(err=>console.log(err))
     }, [])
-
+    useEffect(() => {
+        const cantidad = user?.pedidos?.find(e=>e.Terminado?false:true)?.carrito.length
+        setcartCount(cantidad?cantidad:0)
+    }, [user])
     //Functions
     const menu = (
         <Menu>
@@ -68,10 +71,18 @@ const Layout = (props: propsLayout):JSX.Element =>{
                 <span>{user.nombre}</span>
             </Menu.Item>
             <Menu.Item>
+                <Link href='/'>
+                    <a>
+                        Mis pedidos
+                    </a>
+                </Link>
+            </Menu.Item>
+            <Menu.Item>
                 <a className='logOutButton' onClick={logout}><PoweroffOutlined/> Cerrar Sesión</a>
             </Menu.Item>
         </Menu>
     )
+
     return(
         <main>
             <div className='mainLayout'>
@@ -113,7 +124,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                                     <Button style={{marginLeft: '1em'}} onClick={()=>setModalAuthSignIn(true)}>Iniciar Sesión</Button>
                                 </>
                             }
-                            <Badge count={1}>
+                            <Badge count={cartCount}>
                                 <ShoppingCartOutlined className='iconCart' />
                             </Badge>
                             <Link href='/'>
@@ -126,6 +137,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                                     Categorías
                                 </a>
                             </Link>
+                            
                         </div>
                     </div>
                 </div>

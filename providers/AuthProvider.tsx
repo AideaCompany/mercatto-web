@@ -7,7 +7,11 @@ import axios from 'axios'
 import Cookie from 'js-cookie'
 
 
-type typeUser = {nombre?: string, jwt?:string }
+
+type Producto = {_id:string,nombre:string,descripcion:string,precio:Number,imagenes:{url:string}}
+type Carrito = {_id:string,cantidad:Number,producto:Producto}
+type Pedidos = {_id:string,carrito:[Carrito],Terminado:Boolean}
+type typeUser = {nombre?: string, jwt?:string, pedidos? : [Pedidos]}
 type typeAuthContext = { user: typeUser; isAuthenticated : boolean ;  logout :  () => void, login : (data:{identifier:string, password:string, remember:boolean},urlBack:string, setModalAuthSignIn?:(_:any)=>any, setErrorMessage?:(_:any)=>any) => void };
 
 const AuthContext = React.createContext<typeAuthContext>({} as typeAuthContext);
@@ -22,8 +26,7 @@ export const AuthProvider = ({children})=>{
     //Effect
     useEffect(() => {
         const url = process.env.NEXT_PUBLIC_URL_STRAPI
-
-        if(Cookie.get('authTokenMercatto') !== undefined && user.nombre){
+        if(Cookie.get('authTokenMercatto') !== undefined){
             axios.get(`${url}/users/me`, {
                 headers: {
                     Authorization: `Bearer ${Cookie.get('authTokenMercatto')}`
@@ -31,7 +34,8 @@ export const AuthProvider = ({children})=>{
             }).then(res=>{
                 setUser({
                     nombre: res.data.nombre,
-                    jwt: Cookie.get('authTokenMercatto')
+                    jwt: Cookie.get('authTokenMercatto'),
+                    pedidos : res.data.Pedidos
                 })
                 pushIndex()
             }).catch(err=>console.log(err))
@@ -45,9 +49,10 @@ export const AuthProvider = ({children})=>{
             identifier: data.identifier,
             password: data.password,
         }).then(res=>{
-            console.log(res)
             if (data.remember) {
                 Cookie.set('authTokenMercatto', res.data.jwt,{expires:30})
+            }else{
+                Cookie.set('authTokenMercatto', res.data.jwt,{expires:1})
             }
             setUser({
                 nombre: res.data.user.nombre,
@@ -68,7 +73,7 @@ export const AuthProvider = ({children})=>{
     const pushIndex = () =>{
         console.log(router.query.code)
         if (router.query.code !== "") {
-            router.push('/')
+            // router.push('/')
         }
     }
 

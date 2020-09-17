@@ -68,7 +68,7 @@ export async function getServerSideProps (ctx) {
 
     const dataCategoryJson  = await dataCategory.json()
     const jsonSubCategoria = await subCategoria.json()
-    console.log(jsonSubCategoria);
+
     const background = ctx.query.cr
     const contrast = ctx.query.cn === "true" ? true : false
     return {props: {dataSubCategoria:jsonSubCategoria,background:background, contrast: contrast, url:URL, dataCategory: dataCategoryJson}}

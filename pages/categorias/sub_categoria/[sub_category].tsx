@@ -4,7 +4,7 @@ import Layout from '../../../components/Layout';
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 //Antd
-import {ArrowLeftOutlined,PlusOutlined,MinusOutlined} from '@ant-design/icons';
+import {ArrowLeftOutlined,ShoppingCartOutlined} from '@ant-design/icons';
 //utils
 import {hexToRgb} from '../../../utils/functions'
 
@@ -56,7 +56,9 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
         settitle(product.nombre)
     }
     // const category = dataCategory[0]
-    
+    const addCart = ()=>{
+        console.log(selectedProduct);
+    }
     return(
         <Layout urlBack={url}  logoWhite={!contrast} pathPublic={'../../'} title={title} color={!contrast ? "#ffffff" :"#8D8D8D"}  background={`#${background}`}>
             <div className='productMain'>
@@ -79,6 +81,9 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
                                         -
                                     </div>
                                 </div>
+                            </div>
+                            <div className="addCart" onClick={addCart}>
+                                    <button>Agregar al carrito</button>
                             </div>
                         </div>
                         }
