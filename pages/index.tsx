@@ -1,7 +1,7 @@
 
 //Layout
 import Layout from '../components/Layout'
-//nrxtjs
+//nextjs
 import Link from 'next/link'
 //Carousel
 import Carousel from '@brainhubeu/react-carousel';
@@ -26,13 +26,14 @@ type Productos = {
   nombre: string
 }
 
-function Home(props:{dataCategoria:Categorias[], dataProductos:Productos[], urlBack?:string, confirmed:boolean, code?:string}):JSX.Element {
+function Home(props:{dataCategoria:Categorias[], dataProductos:Productos[], urlBack?:string, confirmed:boolean, code?:string, tokenProvider?: string}):JSX.Element {
   //props
-  const {dataCategoria, urlBack, dataProductos, confirmed, code} = props
+  const {dataCategoria, urlBack, dataProductos, confirmed, code, tokenProvider} = props
+
 
   return (
     <div>
-      <Layout logoWhite={false} pathPublic={'./'} code={code} confirmed={confirmed} urlBack={urlBack} title='Categorías' color='#8D8D8D' background='#EEEEEE'>
+      <Layout tokenProvider={tokenProvider} logoWhite={false} pathPublic={'./'} code={code} confirmed={confirmed} urlBack={urlBack} title='Categorías' color='#8D8D8D' background='#EEEEEE'>
         <>
           <div className='offer'>
             <h2>Ofertas y recomendaciones</h2>
@@ -75,7 +76,8 @@ export async function getServerSideProps (ctx) {
   const resProductos = await fetch(`${URL}/productos?recomended`,{method: 'GET'})
   const jsonCategorias = await resCategorias.json()
   const jsonProdcutos = await resProductos.json()
-  return {props:{dataCategoria : jsonCategorias, urlBack: URL, dataProductos:jsonProdcutos, confirmed: confirmed, code: code } }
+  const tokenProvider =  ctx.query.access_token ? ctx.query.access_token : ""
+  return {props:{dataCategoria : jsonCategorias, urlBack: URL, dataProductos:jsonProdcutos, confirmed: confirmed, code: code, tokenProvider: tokenProvider }}
 }
 
 export default Home

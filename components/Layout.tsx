@@ -23,12 +23,13 @@ type propsLayout ={
     code?:string
     pathPublic:string
     logoWhite?:boolean
+    tokenProvider?: string
 }
 
 const Layout = (props: propsLayout):JSX.Element =>{
 
     //Props
-    const {children, title ,color, background, urlBack, confirmed, code, pathPublic, logoWhite} = props
+    const {children, title ,color, background, urlBack, confirmed, code, pathPublic, logoWhite, tokenProvider} = props
 
 
     //state
@@ -38,7 +39,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
     const [modalResetPassword, setModalResetPassword] = useState<boolean>(false)
     const [cartCount, setcartCount] = useState<Number>(0)
     //context
-    const {user, logout} = useAuth()
+    const {user, logout, loginProvider} = useAuth()
 
     //Effect
     useEffect(() => {
@@ -59,6 +60,13 @@ const Layout = (props: propsLayout):JSX.Element =>{
             }
             setDataSearch(tempDataSearch)
         }).catch(err=>console.log(err))
+
+        if (tokenProvider !== '') {
+            axios.get(`${urlBack}/auth/facebook/callback?access_token=${tokenProvider}`).then(res=>
+                loginProvider(res.data)
+            ).catch(err=>console.log(err))
+        }
+
     }, [])
     
     useEffect(() => {

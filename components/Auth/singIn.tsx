@@ -75,7 +75,9 @@ const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, set
                     }
                     {!forgotPassword?
                     <>
-                        <img className='facebookAuth' src={`${pathPublic}images/Layout/facebook.svg`} alt="facebook mercatto"/>
+                        <a /* onClick={()=>loginProvider('facebook')} */ href={`${urlBack}/connect/facebook`}>
+                            <img className='facebookAuth' src={`${pathPublic}images/Layout/facebook.svg`} alt="facebook mercatto"/>
+                        </a>
                         <br/>
                         <span><a>Políticas de privacidad</a></span>
                         <br/>
