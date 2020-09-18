@@ -4,6 +4,7 @@ import '../styles/pages/Index.scss'
 import '../styles/pages/Auth.scss'
 import '../styles/pages/Category.scss'
 import '../styles/pages/Products.scss';
+import '../styles/pages/Carrito.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'antd/dist/antd.css';
 import '@brainhubeu/react-carousel/lib/style.css';

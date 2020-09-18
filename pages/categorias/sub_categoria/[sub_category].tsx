@@ -7,7 +7,11 @@ import {useRouter} from 'next/router'
 import {ArrowLeftOutlined,ShoppingCartOutlined} from '@ant-design/icons';
 //utils
 import {hexToRgb} from '../../../utils/functions'
-
+//axios
+import axios from 'axios'
+//context
+import useAuth from '../../../providers/AuthProvider'
+import { message } from 'antd';
 //Types
 type Products = {
     descripcion: string
@@ -24,7 +28,19 @@ type SubCategory = {
     titulo: string
 }
 
+type newCarrito = {
+    _id?: string,
+    cantidad:Number
+    producto:string
+}
+type newPedido = {
+    _id?:string,
+    carrito:[newCarrito],
+    Terminado?:boolean
+}
 const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataSubCategory: SubCategory, background: string, contrast: boolean}) =>{
+    //context
+    const {user, logout, loginProvider,setModalAuthSignIn,updateUser} = useAuth()
 
     const { dataSubCategory ,background, contrast,  url,  dataProducts } = props
     //state
@@ -57,7 +73,40 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
     }
     // const category = dataCategory[0]
     const addCart = ()=>{
-        console.log(selectedProduct);
+        if(user.jwt && quantity>0){
+            var actualPedido = user?.pedidos?.map(e=>{
+                return (
+                    {
+                        _id: e._id,
+                        carrito : e.carrito.map(l=>{return({cantidad:l.cantidad,producto: l.producto._id}as newCarrito)}),
+                        Terminado : e.Terminado?true:false
+                    }as newPedido
+                )
+            }  )
+            var pedido =  actualPedido?.find(e=>e.Terminado?false:true)
+            const pedidoPos =  actualPedido?.findIndex(e=>e.Terminado?false:true)
+
+            if (pedido){
+                actualPedido[pedidoPos].carrito.push({cantidad:quantity,producto:selectedProduct._id})
+            }else{
+                actualPedido.push({carrito:[{cantidad:quantity,producto:selectedProduct._id}]})
+            }
+            
+            axios.put(`${url}/users/${user._id}`,{
+                Pedidos:actualPedido}, {
+                headers: {
+                    Authorization: `Bearer ${user.jwt}`
+                }
+            }).then(res=>{  
+                updateUser(res);
+            }).catch(err=>console.log(err))
+        }else if(quantity===0){
+            message.info({content:"Porfavor indica la cantidad",className: 'messageVerification',duration: '5'})
+        }else{
+            message.info({content:"Porfavor inicia sesión para usar el carrito",className: 'messageVerification',duration: '5'})
+            setModalAuthSignIn(true)
+        }
+
     }
     return(
         <Layout urlBack={url}  logoWhite={!contrast} pathPublic={'../../'} title={title} color={!contrast ? "#ffffff" :"#8D8D8D"}  background={`#${background}`}>

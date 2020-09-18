@@ -1,0 +1,69 @@
+.carritoMain{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    
+    >div{
+          height: 100%;
+    }
+    .carritoLeft{
+        width: 30vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+
+        img{
+            width: 25vw;
+        }
+        .backArrow{
+            position: absolute;
+            left: 5%;
+            top: 90%;
+            svg{
+                font-size: 2vw;
+            }
+        }
+
+
+    }
+    .carritoRight{
+        width: 70vw;
+        margin: 0;
+        overflow-y: scroll;
+        .targetSubCategory{
+            // height: 80vh;
+            padding: 2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            >div{
+                width: 65vw;
+                height: 20vw;
+                border-radius: 25px;
+                -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                >a >div{
+                    width: 20vw;
+                    height: 20vw;
+                    position: relative;
+                    img{
+                        width: 85%;
+                        max-height: 15vw;
+                        position: absolute;
+                        top: 60%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        -webkit-transform: translate(-50%, -50%);  
+                    }
+                    h2{
+                        position: absolute;
+                        top: 5%;
+                        left: 10%;
+                    }
+                }
+            }
+        }
+    }
+}

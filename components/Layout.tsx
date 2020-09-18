@@ -13,6 +13,8 @@ import axios from 'axios'
 //context
 import useAuth from '../providers/AuthProvider'
 
+
+
 type propsLayout ={
     children: JSX.Element
     title: string
@@ -34,12 +36,11 @@ const Layout = (props: propsLayout):JSX.Element =>{
 
     //state
     const [dataSearch, setDataSearch] = useState([])
-    const [modalAuthSignIn, setModalAuthSignIn] = useState<boolean>(false)
-    const [modalAuthSignUp, setModalAuthSignUp] = useState<boolean>(false)
+
     const [modalResetPassword, setModalResetPassword] = useState<boolean>(false)
     const [cartCount, setcartCount] = useState<Number>(0)
     //context
-    const {user, logout, loginProvider} = useAuth()
+    const {user, logout, loginProvider,modalAuthSignIn,setModalAuthSignIn,modalAuthSignUp,setModalAuthSignUp} = useAuth()
 
     //Effect
     useEffect(() => {
@@ -60,8 +61,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
             }
             setDataSearch(tempDataSearch)
         }).catch(err=>console.log(err))
-
-        if (tokenProvider !== '') {
+        if (tokenProvider !== '' && tokenProvider !== undefined) {
             axios.get(`${urlBack}/auth/facebook/callback?access_token=${tokenProvider}`).then(res=>
                 loginProvider(res.data)
             ).catch(err=>console.log(err))
@@ -134,7 +134,11 @@ const Layout = (props: propsLayout):JSX.Element =>{
                                 </>
                             }
                             <Badge count={cartCount}>
-                                <ShoppingCartOutlined className='iconCart' />
+                              <Link href='/carrito'>
+                                    <a>
+                                        <ShoppingCartOutlined className='iconCart' />
+                                    </a>
+                                </Link>
                             </Badge>
                             <Link href='/'>
                                 <a>

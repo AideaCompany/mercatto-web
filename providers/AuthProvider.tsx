@@ -6,16 +6,18 @@ import axios from 'axios'
 //Cookie
 import Cookie from 'js-cookie'
 
-type Producto = {_id:string,nombre:string,descripcion:string,precio:Number,imagenes:{url:string}}
-type Carrito = {_id:string,cantidad:Number,producto:Producto}
-type Pedidos = {_id:string,carrito:[Carrito],Terminado:Boolean}
-type typeUser = {nombre?: string, jwt?:string, pedidos? : [Pedidos]}
+import {typeUser} from '../utils/types'
 type typeAuthContext = { 
     user: typeUser; 
     isAuthenticated : boolean ;  
     logout :  () => void;
     login : (data:{identifier:string, password:string, remember:boolean},urlBack:string, setModalAuthSignIn?:(_:any)=>any, setErrorMessage?:(_:any)=>any) => void;
-    loginProvider : (provider)=>void
+    loginProvider : (provider)=>void;
+    modalAuthSignIn : boolean;
+    setModalAuthSignIn : React.Dispatch<React.SetStateAction<Boolean>>;
+    modalAuthSignUp :boolean;
+    setModalAuthSignUp : React.Dispatch<React.SetStateAction<Boolean>>;
+    updateUser : (data)=>void;
 }
 
 const AuthContext = React.createContext<typeAuthContext>({} as typeAuthContext);
@@ -24,7 +26,8 @@ export const AuthProvider = ({children})=>{
 
     //States
     const [user, setUser] = useState<typeUser>({})
-
+    const [modalAuthSignIn, setModalAuthSignIn] = useState<boolean>(false)
+    const [modalAuthSignUp, setModalAuthSignUp] = useState<boolean>(false)
     //context
     const router = useRouter()
     //Effect
@@ -37,6 +40,7 @@ export const AuthProvider = ({children})=>{
                 }
             }).then(res=>{
                 setUser({
+                    _id:res.data._id,
                     nombre: res.data.nombre,
                     jwt: Cookie.get('authTokenMercatto'),
                     pedidos : res.data.Pedidos
@@ -54,10 +58,14 @@ export const AuthProvider = ({children})=>{
         }).then(res=>{
             if (data.remember) {
                 Cookie.set('authTokenMercatto', res.data.jwt,{expires:30})
+            }else{
+                Cookie.set('authTokenMercatto', res.data.jwt,{expires:1})
             }
             setUser({
+                _id:res.data.user._id,
                 nombre: res.data.user.nombre,
-                jwt: res.data.jwt
+                jwt: res.data.jwt,
+                pedidos : res.data.user.Pedidos
             })
             setModalAuthSignIn(false)
             pushIndex()
@@ -69,8 +77,10 @@ export const AuthProvider = ({children})=>{
 
     const loginProvider =  (data) =>{
             setUser({
+                _id:data.user._id,
                 nombre: data.user.username,
-                jwt: data.jwt
+                jwt: data.jwt,
+                pedidos : data.user.Pedidos
             })
             Cookie.set('authTokenMercatto',data.jwt, {expires:1})
     }
@@ -88,8 +98,16 @@ export const AuthProvider = ({children})=>{
         }
     }
 
+    const updateUser = (res)=>{
+        setUser({
+            _id:res.data.id,
+            nombre: res.data.nombre,
+            jwt: user.jwt,
+            pedidos : res.data.Pedidos
+        })
+    }
     return (
-        <AuthContext.Provider value={{ isAuthenticated: !!user, user, logout , login, loginProvider}}>
+        <AuthContext.Provider value={{ isAuthenticated: !!user, user, logout , login, loginProvider,modalAuthSignIn,setModalAuthSignIn,modalAuthSignUp,setModalAuthSignUp,updateUser}}>
             {children}
         </AuthContext.Provider>
     )
