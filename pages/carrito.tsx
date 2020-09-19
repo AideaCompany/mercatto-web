@@ -86,9 +86,25 @@ const carrito = (props:{url:string}):JSX.Element=>{
                 Authorization: `Bearer ${user.jwt}`
             }
         }).then(res=>{  
-            updateUser(res);
-            message.success({content:"Pedido realizado",className: 'messageVerification',duration: '5'})
-            router.push("/pedidos")
+            var carrito = actualCart.map(e=>{
+                return ({
+                    Cantidad: e.cantidad,
+                    Producto: (e.producto as Producto).nombre
+                })
+            })
+            axios.post(`${url}/pedidos`,{
+                Carrito: carrito,
+                user: user._id ,
+                Entregado: false
+                }, {
+                headers: {
+                    Authorization: `Bearer ${user.jwt}`
+                }
+            }).then(rpt=>{ 
+                updateUser(res);
+                message.success({content:"Pedido realizado",className: 'messageVerification',duration: '5'})
+                // router.push("/pedidos")
+            }).catch(err=>console.log(err))
         }).catch(err=>console.log(err))
     }
     return (

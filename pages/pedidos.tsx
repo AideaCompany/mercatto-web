@@ -8,7 +8,7 @@ import {ArrowLeftOutlined,ShoppingOutlined} from '@ant-design/icons';
 //context
 import useAuth from '../providers/AuthProvider'
 //types
-import {Carrito, Pedidos} from '../utils/types'
+import {Carrito, Pedidos , Producto} from '../utils/types'
 import { Modal ,Form, Button, message} from 'antd';
 //axios
 import axios from 'axios'
@@ -44,15 +44,17 @@ const carrito = (props:{url:string}):JSX.Element=>{
                     <div className='pedidos'>
                         <div className="targetSubCategory">
                             {pedidos?.map((e,i)=>{
+                                const date = new Date(e.createdAt);
+                                const day = date.getDay();
+                                const month = date.getMonth();
+                                const year  = date.getFullYear();
+                                const precios = e.carrito.map(l=>l.cantidad*(l.producto as Producto).precio)
+                                const total = precios.reduce((a,b)=>a+b,0)
                             return (
                             <div className="productItem" style={{background:background}}>
-                                <div className="titulo">
-                                    <h2 style={{color:"#787878"}}>{e.createdAt}</h2>
-
-                                </div>
-                                <div className="price">{`$${e.carrito.length}`}</div>
- 
-
+                                <div>{`Fecha de pedido: ${year}/${month}/${day}`}</div>
+                                <div>{`Cantidad de productos: ${e.carrito.length}`}</div>
+                                <div>{`Precio total ${total}`}</div>
                             </div>
                             )
                             })}

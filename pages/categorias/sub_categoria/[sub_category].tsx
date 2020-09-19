@@ -47,7 +47,7 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
     //state
     const [left, setleft] = useState<Boolean>()
     const [title, settitle] = useState<string>()
-    const [quantity, setquantity] = useState(0)
+    const [quantity, setquantity] = useState(1)
     const [selectedProduct, setselectedProduct] = useState<Products>()
     //router
     const router = useRouter()
@@ -68,6 +68,7 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
         }
     }
     const handleClickProduct= (product:Products)=>{
+        setquantity(1)
         setselectedProduct(product)
         setleft(false)
         settitle(product.nombre)
