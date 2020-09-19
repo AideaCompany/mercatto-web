@@ -17,6 +17,14 @@ $mainBlue: #2FAFFF;
     .ant-modal-close{
         color: #ffffff;
     }
+    .image{
+
+        img{
+            min-height: 10vh;
+            object-fit: cover;
+            width: 100%;
+        }
+    }
     .containerForm{
         width: 400px;
         min-height: 60vh;

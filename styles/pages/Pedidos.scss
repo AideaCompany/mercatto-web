@@ -1,4 +1,4 @@
-.carritoMain{
+.pedidosMain{
     width: 100%;
     height: 100%;
     display: flex;
@@ -6,7 +6,7 @@
     >div{
           height: 100%;
     }
-    .carritoLeft{
+    .pedidosLeft{
         width: 30vw;
         display: flex;
         justify-content: center;
@@ -29,8 +29,8 @@
 
 
     }
-    .carritoRight{
-        .carrito{
+    .pedidosRight{
+        .pedidos{
             width: 70vw;
             margin: 0;
             height: 60vh;
@@ -41,10 +41,6 @@
                 justify-content: center;
                 align-items: center;
                 flex-direction: column;
-                .emptyCart{
-                    height: 100%;
-                    
-                }
                 .productItem{
                     display: flex;
                     align-items: center;

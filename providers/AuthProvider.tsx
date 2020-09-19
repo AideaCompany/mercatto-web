@@ -33,20 +33,24 @@ export const AuthProvider = ({children})=>{
     //Effect
     const url = process.env.NEXT_PUBLIC_URL_STRAPI
     useEffect(() => {
-        if(Cookie.get('authTokenMercatto') !== undefined){
-            axios.get(`${url}/users/me`, {
-                headers: {
-                    Authorization: `Bearer ${Cookie.get('authTokenMercatto')}`
-                }
-            }).then(res=>{
-                setUser({
-                    _id:res.data._id,
-                    nombre: res.data.nombre,
-                    jwt: Cookie.get('authTokenMercatto'),
-                    pedidos : res.data.Pedidos
-                })
-                pushIndex()
-            }).catch(err=>console.log(err))
+        if(!user.jwt){
+            if(Cookie.get('authTokenMercatto') !== undefined){
+                axios.get(`${url}/users/me`, {
+                    headers: {
+                        Authorization: `Bearer ${Cookie.get('authTokenMercatto')}`
+                    }
+                }).then(res=>{
+                    console.log(res);
+                    setUser({
+                        _id:res.data._id,
+                        nombre: res.data.nombre,
+                        jwt: Cookie.get('authTokenMercatto'),
+                        pedidos : res.data.Pedidos,
+                        carrito : res.data.carrito
+                    })
+                    pushIndex()
+                }).catch(err=>console.log(err))
+            }
         }
     }, [])
 
@@ -61,11 +65,13 @@ export const AuthProvider = ({children})=>{
             }else{
                 Cookie.set('authTokenMercatto', res.data.jwt,{expires:1})
             }
+            console.log(res);
             setUser({
                 _id:res.data.user._id,
                 nombre: res.data.user.nombre,
                 jwt: res.data.jwt,
-                pedidos : res.data.user.Pedidos
+                pedidos : res.data.user.Pedidos,
+                carrito : res.data.user.carrito
             })
             setModalAuthSignIn(false)
             pushIndex()
@@ -80,7 +86,8 @@ export const AuthProvider = ({children})=>{
                 _id:data.user._id,
                 nombre: data.user.username,
                 jwt: data.jwt,
-                pedidos : data.user.Pedidos
+                pedidos : data.user.Pedidos,
+                carrito : data.user.carrito
             })
             Cookie.set('authTokenMercatto',data.jwt, {expires:1})
     }
@@ -103,7 +110,8 @@ export const AuthProvider = ({children})=>{
             _id:res.data.id,
             nombre: res.data.nombre,
             jwt: user.jwt,
-            pedidos : res.data.Pedidos
+            pedidos : res.data.Pedidos,
+            carrito : res.data.carrito
         })
     }
     return (

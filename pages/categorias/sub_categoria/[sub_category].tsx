@@ -12,6 +12,7 @@ import axios from 'axios'
 //context
 import useAuth from '../../../providers/AuthProvider'
 import { message } from 'antd';
+import { Carrito } from '../../../utils/types';
 //Types
 type Products = {
     descripcion: string
@@ -74,31 +75,16 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
     // const category = dataCategory[0]
     const addCart = ()=>{
         if(user.jwt && quantity>0){
-            var actualPedido = user?.pedidos?.map(e=>{
-                return (
-                    {
-                        _id: e._id,
-                        carrito : e.carrito.map(l=>{return({cantidad:l.cantidad,producto: l.producto._id}as newCarrito)}),
-                        Terminado : e.Terminado?true:false
-                    }as newPedido
-                )
-            }  )
-            var pedido =  actualPedido?.find(e=>e.Terminado?false:true)
-            const pedidoPos =  actualPedido?.findIndex(e=>e.Terminado?false:true)
-
-            if (pedido){
-                actualPedido[pedidoPos].carrito.push({cantidad:quantity,producto:selectedProduct._id})
-            }else{
-                actualPedido.push({carrito:[{cantidad:quantity,producto:selectedProduct._id}]})
-            }
-            
+            var carrito: Carrito[] = user.carrito
+            carrito.push({cantidad:quantity,producto:selectedProduct._id})
             axios.put(`${url}/users/${user._id}`,{
-                Pedidos:actualPedido}, {
+                carrito:carrito}, {
                 headers: {
                     Authorization: `Bearer ${user.jwt}`
                 }
             }).then(res=>{  
                 updateUser(res);
+                message.success({content:"Producto agregado",className: 'messageVerification',duration: '5'})
             }).catch(err=>console.log(err))
         }else if(quantity===0){
             message.info({content:"Porfavor indica la cantidad",className: 'messageVerification',duration: '5'})

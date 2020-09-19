@@ -8,48 +8,171 @@ import {ArrowLeftOutlined,ShoppingCartOutlined} from '@ant-design/icons';
 //context
 import useAuth from '../providers/AuthProvider'
 //types
-import {Carrito} from '../utils/types'
-const carrito = (props:{url:string, /*  background: string, contrast: boolean */}):JSX.Element=>{
-    const { /*  background, contrast ,*/  url   } = props
-    const [actualCart, setactualCart] = useState<Carrito[]>()
-    const background = "#fffff"
-    const contrast = true
+import {Carrito, Producto} from '../utils/types'
+import { Modal ,Form, Button, message} from 'antd';
+//axios
+import axios from 'axios'
+
+type showCarrito = Carrito & {totalPrecio?:number}
+
+const carrito = (props:{url:string}):JSX.Element=>{
+    const {url} = props
+    const [actualCart, setactualCart] = useState<showCarrito[]>()
+    const [totalPrice, settotalPrice] = useState<Number>(0)
+    const [modalVisible, setmodalVisible] = useState<boolean>(false)
+    const [toDelete, settoDelete] = useState<number>()
+    const background = "#e5f5ff"
       //context
-      const {user} = useAuth()
+      const {user,updateUser} = useAuth()
     //router
     const router = useRouter()
-
     useEffect(() => {
-        const actual = user?.pedidos?.find(e=>e.Terminado?false:true)?.carrito
+        const actual:showCarrito[] = user?.carrito
+        actual?.map(e=>e.totalPrecio=e.cantidad*((e.producto) as Producto).precio)
+        settotalPrice(actual?actual.map(e=>e.totalPrecio).reduce((a,b)=>a+b,0):0)
         setactualCart(actual?actual:[])
     }, [user])
+    //functions
+    const plus= (pos)=>{
+        actualCart[pos].cantidad +=1
+        actualCart?.map(e=>e.totalPrecio=e.cantidad*((e.producto) as Producto).precio)
+        settotalPrice(actualCart?.map(e=>e.totalPrecio).reduce((a,b)=>a+b,0))
+        setactualCart([...actualCart])
+    }
+
+    const minus = (pos)=>{
+        if(actualCart[pos].cantidad>1){
+            actualCart[pos].cantidad -=1
+            actualCart?.map(e=>e.totalPrecio=e.cantidad*((e.producto) as Producto).precio)
+            settotalPrice(actualCart?.map(e=>e.totalPrecio).reduce((a,b)=>a+b,0))
+            setactualCart([...actualCart])
+        }else{
+            settoDelete(pos)
+            setmodalVisible(true);
+        }
+
+    }
+
+    const HandleClose = ()=>{
+        setmodalVisible(false)
+        Modal.destroyAll()
+    }
+
+    const deleteItem = ()=>{
+        actualCart.splice(toDelete,1)
+        setactualCart([...actualCart])
+        setmodalVisible(false)
+        settoDelete(null)
+        axios.put(`${url}/users/${user._id}`,{
+            carrito:actualCart}, {
+            headers: {
+                Authorization: `Bearer ${user.jwt}`
+            }
+        }).then(res=>{  
+            updateUser(res);
+            message.success({content:"Producto eliminado",className: 'messageVerification',duration: '5'})
+        }).catch(err=>console.log(err))
+    }
+    const okCart = ()=>{
+        actualCart.map(e=>{delete e._id;delete e.id})
+        user.pedidos.push({
+            carrito:actualCart,
+            Terminado:false
+        }) 
+        axios.put(`${url}/users/${user._id}`,{
+            carrito: [],
+            Pedidos:user.pedidos}, {
+            headers: {
+                Authorization: `Bearer ${user.jwt}`
+            }
+        }).then(res=>{  
+            updateUser(res);
+            message.success({content:"Pedido realizado",className: 'messageVerification',duration: '5'})
+            router.push("/pedidos")
+        }).catch(err=>console.log(err))
+    }
     return (
-    <Layout urlBack={url}  logoWhite={false} pathPublic={'../../'} title={"Carrito"} color={!contrast ? "#ffffff" :"#8D8D8D"}  background={`#${background}`}>
+        <>
+    <Layout urlBack={url}  logoWhite={false} pathPublic={'../../'} title={"Carrito"} color={"#8D8D8D"}  background={"#EEEEEE"}>
             <div className='carritoMain'>
                 <div className='carritoLeft'>
-                     <ShoppingCartOutlined />
+                    <ShoppingCartOutlined />
 
-                    <a onClick={()=>router.back()} style={{color: `${!contrast ? "#ffffff" :"#8D8D8D"}`}} className='backArrow'>
-                            <ArrowLeftOutlined />
+                    <a onClick={()=>router.back()} style={{color: "#8D8D8D"}}
+                        className='backArrow'>
+                        <ArrowLeftOutlined />
                     </a>
                 </div>
-                <div>
+                <div className="carritoRight">
+                    <h2 style={{paddingLeft:"5%"}}>{actualCart?.length>0?"Lista de productos:":null}</h2>
+                    <div className='carrito'>
+                        <div className="targetSubCategory">
+                            {actualCart?.length>0?actualCart?.map((e,i)=>{
+                            return (
+                            <div className="productItem" style={{background:background}}>
+                                <div className="image">
+                                    <img src={`${url}${((e.producto) as Producto).imagenes.url}`} alt={`${((e.producto) as Producto).nombre}
+                                        mercatto`} />
+                                </div>
+                                <div className="titulo">
+                                    <h2 style={{color:"#787878"}}>{((e.producto) as Producto).nombre}</h2>
 
-                <div className='carritoRight row'>
-                        <div className="col-lg-12 targetSubCategory">
-                            {actualCart?.map(e=>{
-                                return (
-                                    <div  className="col-sm" >
-                                        <h2 style={{color: !contrast ? "#ffffff" : "#787878"}}>{e.producto.nombre}</h2>
-                                        <img src={`${url}${e.producto.imagenes.url}`} alt={`${e.producto.nombre} mercatto`}/>
+                                </div>
+                                <div className="simbols">
+                                    <div className="price">{`$${e.totalPrecio}`}</div>
+
+                                    <button onClick={()=>plus(i)} className="circle">
+                                        +
+                                    </button>
+                                    <div className="number">
+                                        {e.cantidad}
                                     </div>
-                                )
-                            })}
+                                    <button onClick={()=>minus(i)} className="circle">
+                                        -
+                                    </button>
+                                </div>
+
+                            </div>
+                            )
+                            }):
+                            <div className="emptyCart">
+                                <h2>Carrito vacío :(</h2>
+                                <img src={'./images/Layout/empty-cart.svg'} />
+
+                            </div>
+                            }
                         </div>
-                    </div>                  
+                    </div>
+                    {actualCart?.length>0?                    
+                    <div className="totals">
+                        <span className="value">
+                            {`Total:$${totalPrice}`}
+                        </span>
+                        <button onClick={okCart} type="button" className="btn btn-primary btn-lg">
+                            Realizar pedido
+                        </button>
+                    </div>:null}
+
                 </div>
             </div>
     </Layout>
+    <Modal centered onCancel={HandleClose} visible={modalVisible}>
+        {actualCart?
+        <div className='containerForm'>
+            <h2>{`¿Deseas eliminar el producto ${(actualCart[toDelete]?.producto as Producto)?.nombre}?`}</h2>
+            <div className="image">
+            <img src={`${url}${(actualCart[toDelete]?.producto as Producto)?.imagenes.url}`} alt={`${(actualCart[toDelete]?.producto as Producto)?.nombre}mercatto`} />   
+
+            </div>
+             <Form name='signIn' onFinish={deleteItem}>
+                        <div className='buttonsAuth'>
+                            <Button htmlType="submit">Aceptar</Button>
+                            <Button onClick={HandleClose}>Cancelar</Button>
+                        </div>
+            </Form>
+        </div>:null}
+    </Modal>
+    </>
     )
 }
 export async function getServerSideProps (ctx) {

@@ -70,8 +70,8 @@ const Layout = (props: propsLayout):JSX.Element =>{
     }, [])
     
     useEffect(() => {
-        const cantidad = user?.pedidos?.find(e=>e.Terminado?false:true)?.carrito.length
-        setcartCount(cantidad?cantidad:0)
+        console.log(user);
+        setcartCount(user?user.carrito?.length:0)
     }, [user])
     //Functions
     const menu = (
@@ -80,7 +80,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                 <span>{user.nombre}</span>
             </Menu.Item>
             <Menu.Item>
-                <Link href='/'>
+                <Link href='/pedidos'>
                     <a>
                         Mis pedidos
                     </a>
