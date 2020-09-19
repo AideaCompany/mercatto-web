@@ -76,7 +76,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
     const okCart = ()=>{
         actualCart.map(e=>{delete e._id;delete e.id})
         user.pedidos.push({
-            carrito:actualCart,
+            carrito:actualCart as Carrito[],
             Terminado:false
         }) 
         axios.put(`${url}/users/${user._id}`,{
