@@ -1,17 +1,17 @@
 import {useEffect,useState} from 'react'
-import Layout from '../../../components/Layout';
+import Layout from '../../components/Layout';
 //Nextjs
 import {useRouter} from 'next/router'
 //Antd
 import {ArrowLeftOutlined} from '@ant-design/icons';
 //utils
-import {hexToRgb} from '../../../utils/functions'
+import {hexToRgb} from '../../utils/functions'
 //axios
 import axios from 'axios'
 //context
-import useAuth from '../../../providers/AuthProvider'
+import useAuth from '../../providers/AuthProvider'
 import { message } from 'antd';
-import { Carrito } from '../../../utils/types';
+import { Carrito } from '../../utils/types';
 //Types
 type Products = {
     descripcion: string
@@ -38,11 +38,11 @@ type newPedido = {
     carrito:[newCarrito],
     Terminado?:boolean
 }
-const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataSubCategory: SubCategory, background: string, contrast: boolean}) =>{
+const ProductSearchComponent = (props:{url:string, dataProducts: Products[]}) =>{
     //context
     const {user, logout, loginProvider,setModalAuthSignIn,updateUser} = useAuth()
 
-    const { dataSubCategory ,background, contrast,  url,  dataProducts } = props
+    const {url,  dataProducts } = props
     //state
     const [left, setleft] = useState<Boolean>()
     const [title, settitle] = useState<string>()
@@ -53,7 +53,6 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
 
     useEffect(() => {
         setleft(true)
-        settitle(dataSubCategory.titulo)
     }, [])
     
     const plus = ()=>{
@@ -95,10 +94,10 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
 
     }
     return(
-        <Layout urlBack={url}  logoWhite={!contrast} pathPublic={'../../'} title={title} color={!contrast ? "#ffffff" :"#8D8D8D"}  background={`#${background}`}>
+        <Layout urlBack={url}  logoWhite={true} pathPublic={'../'} title={title} color={true ? "#ffffff" :"#8D8D8D"}  background={`#8D8D8D`}>
             <div className='productMain'>
                 <div className='productLeft'>
-                    {left?<img src={`${url}${dataSubCategory.portada.url}`} alt={`mercatto ${dataSubCategory.titulo}`}/>:
+                    {/* {left?<img src={`${url}${dataSubCategory.portada.url}`} alt={`mercatto ${dataSubCategory.titulo}`}/>:
                         <div className="productElements">
                             <img src={`${url}${selectedProduct?.imagenes.url}`} alt={`mercatto ${selectedProduct?.nombre}`}/>
                             <div  className="productPrice" style={{color:!contrast ? "#ffffff" :"#8D8D8D"}}>
@@ -121,18 +120,18 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
                                     <button>Agregar al carrito</button>
                             </div>
                         </div>
-                        }
+                        } */}
 
-                    <a onClick={()=>router.back()} style={{color: `${!contrast ? "#ffffff" :"#8D8D8D"}`}} className='backArrow'>
+                    <a onClick={()=>router.back()} style={{color: `${!true ? "#ffffff" :"#8D8D8D"}`}} className='backArrow'>
                             <ArrowLeftOutlined />
                     </a>
                 </div>
                 <div className='productRight row'>
                     {dataProducts.map(product=>(
                         <div className='col-lg-4 targetSubProduct' key={product._id}>
-                            <div style={{background: hexToRgb(`#${background}`)}}>
+                            <div style={{background: hexToRgb(`#8D8D8D`)}}>
                                         <div  onClick={e=>handleClickProduct(product)}>
-                                            <h2 style={{color: !contrast ? "#ffffff" : "#787878"}}>{product.nombre}</h2>
+                                            <h2 style={{color: "#787878"}}>{product.nombre}</h2>
                                             <img src={`${url}${product.imagenes.url}`} alt={`${product.nombre} mercatto`}/>
                                         </div>
                             </div>
@@ -146,12 +145,10 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
 
 export async function getServerSideProps (ctx) {
     const URL = process.env.URL_STRAPI;
-    const dataSubCategory = await fetch(`${URL}/sub-categorias?only=${ctx.query.id}`,{method: 'GET'})
-    const jsonSubcategory = await dataSubCategory.json()
-    const dataProducts = await fetch(`${URL}/productos?id_sub_category=${ctx.query.id}`,{method: 'GET'})
+
+    const dataProducts = await fetch(`${URL}/productos?search_product=${ctx.query.product}`,{method: 'GET'})
     const jsonProducts = await dataProducts.json()
-    const contrast = ctx.query.contrast === "true" ? true : false
-    return {props: {url:URL, contrast: contrast, background: ctx.query.background, dataSubCategory: jsonSubcategory, dataProducts: jsonProducts}}
+    return {props: {url:URL, dataProducts: jsonProducts}}
 }
 
-export default SubCategoryComponent
+export default ProductSearchComponent

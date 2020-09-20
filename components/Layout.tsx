@@ -5,6 +5,7 @@ import SignUpcomponent from '../components/Auth/singup'
 import ResetPasswordComponent from '../components/Auth/resetPasswor'
 //nextjs
 import Link from 'next/link'
+import router from 'next/router'
 //antD
 import {AutoComplete, Input, Badge, Avatar, Button, message, Menu, Dropdown} from 'antd'
 import {SearchOutlined, ShoppingCartOutlined, UserOutlined, PoweroffOutlined} from '@ant-design/icons';
@@ -33,12 +34,9 @@ const Layout = (props: propsLayout):JSX.Element =>{
     //Props
     const {children, title ,color, background, urlBack, confirmed, code, pathPublic, logoWhite, tokenProvider} = props
 
-
-    //state
-    const [dataSearch, setDataSearch] = useState([])
-
     const [modalResetPassword, setModalResetPassword] = useState<boolean>(false)
     const [cartCount, setcartCount] = useState<Number>(0)
+    const [searchWord, setSearchWord] = useState<string>('')
     //context
     const {user, logout, loginProvider,modalAuthSignIn,setModalAuthSignIn,modalAuthSignUp,setModalAuthSignUp} = useAuth()
 
@@ -52,15 +50,6 @@ const Layout = (props: propsLayout):JSX.Element =>{
         if (code !== '' && code) {
             setModalResetPassword(true)
         }
-        axios.get(`${urlBack}/productos?search`).then(res=>{
-            var tempDataSearch = []
-            for (let k = 0; k < res.data.length; k++) {
-                tempDataSearch.push({
-                    value: res.data[k].nombre
-                })
-            }
-            setDataSearch(tempDataSearch)
-        }).catch(err=>console.log(err))
         if (tokenProvider !== '' && tokenProvider !== undefined) {
             axios.get(`${urlBack}/auth/facebook/callback?access_token=${tokenProvider}`).then(res=>
                 loginProvider(res.data)
@@ -108,12 +97,8 @@ const Layout = (props: propsLayout):JSX.Element =>{
                 <div className='rigthContainer'>
                     <div className='topContainer'>
                         <div className='searchBar'>
-                            <AutoComplete 
-                                options={dataSearch}
-                                filterOption={(inputValue, option) =>
-                                    option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-                                }>
-                                <Input prefix={<SearchOutlined />} placeholder={"Buscar"}></Input>
+                            <AutoComplete onChange={(e)=>setSearchWord(e)}>
+                                <Input onPressEnter={(e)=>{router.push(`/productos/${searchWord}`)}} value={searchWord}   prefix={<SearchOutlined />}  placeholder={"Buscar"}></Input>
                             </AutoComplete>
                         </div>
                         <div className='socialMedia'>
