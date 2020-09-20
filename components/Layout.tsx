@@ -59,7 +59,6 @@ const Layout = (props: propsLayout):JSX.Element =>{
     }, [])
     
     useEffect(() => {
-        console.log(user);
         setcartCount(user?user.carrito?.length:0)
     }, [user])
     //Functions

@@ -14,13 +14,16 @@ import '@brainhubeu/react-carousel/lib/style.css';
 import {AnimatePresence} from 'framer-motion'
 //Providers
 import {AuthProvider} from '../providers/AuthProvider'
-function MyApp({ Component, pageProps }) {
+
+function MyApp({ Component, pageProps, router }) {
   return (
-    <AnimatePresence exitBeforeEnter>
+    
       <AuthProvider>
-        <Component {...pageProps} />
+        <AnimatePresence  key={router.route}  exitBeforeEnter={true}>
+          <Component {...pageProps} />
+        </AnimatePresence>
       </AuthProvider>
-    </AnimatePresence>
+    
   )
 }
 

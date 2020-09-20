@@ -36,7 +36,7 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Productos[], urlB
 
 
   return (
-    <motion.div exit={{opacity: 0}}>
+    <motion.div exit={{opacity:0}} initial="initial" animate="animate">
       <Layout tokenProvider={tokenProvider} logoWhite={false} pathPublic={'./'} code={code} confirmed={confirmed} urlBack={urlBack} title='Categorías' color='#8D8D8D' background='#EEEEEE'>
         <>
           <div className='offer'>
@@ -61,13 +61,15 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Productos[], urlB
           </div>
           <div className='categoriesTargets'>
             <Carousel minDraggableOffset={15} draggable={dataCategoria.length>3? true : false} slidesPerPage={3} infinite={false}>
-              {dataCategoria.map((categories,i)=>{
+              {dataCategoria.map((categories)=>{
                 return(
-                <Link href={`/categorias/${categories.Categoria.toLowerCase()}?id=${categories._id}&cr=${categories.main_color.split('#')[1]}&cn=${categories.contraste_oscuro}`}>
-                  <a style={{background: hexToRgb(categories.main_color)}} className={`${categories._id} categoryTarget`}>
-                    <img src={`${urlBack}${categories.portada.url}`} alt={`${categories.Categoria}`}/>
-                    <h2 style={{color:`${categories.contraste_oscuro ? '#8D8D8D':'#ffffff'}`}}>{categories.Categoria}</h2>
-                  </a>  
+                <Link key={categories._id} href={{pathname:`/categorias/${encodeURIComponent(categories.Categoria)}`, query:{id:categories._id, cr: categories.main_color.split('#')[1], cn: categories.contraste_oscuro} }}>
+                  <a>
+                    <div style={{background: hexToRgb(categories.main_color)}} className={`${categories._id} categoryTarget`}>
+                      <img src={`${urlBack}${categories.portada.url}`} alt={`${categories.Categoria}`}/>
+                      <h2 style={{color:`${categories.contraste_oscuro ? '#8D8D8D':'#ffffff'}`}}>{categories.Categoria}</h2>
+                    </div> 
+                  </a>     
                 </Link>
               )})}
             </Carousel>
