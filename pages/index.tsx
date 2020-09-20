@@ -7,6 +7,10 @@ import Link from 'next/link'
 import Carousel from '@brainhubeu/react-carousel';
 //utils
 import {hexToRgb} from '../utils/functions'
+//Antd
+import {Button} from 'antd'
+//Framer-motion
+import {motion} from 'framer-motion'
 
 
 //types
@@ -32,21 +36,28 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Productos[], urlB
 
 
   return (
-    <div>
+    <motion.div exit={{opacity: 0}}>
       <Layout tokenProvider={tokenProvider} logoWhite={false} pathPublic={'./'} code={code} confirmed={confirmed} urlBack={urlBack} title='Categorías' color='#8D8D8D' background='#EEEEEE'>
         <>
           <div className='offer'>
             <h2>Ofertas y recomendaciones</h2>
-            <Carousel draggable={dataProductos.length>6? true : false} slidesPerPage={6}>
+            {dataProductos.length>4 ? <span className='alertDrag'>Arrastra hacia la izquierda</span>: null}
+            <Carousel draggable={dataProductos.length>4? true : false} slidesPerPage={4}>
               {dataProductos.map(products=>(
                 <div className='targetProductsIndex'>
-                  <span>{`$${products.precio.toString()}`}</span>
+                  <span className='productDescription'>{`${products.descripcion}`}</span>
+                  <span className='productPrice'>{`$${products.precio.toString()}`}</span>
                   <h3>{products.nombre}</h3>
                   <img src={`${urlBack}${products.imagenes.url}`} alt={products.nombre}/>
+                  <div>
+                    <div className='plus'>+</div>
+                    <span>1</span>
+                    <div className='less'>-</div>
+                  </div>
+                  <Button>Agregar al carrito</Button>
                 </div>
               ))}
             </Carousel>
-            {dataProductos.length>6 ? <span className='alertDrag'>Arrastra hacia la izquierda</span>: null}
           </div>
           <div className='categoriesTargets'>
             <Carousel minDraggableOffset={15} draggable={dataCategoria.length>3? true : false} slidesPerPage={3} infinite={false}>
@@ -63,7 +74,7 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Productos[], urlB
           </div>
         </>
       </Layout>
-    </div>
+    </motion.div>
   )
 }
 

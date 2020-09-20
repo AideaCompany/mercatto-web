@@ -38,11 +38,11 @@ type newPedido = {
     carrito:[newCarrito],
     Terminado?:boolean
 }
-const ProductSearchComponent = (props:{url:string, dataProducts: Products[]}) =>{
+const ProductSearchComponent = (props:{url:string, dataProducts: Products[], titleInit: string}) =>{
     //context
-    const {user, logout, loginProvider,setModalAuthSignIn,updateUser} = useAuth()
+    const {user ,setModalAuthSignIn,updateUser } = useAuth()
 
-    const {url,  dataProducts } = props
+    const {url,  dataProducts, titleInit } = props
     //state
     const [left, setleft] = useState<Boolean>()
     const [title, settitle] = useState<string>()
@@ -53,6 +53,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Products[]}) =>
 
     useEffect(() => {
         setleft(true)
+        settitle(`Resultados de busqueda para ${titleInit}`)
     }, [])
     
     const plus = ()=>{
@@ -94,46 +95,51 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Products[]}) =>
 
     }
     return(
-        <Layout urlBack={url}  logoWhite={true} pathPublic={'../'} title={title} color={true ? "#ffffff" :"#8D8D8D"}  background={`#8D8D8D`}>
+        <Layout urlBack={url}  logoWhite={false} pathPublic={'../'} title={title} color={"#8D8D8D"}  background={`#EEEEEE`}>
             <div className='productMain'>
                 <div className='productLeft'>
-                    {/* {left?<img src={`${url}${dataSubCategory.portada.url}`} alt={`mercatto ${dataSubCategory.titulo}`}/>:
+                    {left? <div></div>:
                         <div className="productElements">
                             <img src={`${url}${selectedProduct?.imagenes.url}`} alt={`mercatto ${selectedProduct?.nombre}`}/>
-                            <div  className="productPrice" style={{color:!contrast ? "#ffffff" :"#8D8D8D"}}>
+                            <div  className="productPrice" style={{color:"#8D8D8D"}}>
                                 <div>
-                                    {`$${selectedProduct?.precio} cop`}
+                                    <span className='mainPrice'>
+                                        {`$${selectedProduct?.precio}`}
+                                    </span>
                                 </div>
                                 <div className="simbols" > 
-                                    <div onClick={plus} className="circle"  style={{color:`#${background}`,background:!contrast ? "#ffffff" :"#8D8D8D"}}>
-                                        +
-                                    </div>
-                                        <div className="number">
-                                            {quantity}
-                                        </div>
-                                    <div  onClick={minus} className="circle" style={{color:`#${background}`,background:!contrast ? "#ffffff" :"#8D8D8D"}}>
+                                    <div  onClick={minus} className="circle" style={{color:`#ffffff`,background:"#8D8D8D"}}>
                                         -
                                     </div>
+                                    <div className="number">
+                                        {quantity}
+                                    </div>
+                                    <div onClick={plus} className="circle"  style={{color:`#ffffff`,background:"#8D8D8D"}}>
+                                        +
+                                    </div>
+                                    
                                 </div>
                             </div>
                             <div className="addCart" onClick={addCart}>
                                     <button>Agregar al carrito</button>
                             </div>
                         </div>
-                        } */}
+                        }
 
-                    <a onClick={()=>router.back()} style={{color: `${!true ? "#ffffff" :"#8D8D8D"}`}} className='backArrow'>
+                    <a onClick={()=>router.back()} style={{color: `${"#8D8D8D"}`}} className='backArrow'>
                             <ArrowLeftOutlined />
                     </a>
                 </div>
                 <div className='productRight row'>
                     {dataProducts.map(product=>(
                         <div className='col-lg-4 targetSubProduct' key={product._id}>
-                            <div style={{background: hexToRgb(`#8D8D8D`)}}>
-                                        <div  onClick={e=>handleClickProduct(product)}>
-                                            <h2 style={{color: "#787878"}}>{product.nombre}</h2>
-                                            <img src={`${url}${product.imagenes.url}`} alt={`${product.nombre} mercatto`}/>
-                                        </div>
+                            <div className='productTarget'>
+                                <div  onClick={e=>handleClickProduct(product)}>
+                                    <h2 style={{color: "#787878"}}>{product.nombre}</h2>
+                                    <span className='productDescription' style={{color: "#787878"}}>{product.descripcion}</span>
+                                    <img src={`${url}${product.imagenes.url}`} alt={`${product.nombre} mercatto`}/>
+                                    <span className='productPrice'  style={{color: "#787878"}}>{`$${product.precio}`}</span>
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -148,7 +154,7 @@ export async function getServerSideProps (ctx) {
 
     const dataProducts = await fetch(`${URL}/productos?search_product=${ctx.query.product}`,{method: 'GET'})
     const jsonProducts = await dataProducts.json()
-    return {props: {url:URL, dataProducts: jsonProducts}}
+    return {props: {url:URL, dataProducts: jsonProducts, titleInit: ctx.query.product}}
 }
 
 export default ProductSearchComponent

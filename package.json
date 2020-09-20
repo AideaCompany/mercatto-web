@@ -12,6 +12,7 @@
     "antd": "^4.6.2",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
+    "framer-motion": "^2.6.15",
     "js-cookie": "^2.2.1",
     "next": "9.5.2",
     "react": "16.13.1",

@@ -109,22 +109,26 @@ const Layout = (props: propsLayout):JSX.Element =>{
                         <div className='menu'>
                             {
                                 user.nombre ? 
+                                <>
+                                    <Badge count={cartCount}>
+                                        <Link href='/carrito'>
+                                            <a>
+                                                <ShoppingCartOutlined className='iconCart' />
+                                            </a>
+                                        </Link>
+                                    </Badge>
                                     <Dropdown overlay={menu}>
                                         <Avatar size={40} className='profileUser' icon={<UserOutlined />}/>
                                     </Dropdown>
+                                </>
                                 :
                                 <>
                                     <Button style={{margin: '1em'}} onClick={()=>setModalAuthSignUp(true)}>Registrate</Button>
                                     <Button style={{marginLeft: '1em'}} onClick={()=>setModalAuthSignIn(true)}>Iniciar Sesión</Button>
                                 </>
+
                             }
-                            <Badge count={cartCount}>
-                              <Link href='/carrito'>
-                                    <a>
-                                        <ShoppingCartOutlined className='iconCart' />
-                                    </a>
-                                </Link>
-                            </Badge>
+                            
                             <Link href='/'>
                                 <a>
                                     Productos

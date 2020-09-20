@@ -103,18 +103,21 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
                             <img src={`${url}${selectedProduct?.imagenes.url}`} alt={`mercatto ${selectedProduct?.nombre}`}/>
                             <div  className="productPrice" style={{color:!contrast ? "#ffffff" :"#8D8D8D"}}>
                                 <div>
-                                    {`$${selectedProduct?.precio} cop`}
+                                    <span className='mainPrice'>
+                                        {`$${selectedProduct?.precio}`}
+                                    </span>
                                 </div>
                                 <div className="simbols" > 
-                                    <div onClick={plus} className="circle"  style={{color:`#${background}`,background:!contrast ? "#ffffff" :"#8D8D8D"}}>
-                                        +
-                                    </div>
-                                        <div className="number">
-                                            {quantity}
-                                        </div>
                                     <div  onClick={minus} className="circle" style={{color:`#${background}`,background:!contrast ? "#ffffff" :"#8D8D8D"}}>
                                         -
                                     </div>
+                                    <div className="number">
+                                        {quantity}
+                                    </div>
+                                    <div onClick={plus} className="circle"  style={{color:`#${background}`,background:!contrast ? "#ffffff" :"#8D8D8D"}}>
+                                        +
+                                    </div>
+                                    
                                 </div>
                             </div>
                             <div className="addCart" onClick={addCart}>
@@ -133,7 +136,9 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
                             <div style={{background: hexToRgb(`#${background}`)}}>
                                         <div  onClick={e=>handleClickProduct(product)}>
                                             <h2 style={{color: !contrast ? "#ffffff" : "#787878"}}>{product.nombre}</h2>
+                                            <span className='productDescription' style={{color: !contrast ? "#ffffff" : "#787878"}}>{product.descripcion}</span>
                                             <img src={`${url}${product.imagenes.url}`} alt={`${product.nombre} mercatto`}/>
+                                            <span className='productPrice'  style={{color: !contrast ? "#ffffff" : "#787878"}}>{`$${product.precio}`}</span>
                                         </div>
                             </div>
                         </div>

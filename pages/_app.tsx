@@ -9,13 +9,18 @@ import '../styles/pages/Pedidos.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'antd/dist/antd.css';
 import '@brainhubeu/react-carousel/lib/style.css';
+
+//framer-motion
+import {AnimatePresence} from 'framer-motion'
 //Providers
 import {AuthProvider} from '../providers/AuthProvider'
 function MyApp({ Component, pageProps }) {
   return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
+    <AnimatePresence exitBeforeEnter>
+      <AuthProvider>
+        <Component {...pageProps} />
+      </AuthProvider>
+    </AnimatePresence>
   )
 }
 
