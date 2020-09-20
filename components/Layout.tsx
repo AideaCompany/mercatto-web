@@ -84,7 +84,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
     return(
         <main>
             <div className='mainLayout'>
-                <div style={{backgroundColor:background}} className='leftContainer'>
+                <div style={{backgroundColor:background}} className='leftContainer' >
                     <div className='containerLogos'>
                         <Link href='/'>
                             <a >
