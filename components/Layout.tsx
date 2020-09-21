@@ -107,7 +107,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                         </div>
                         <div className='menu'>
                             {
-                                user.nombre ? 
+                                user.jwt ? 
                                 <>
                                     <Dropdown overlay={menu}>
                                         <Avatar size={40} className='profileUser' icon={<UserOutlined />}/>

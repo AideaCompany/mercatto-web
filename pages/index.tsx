@@ -38,6 +38,7 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
   const {user ,setModalAuthSignIn,updateUser } = useAuth()
   const router = useRouter()
 
+  console.log(user)
   //State
   const [cartProducts, setCartProducts] = useState<countProduct[]>([])
 
@@ -109,8 +110,8 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
           <div className='offer'>
             <h2>Ofertas y recomendaciones</h2>
             {dataProductos.length>4 ? <span className='alertDrag'>Arrastra hacia la izquierda</span>: null}
-            <Carousel arrows={true} draggable={dataProductos.length>4? true : false} slidesPerPage={4}>
-              {dataProductos.map((products,i)=>(
+            <Carousel arrows={dataProductos.length>4? true: false} draggable={dataProductos.length>4? true : false} slidesPerPage={4}>
+              {dataProductos?.map((products,i)=>(
                 <div className='targetProductsIndex'>
                   <span className='productDescription'>{`${products.descripcion}`}</span>
                   <span className='productPrice'>{`$${products.precio.toString()}`}</span>
@@ -128,7 +129,7 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
           </div>
           <div className='categoriesTargets'>
             <Carousel  minDraggableOffset={20} draggable={dataCategoria.length>3? true : false} slidesPerPage={3} infinite={false}>
-              {dataCategoria.map((categories)=>{
+              {dataCategoria?.map((categories)=>{
                 return(
                   <a>
                     <div onClick={()=>router.push({pathname:`/categorias/${categories.Categoria}`, query:{id:categories._id, cr: categories.main_color.split('#')[1], cn: categories.contraste_oscuro}})} style={{background: hexToRgb(categories.main_color)}} className={`${categories._id} categoryTarget`}>

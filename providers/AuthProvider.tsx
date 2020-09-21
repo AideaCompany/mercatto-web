@@ -39,7 +39,6 @@ export const AuthProvider = ({children})=>{
                         Authorization: `Bearer ${Cookie.get('authTokenMercatto')}`
                     }
                 }).then(res=>{
-                    console.log(res);
                     setUser({
                         _id:res.data._id,
                         nombre: res.data.nombre,
@@ -47,10 +46,11 @@ export const AuthProvider = ({children})=>{
                         pedidos : res.data.Pedidos,
                         carrito : res.data.carrito
                     })
-                    pushIndex()
                 }).catch(err=>console.log(err))
             }
     }, [])
+
+    
 
 
     const login = async (data:{identifier:string, password:string, remember:boolean}, urlBack:string, setModalAuthSignIn?:(_:any)=>any, setErrorMessage?:(_:any)=>any) => { 
@@ -72,11 +72,9 @@ export const AuthProvider = ({children})=>{
                 carrito : res.data.user.carrito
             })
             setModalAuthSignIn(false)
-            pushIndex()
         }).catch(err=>{
             setErrorMessage('Error al iniciar sesión, verifica tus credenciales')
         })
-        
     }
 
     const loginProvider =  (data) =>{
@@ -88,6 +86,7 @@ export const AuthProvider = ({children})=>{
                 carrito : data.user.carrito
             })
             Cookie.set('authTokenMercatto',data.jwt, {expires:1})
+            router.push('/')
     }
 
     const logout = ()=>{
@@ -96,12 +95,6 @@ export const AuthProvider = ({children})=>{
         Cookie.remove('authTokenMercatto')
     }
 
-    const pushIndex = () =>{
-        console.log(router.query.code)
-        if (router.query.code !== "") {
-            // router.push('/')
-        }
-    }
 
     const updateUser = (res)=>{
         setUser({

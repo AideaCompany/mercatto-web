@@ -48,12 +48,20 @@ $mainBlue: #2FAFFF;
         a{
             color: $darkGrey;
         }
-        .ant-input , .ant-input-password{
-           border-radius: 50px; 
-           border: 1px solid $darkGrey;
-           input{
-               border: none;
-           }
+        .ant-input , .ant-input-password, .ant-select{
+            
+            .ant-select-selector{
+                border-radius: 50px;
+                border: none;
+                .ant-select-selection-placeholder, .ant-select-selection-item{
+                    text-align: left;
+                }
+            }
+            border-radius: 50px; 
+            border: 1px solid $darkGrey;
+            input{
+                border: none;
+            }
         }
         .ant-checkbox{
             .ant-checkbox-inner{
@@ -83,4 +91,9 @@ $mainBlue: #2FAFFF;
         display: none;
     }
     
+}
+
+
+.ant-select-dropdown{
+    border-radius: 25px !important;
 }

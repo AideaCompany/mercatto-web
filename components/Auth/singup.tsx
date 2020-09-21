@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 //AntDesign 
-import {Form, Input, Button, Modal} from 'antd'
+import {Form, Input, Button, Modal, Select} from 'antd'
 
+const {Option} = Select
 
 const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, setModalAuthSignIn, urlBack:string, pathPublic:string}):JSX.Element =>{
     const {modalAuthSignUp, setModalAuthSignUp, setModalAuthSignIn, urlBack, pathPublic} = props
@@ -42,7 +43,11 @@ const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, set
                             <Input placeholder='Nombre'/>
                         </Form.Item >
                         <Form.Item name='tipo_identificacion' rules={[{required: true,message: 'Por favor selecciona un tipo de identificación'}]}>
-                            <Input placeholder='Tipo de identificación'/>
+                            <Select placeholder='tipo de identificación'>
+                              <Option value='cedula'>Cédula de ciudadania</Option>
+                              <Option value='NIT'>NIT</Option>
+                              <Option value='cedula_extranjera'>Cédula extranjera</Option>
+                            </Select>
                         </Form.Item>
                         <Form.Item name='identificacion' rules={[{required: true,message: 'Por favor inserta tu No de identificación'}]}>
                             <Input placeholder='No de Identificación'/>
