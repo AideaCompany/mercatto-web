@@ -86,7 +86,9 @@ const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, set
                             <Button onClick={()=>{setModalAuthSignIn(true);HandleClose()}}>Iniciar Sesión</Button>
                         </div>
                     </Form>
-                    <img className='facebookAuth' src="./images/Layout/facebook.svg" alt="facebook mercatto"/>
+                    <a  href={`${urlBack}/connect/facebook`}>
+                        <img className='facebookAuth' src={`${pathPublic}images/Layout/facebook.svg`} alt="facebook mercatto"/>
+                    </a>
                     <br/>
                     <span><a>Políticas de privacidad</a></span>
                     </>

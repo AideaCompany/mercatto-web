@@ -109,6 +109,9 @@ const Layout = (props: propsLayout):JSX.Element =>{
                             {
                                 user.nombre ? 
                                 <>
+                                    <Dropdown overlay={menu}>
+                                        <Avatar size={40} className='profileUser' icon={<UserOutlined />}/>
+                                    </Dropdown>
                                     <Badge count={cartCount}>
                                         <Link href='/carrito'>
                                             <a>
@@ -116,9 +119,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                                             </a>
                                         </Link>
                                     </Badge>
-                                    <Dropdown overlay={menu}>
-                                        <Avatar size={40} className='profileUser' icon={<UserOutlined />}/>
-                                    </Dropdown>
+                                    
                                 </>
                                 :
                                 <>
@@ -146,7 +147,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                     {children}
                 </div>
                 <div className='footer'>
-                    <span>Terminos de uso</span>
+                    <span>Powered by IDEA SAS - AIDEA SAS</span>
                     <span>Politicas de privacidad</span>
                 </div>
                 <SignInComponent pathPublic={pathPublic} urlBack={urlBack} modalAuthSignIn={modalAuthSignIn} setModalAuthSignIn={setModalAuthSignIn} setModalAuthSignUp={setModalAuthSignUp}/>
