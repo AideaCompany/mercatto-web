@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react'
 import Layout from '../components/Layout'
 //nextjs
 import Link from 'next/link'
+import {useRouter} from 'next/router'
 //provider
 import useAuth from '../providers/AuthProvider'
 import Carousel from '@brainhubeu/react-carousel';
@@ -35,6 +36,7 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
 
   //Provider
   const {user ,setModalAuthSignIn,updateUser } = useAuth()
+  const router = useRouter()
 
   //State
   const [cartProducts, setCartProducts] = useState<countProduct[]>([])
@@ -107,7 +109,7 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
           <div className='offer'>
             <h2>Ofertas y recomendaciones</h2>
             {dataProductos.length>4 ? <span className='alertDrag'>Arrastra hacia la izquierda</span>: null}
-            <Carousel draggable={dataProductos.length>4? true : false} slidesPerPage={4}>
+            <Carousel arrows={true} draggable={dataProductos.length>4? true : false} slidesPerPage={4}>
               {dataProductos.map((products,i)=>(
                 <div className='targetProductsIndex'>
                   <span className='productDescription'>{`${products.descripcion}`}</span>
@@ -125,17 +127,15 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
             </Carousel>
           </div>
           <div className='categoriesTargets'>
-            <Carousel minDraggableOffset={15} draggable={dataCategoria.length>3? true : false} slidesPerPage={3} infinite={false}>
+            <Carousel  minDraggableOffset={20} draggable={dataCategoria.length>3? true : false} slidesPerPage={3} infinite={false}>
               {dataCategoria.map((categories)=>{
                 return(
-                <Link key={categories._id} href={{pathname:`/categorias/${encodeURIComponent(categories.Categoria)}`, query:{id:categories._id, cr: categories.main_color.split('#')[1], cn: categories.contraste_oscuro} }}>
                   <a>
-                    <div style={{background: hexToRgb(categories.main_color)}} className={`${categories._id} categoryTarget`}>
+                    <div onClick={()=>router.push({pathname:`/categorias/${categories.Categoria}`, query:{id:categories._id, cr: categories.main_color.split('#')[1], cn: categories.contraste_oscuro}})} style={{background: hexToRgb(categories.main_color)}} className={`${categories._id} categoryTarget`}>
                       <img src={`${urlBack}${categories.portada.url}`} alt={`${categories.Categoria}`}/>
                       <h2 style={{color:`${categories.contraste_oscuro ? '#8D8D8D':'#ffffff'}`}}>{categories.Categoria}</h2>
                     </div> 
                   </a>     
-                </Link>
               )})}
             </Carousel>
           </div>

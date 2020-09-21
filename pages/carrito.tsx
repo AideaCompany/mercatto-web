@@ -122,6 +122,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                     </a>
                 </div>
                 <div className="carritoRight">
+                    
                     <h2 style={{paddingLeft:"5%"}}>{actualCart?.length>0?"Lista de productos:":null}</h2>
                     <div className='carrito'>
                         <div className="targetSubCategory">

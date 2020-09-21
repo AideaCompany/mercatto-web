@@ -136,11 +136,13 @@ $mainBlue: #2FAFFF;
 
     }
     .categoriesTargets{
+        width: 90vw;
         .BrainhubCarousel__container{
             overflow: inherit ;
             margin-top: 30vh;
             div{
                 overflow: inherit ;
+                width: 100%;
     
                 ul{
                     overflow: inherit !important;

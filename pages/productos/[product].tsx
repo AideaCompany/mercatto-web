@@ -1,9 +1,10 @@
 import {useEffect,useState} from 'react'
 import Layout from '../../components/Layout';
 //Nextjs
+import Link from 'next/link'
 import {useRouter} from 'next/router'
 //Antd
-import {ArrowLeftOutlined} from '@ant-design/icons';
+import {ArrowLeftOutlined, FrownOutlined} from '@ant-design/icons';
 //axios
 import axios from 'axios'
 //context
@@ -119,7 +120,8 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Products[], tit
                     </a>
                 </div>
                 <div className='productRight row'>
-                    {dataProducts.map(product=>(
+
+                    {dataProducts.length >0 ? dataProducts.map(product=>(
                         <div className='col-lg-4 targetSubProduct' key={product._id}>
                             <div className='productTarget'>
                                 <div  onClick={e=>handleClickProduct(product)}>
@@ -130,7 +132,17 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Products[], tit
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    )):
+                    <div className='empty'>
+                        <h2>No existen Productos relacionados con tu busqueda</h2>
+                        <FrownOutlined />
+                        <br/>
+                        <Link href={'/'}>
+                            <a>
+                                Regresar
+                            </a>
+                        </Link>
+                    </div>}
                 </div>
             </div>
         </Layout>
