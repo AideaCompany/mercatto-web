@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '../styles/globals.scss'
 import '../styles/Layout.scss'
 import '../styles/pages/Index.scss'
 import '../styles/pages/Auth.scss'
