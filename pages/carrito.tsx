@@ -1,10 +1,11 @@
 import React,{useEffect,useState} from 'react'
 //next
+import Link from 'next/link'
 import {useRouter} from 'next/router'
 //components
 import Layout from '../components/Layout';
 //antd
-import {ArrowLeftOutlined,ShoppingCartOutlined} from '@ant-design/icons';
+import {ArrowLeftOutlined,ShoppingCartOutlined,DeleteOutlined } from '@ant-design/icons';
 //context
 import useAuth from '../providers/AuthProvider'
 //types
@@ -26,6 +27,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
       const {user,updateUser} = useAuth()
     //router
     const router = useRouter()
+
     useEffect(() => {
         const actual:showCarrito[] = user?.carrito
         actual?.map(e=>e.totalPrecio=e.cantidad*((e.producto) as Producto).precio)
@@ -132,27 +134,33 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                 </div>
                                 <div className="titulo">
                                     <h2 style={{color:"#787878"}}>{((e.producto) as Producto).nombre}</h2>
-
+                                    <span style={{color:"#787878"}}>{((e.producto)as Producto).descripcion}</span>
                                 </div>
                                 <div className="simbols">
                                     <div className="price">{`$${e.totalPrecio}`}</div>
-
-                                    <button onClick={()=>plus(i)} className="circle">
-                                        +
+                                    <button onClick={()=>minus(i)} className="circle">
+                                        -
                                     </button>
                                     <div className="number">
                                         {e.cantidad}
                                     </div>
-                                    <button onClick={()=>minus(i)} className="circle">
-                                        -
+                                    
+                                    <button onClick={()=>plus(i)} className="circle">
+                                        +
                                     </button>
+                                    <DeleteOutlined onClick={()=>{settoDelete(i);setmodalVisible(true)}} className='iconDelete'/>
                                 </div>
 
                             </div>
                             )
                             }):
                             <div className="emptyCart">
-                                <h2>Carrito vacío :(</h2>
+                                <h2>Tu carrito está vacio:(</h2>
+                                <Link href='/'>
+                                    <a>
+                                        Regresa para comprar
+                                    </a>
+                                </Link>
                                 <img src={'./images/Layout/empty-cart.svg'} />
 
                             </div>

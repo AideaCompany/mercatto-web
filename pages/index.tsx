@@ -73,7 +73,12 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
     var index = tempCartProducts.findIndex(e=> e._id === id)
     if (user.jwt && tempCartProducts[index].count>0) {
       var carrito: Carrito[] = user.carrito
-      carrito.push({cantidad:tempCartProducts[index].count, producto: tempCartProducts[index]._id })
+      var isProdcut = user.carrito.findIndex(e=>e.producto.id === id)
+      if (isProdcut >-1) {
+        carrito[isProdcut].cantidad += tempCartProducts[index].count
+      }else{
+        carrito.push({cantidad:tempCartProducts[index].count, producto: tempCartProducts[index]._id })
+      }
       axios.put(`${urlBack}/users/${user._id}`,{
         carrito: carrito
       },

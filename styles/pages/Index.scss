@@ -115,7 +115,7 @@ $mainBlue: #2FAFFF;
                         justify-content: center;
                         color: #ffffff;
                         margin: 0 0.5em 0 0.5em ;
-                        transition: 0.2 ease-in-out;
+                        transition: 0.2s ease-in-out;
                     }
                     >div:hover{
                         background-color: rgba($color: $mainBlue, $alpha: 0.8);

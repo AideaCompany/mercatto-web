@@ -130,6 +130,7 @@ $mainBlue: #2FAFFF;
     button:active, button:focus{
         background-color: $mainBlue;
         color: #ffffff; 
+        outline: none;
     }
     button:hover {
         background-color: rgba($color: $mainBlue, $alpha: 0.8);

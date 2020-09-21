@@ -76,7 +76,12 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
     const addCart = ()=>{
         if(user.jwt && quantity>0){
             var carrito: Carrito[] = user.carrito
-            carrito.push({cantidad:quantity,producto:selectedProduct._id})
+            var isProdcut = user.carrito.findIndex(e=>e.producto.id === selectedProduct._id)
+            if (isProdcut >-1) {
+                carrito[isProdcut].cantidad += quantity
+            }else{
+                carrito.push({cantidad:quantity,producto:selectedProduct._id})
+            }
             axios.put(`${url}/users/${user._id}`,{
                 carrito:carrito}, {
                 headers: {

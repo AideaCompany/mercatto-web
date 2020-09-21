@@ -1,3 +1,4 @@
+$darkGrey: #8D8D8D;
 .carritoMain{
     width: 100%;
     height: 100%;
@@ -14,6 +15,7 @@
         position: relative;
         svg{
             font-size: 25vw;
+            color: $darkGrey;
         }
         img{
             width: 25vw;
@@ -24,6 +26,7 @@
             top: 90%;
             svg{
                 font-size: 2vw;
+
             }
         }
 
@@ -42,8 +45,31 @@
                 align-items: center;
                 flex-direction: column;
                 .emptyCart{
-                    height: 100%;
-                    
+                    width: 100%;
+                    height: 40vh;
+                    position: relative;
+                    text-align: center;
+                    h2{
+                        color: $darkGrey;
+                        font-size: 3vw;
+                    }
+                    a{
+                        color: $darkGrey;
+                        font-size: 2vw;
+                    }
+                    img{
+                        width: 25%;
+                        position: absolute;
+                        top: 80%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        -webkit-transform: translate(-50%, -50%);
+                    }
+                }
+                .productItem:hover{
+                    -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+                    -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+                    box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);                
                 }
                 .productItem{
                     display: flex;
@@ -52,12 +78,15 @@
                     margin-bottom: 3%;
                     width: 65vw;
                     height: 15vh;
-                    border-radius: 25px;
+                    border-radius: 7vh;
                     -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
                     -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
                     box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                    cursor: pointer;
+                    transition: 0.2s ease-in-out;
+
                     .image{
-                        width: 25%;
+                        width: 20%;
                         height: 100%;
                         display: flex;
                         align-items: center;
@@ -68,11 +97,14 @@
                     }
                     .titulo{
                         height: 100%;
-                        width: 45%;
-                        display: flex;
-                        align-items: center;
+                        width: 50%;
+                        text-align: center;
                         h2{
-                            font-size: 2.2rem;
+                            margin: 2vh;
+                            font-size: 1.7vw;
+                        }
+                        span{
+                            font-size: 1vw;
                         }
                     }
                     .simbols{
@@ -84,6 +116,7 @@
                         font-size: 2.2rem;
                         .price{
                             margin-right: 15%;
+                            color: $darkGrey;
                         }
                         .circle{
                             display: flex;
@@ -96,6 +129,11 @@
                         }
                         .number{
                             margin:5%;
+                            color: $darkGrey;
+                        }
+                        .iconDelete{
+                            margin: 0 1vw 0 1vw;
+                            color: $darkGrey
                         }
                     }
                 }
