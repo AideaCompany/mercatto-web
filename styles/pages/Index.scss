@@ -115,6 +115,10 @@ $mainBlue: #2FAFFF;
                         justify-content: center;
                         color: #ffffff;
                         margin: 0 0.5em 0 0.5em ;
+                        transition: 0.2s ease-in-out;
+                    }
+                    >div:hover{
+                        background-color: rgba($color: $mainBlue, $alpha: 0.8);
                     }
                     span{
                         color: $darkGrey;
@@ -132,11 +136,13 @@ $mainBlue: #2FAFFF;
 
     }
     .categoriesTargets{
+        width: 90vw;
         .BrainhubCarousel__container{
             overflow: inherit ;
             margin-top: 30vh;
             div{
                 overflow: inherit ;
+                width: 100%;
     
                 ul{
                     overflow: inherit !important;

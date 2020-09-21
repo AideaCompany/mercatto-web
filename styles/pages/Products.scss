@@ -1,3 +1,4 @@
+$darkGrey: #8D8D8D;
 .productMain{
     width: 100%;
     height: 100%;
@@ -78,6 +79,25 @@
         width: 70vw;
         margin: 0;
         overflow-y: scroll;
+
+        .empty{
+            text-align: center;
+            width: 100%;
+            h2{
+                font-size: 4vw;
+                padding: 1vw;
+                color: $darkGrey;
+            }
+            svg{
+                font-size: 10vw;
+                color: $darkGrey;
+            }
+            a{
+                font-size: 3vw;
+                padding: 1vw;
+                color: $darkGrey;
+            }
+        }
 
         .targetSubProduct{
             // height: 80vh;

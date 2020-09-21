@@ -123,16 +123,17 @@ $mainBlue: #2FAFFF;
     }
     button{
         border-radius: 50px ;
-        background-color: $mainBlue;
+        background-color: $mainBlue !important;
         color: #ffffff;
         border: none;
     }
     button:active, button:focus{
         background-color: $mainBlue;
         color: #ffffff; 
+        outline: none;
     }
     button:hover {
-        background-color: rgba($color: $mainBlue, $alpha: 0.8);
+        background-color: rgba($color: $mainBlue, $alpha: 0.8) !important;
         color: #ffffff;
     }
 

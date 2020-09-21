@@ -6,8 +6,6 @@ import {useRouter} from 'next/router'
 import {ArrowLeftOutlined} from '@ant-design/icons';
 //utils
 import {hexToRgb} from '../../utils/functions'
-//motion framer
-import {motion} from 'framer-motion'
 
 //Types
 type Sub_Categorias = {
@@ -33,7 +31,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], background:
     const category = dataCategory[0]
 
     return(
-        <motion.div  exit={{opacity:0}} initial="initial" animate="animate">
+        <div>
             <Layout urlBack={url} logoWhite={!contrast} pathPublic={'../'} title={category.Categoria} color={!contrast ? "#ffffff" :"#8D8D8D"}  background={`#${background}`}>
                 <div className='categoryMain'>
                     <div className='categoryLeft'>
@@ -60,7 +58,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], background:
                     </div>
                 </div>
             </Layout>
-        </motion.div>
+        </div>
     )
 }
 

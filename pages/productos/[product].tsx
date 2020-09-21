@@ -1,11 +1,10 @@
 import {useEffect,useState} from 'react'
 import Layout from '../../components/Layout';
 //Nextjs
+import Link from 'next/link'
 import {useRouter} from 'next/router'
 //Antd
-import {ArrowLeftOutlined} from '@ant-design/icons';
-//utils
-import {hexToRgb} from '../../utils/functions'
+import {ArrowLeftOutlined, FrownOutlined} from '@ant-design/icons';
 //axios
 import axios from 'axios'
 //context
@@ -22,22 +21,7 @@ type Products = {
     peso : string
 }
 
-type SubCategory = {
-    _id:string
-    portada: {url: string}
-    titulo: string
-}
 
-type newCarrito = {
-    _id?: string,
-    cantidad:Number
-    producto:string
-}
-type newPedido = {
-    _id?:string,
-    carrito:[newCarrito],
-    Terminado?:boolean
-}
 const ProductSearchComponent = (props:{url:string, dataProducts: Products[], titleInit: string}) =>{
     //context
     const {user ,setModalAuthSignIn,updateUser } = useAuth()
@@ -73,16 +57,21 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Products[], tit
         settitle(product.nombre)
     }
     // const category = dataCategory[0]
-    const addCart = ()=>{
+    const addCart = () =>{
         if(user.jwt && quantity>0){
             var carrito: Carrito[] = user.carrito
-            carrito.push({cantidad:quantity,producto:selectedProduct._id})
+            var isProdcut = user.carrito.findIndex(e=>e.producto.id === selectedProduct._id)
+            if (isProdcut >-1) {
+                carrito[isProdcut].cantidad += quantity
+            }else{
+                carrito.push({cantidad:quantity,producto:selectedProduct._id})
+            }
             axios.put(`${url}/users/${user._id}`,{
                 carrito:carrito}, {
                 headers: {
                     Authorization: `Bearer ${user.jwt}`
                 }
-            }).then(res=>{  
+            }).then(res=>{
                 updateUser(res);
                 message.success({content:"Producto agregado",className: 'messageVerification',duration: '5'})
             }).catch(err=>console.log(err))
@@ -131,7 +120,8 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Products[], tit
                     </a>
                 </div>
                 <div className='productRight row'>
-                    {dataProducts.map(product=>(
+
+                    {dataProducts.length >0 ? dataProducts.map(product=>(
                         <div className='col-lg-4 targetSubProduct' key={product._id}>
                             <div className='productTarget'>
                                 <div  onClick={e=>handleClickProduct(product)}>
@@ -142,7 +132,17 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Products[], tit
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    )):
+                    <div className='empty'>
+                        <h2>No existen Productos relacionados con tu busqueda</h2>
+                        <FrownOutlined />
+                        <br/>
+                        <Link href={'/'}>
+                            <a>
+                                Regresar
+                            </a>
+                        </Link>
+                    </div>}
                 </div>
             </div>
         </Layout>

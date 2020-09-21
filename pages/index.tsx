@@ -1,16 +1,19 @@
-
+import {useEffect, useState} from 'react'
 //Layout
 import Layout from '../components/Layout'
 //nextjs
 import Link from 'next/link'
-//Carousel
+import {useRouter} from 'next/router'
+//provider
+import useAuth from '../providers/AuthProvider'
 import Carousel from '@brainhubeu/react-carousel';
 //utils
 import {hexToRgb} from '../utils/functions'
-//Antd
-import {Button} from 'antd'
-//Framer-motion
-import {motion} from 'framer-motion'
+//Types
+import {Producto, Carrito} from '../utils/types'
+
+import {Button, message} from 'antd'
+import axios from 'axios'
 
 
 //types
@@ -21,62 +24,124 @@ type Categorias = {
   main_color: string
   contraste_oscuro: boolean
 }
-
-type Productos = {
-  descripcion: string
+type countProduct = {
   _id: string
-  imagenes: {url: string}
-  precio: number
-  nombre: string
+  count : number
 }
 
-function Home(props:{dataCategoria:Categorias[], dataProductos:Productos[], urlBack?:string, confirmed:boolean, code?:string, tokenProvider?: string}):JSX.Element {
+
+function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBack?:string, confirmed:boolean, code?:string, tokenProvider?: string}):JSX.Element {
   //props
   const {dataCategoria, urlBack, dataProductos, confirmed, code, tokenProvider} = props
 
+  //Provider
+  const {user ,setModalAuthSignIn,updateUser } = useAuth()
+  const router = useRouter()
 
+  //State
+  const [cartProducts, setCartProducts] = useState<countProduct[]>([])
+
+  //effect
+  useEffect(() => {
+    var productTemp: countProduct[] = []
+    for (let k = 0; k < dataProductos.length; k++) {
+      productTemp.push({
+        count: 0,
+        _id: dataProductos[k]._id
+      })
+    }
+    setCartProducts(productTemp)
+  }, [])
+
+  //functions
+  const plusProduct = (id:string) =>{
+    var tempCartProducts : countProduct[] = JSON.parse(JSON.stringify(cartProducts))
+    var index = tempCartProducts.findIndex(e=> e._id === id)
+    tempCartProducts[index].count += 1
+    setCartProducts(tempCartProducts)
+  }
+
+  const minusProduct = (id:string)=>{
+    var tempCartProducts : countProduct[] = JSON.parse(JSON.stringify(cartProducts))
+    var index = tempCartProducts.findIndex(e=> e._id === id)
+    if (tempCartProducts[index].count>0) {
+      tempCartProducts[index].count -= 1
+    }
+    setCartProducts(tempCartProducts)
+  }
+
+  const addProduct = (id:string)=>{
+    var tempCartProducts : countProduct[] = JSON.parse(JSON.stringify(cartProducts))
+    var index = tempCartProducts.findIndex(e=> e._id === id)
+    if (user.jwt && tempCartProducts[index].count>0) {
+      var carrito: Carrito[] = user.carrito
+      var isProdcut = user.carrito.findIndex(e=>e.producto.id === id)
+      if (isProdcut >-1) {
+        carrito[isProdcut].cantidad += tempCartProducts[index].count
+      }else{
+        carrito.push({cantidad:tempCartProducts[index].count, producto: tempCartProducts[index]._id })
+      }
+      axios.put(`${urlBack}/users/${user._id}`,{
+        carrito: carrito
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.jwt}`
+        }
+      }
+      ).then(res=>{
+        message.success({content:"Producto agregado",className: 'messageVerification',duration: '5'})
+        updateUser(res)})
+       .catch(err=>{
+         console.log(err)
+       })
+    }else if (tempCartProducts[index].count==0) {
+      message.info({content:"Porfavor indica la cantidad",className: 'messageVerification',duration: '5'})
+    }else{
+      message.info({content:"Porfavor inicia sesión para usar el carrito",className: 'messageVerification',duration: '5'})
+      setModalAuthSignIn(true)
+    }
+  }
   return (
-    <motion.div exit={{opacity:0}} initial="initial" animate="animate">
+    <div>
       <Layout tokenProvider={tokenProvider} logoWhite={false} pathPublic={'./'} code={code} confirmed={confirmed} urlBack={urlBack} title='Categorías' color='#8D8D8D' background='#EEEEEE'>
         <>
           <div className='offer'>
             <h2>Ofertas y recomendaciones</h2>
             {dataProductos.length>4 ? <span className='alertDrag'>Arrastra hacia la izquierda</span>: null}
-            <Carousel draggable={dataProductos.length>4? true : false} slidesPerPage={4}>
-              {dataProductos.map(products=>(
+            <Carousel arrows={true} draggable={dataProductos.length>4? true : false} slidesPerPage={4}>
+              {dataProductos.map((products,i)=>(
                 <div className='targetProductsIndex'>
                   <span className='productDescription'>{`${products.descripcion}`}</span>
                   <span className='productPrice'>{`$${products.precio.toString()}`}</span>
                   <h3>{products.nombre}</h3>
                   <img src={`${urlBack}${products.imagenes.url}`} alt={products.nombre}/>
                   <div>
-                    <div className='plus'>+</div>
-                    <span>1</span>
-                    <div className='less'>-</div>
+                    <div onClick={()=>minusProduct(products._id)} className='less'>-</div>
+                    <span>{cartProducts[i]?.count}</span>
+                    <div onClick={()=>plusProduct(products._id)} className='plus'>+</div>
                   </div>
-                  <Button>Agregar al carrito</Button>
+                  <Button onClick={()=>addProduct(products._id)}>Agregar al carrito</Button>
                 </div>
               ))}
             </Carousel>
           </div>
           <div className='categoriesTargets'>
-            <Carousel minDraggableOffset={15} draggable={dataCategoria.length>3? true : false} slidesPerPage={3} infinite={false}>
+            <Carousel  minDraggableOffset={20} draggable={dataCategoria.length>3? true : false} slidesPerPage={3} infinite={false}>
               {dataCategoria.map((categories)=>{
                 return(
-                <Link key={categories._id} href={{pathname:`/categorias/${encodeURIComponent(categories.Categoria)}`, query:{id:categories._id, cr: categories.main_color.split('#')[1], cn: categories.contraste_oscuro} }}>
                   <a>
-                    <div style={{background: hexToRgb(categories.main_color)}} className={`${categories._id} categoryTarget`}>
+                    <div onClick={()=>router.push({pathname:`/categorias/${categories.Categoria}`, query:{id:categories._id, cr: categories.main_color.split('#')[1], cn: categories.contraste_oscuro}})} style={{background: hexToRgb(categories.main_color)}} className={`${categories._id} categoryTarget`}>
                       <img src={`${urlBack}${categories.portada.url}`} alt={`${categories.Categoria}`}/>
                       <h2 style={{color:`${categories.contraste_oscuro ? '#8D8D8D':'#ffffff'}`}}>{categories.Categoria}</h2>
                     </div> 
                   </a>     
-                </Link>
               )})}
             </Carousel>
           </div>
         </>
       </Layout>
-    </motion.div>
+    </div>
   )
 }
 

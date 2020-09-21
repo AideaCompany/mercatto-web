@@ -10,18 +10,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'antd/dist/antd.css';
 import '@brainhubeu/react-carousel/lib/style.css';
 
-//framer-motion
-import {AnimatePresence} from 'framer-motion'
 //Providers
 import {AuthProvider} from '../providers/AuthProvider'
 
-function MyApp({ Component, pageProps, router }) {
+function MyApp({ Component, pageProps }) {
   return (
     
       <AuthProvider>
-        <AnimatePresence  key={router.route}  exitBeforeEnter={true}>
           <Component {...pageProps} />
-        </AnimatePresence>
       </AuthProvider>
     
   )
