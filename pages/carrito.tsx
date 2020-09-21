@@ -103,7 +103,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
             }).then(rpt=>{ 
                 updateUser(res);
                 message.success({content:"Pedido realizado",className: 'messageVerification',duration: '5'})
-                // router.push("/pedidos")
+                router.push("/pedidos")
             }).catch(err=>console.log(err))
         }).catch(err=>console.log(err))
     }

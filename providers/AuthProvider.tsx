@@ -33,7 +33,6 @@ export const AuthProvider = ({children})=>{
     //Effect
     const url = process.env.NEXT_PUBLIC_URL_STRAPI
     useEffect(() => {
-        if(!user.jwt){
             if(Cookie.get('authTokenMercatto') !== undefined){
                 axios.get(`${url}/users/me`, {
                     headers: {
@@ -51,7 +50,6 @@ export const AuthProvider = ({children})=>{
                     pushIndex()
                 }).catch(err=>console.log(err))
             }
-        }
     }, [])
 
 
