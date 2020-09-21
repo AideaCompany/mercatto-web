@@ -11,7 +11,7 @@ import axios from 'axios'
 //context
 import useAuth from '../../../providers/AuthProvider'
 import { message } from 'antd';
-import { Carrito } from '../../../utils/types';
+import { Carrito,Producto } from '../../../utils/types';
 //Types
 type Products = {
     descripcion: string
@@ -76,7 +76,7 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
     const addCart = ()=>{
         if(user.jwt && quantity>0){
             var carrito: Carrito[] = user.carrito
-            var isProdcut = user.carrito.findIndex(e=>e.producto.id === selectedProduct._id)
+            var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)._id === selectedProduct._id)
             if (isProdcut >-1) {
                 carrito[isProdcut].cantidad += quantity
             }else{
