@@ -75,7 +75,7 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
     var index = tempCartProducts.findIndex(e=> e._id === id)
     if (user.jwt && tempCartProducts[index].count>0) {
       var carrito: Carrito[] = user.carrito
-      var isProdcut = user.carrito.findIndex(e=>e.producto.id === id)
+      var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)._id === id)
       if (isProdcut >-1) {
         carrito[isProdcut].cantidad += tempCartProducts[index].count
       }else{
