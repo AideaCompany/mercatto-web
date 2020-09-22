@@ -36,9 +36,9 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], background:
                 <div className='categoryMain'>
                     <div className='categoryLeft'>
                         <img src={`${url}${category.portada.url}`} alt={`mercatto ${category.Categoria}`}/>
-                        <a onClick={()=>router.push('/')} style={{color: `${!contrast ? "#ffffff" :"#8D8D8D"}`}} className='backArrow'>
+                        <span onClick={()=>router.push('/')} style={{color: `${!contrast ? "#ffffff" :"#8D8D8D"}`, cursor:"pointer"}} className='backArrow'>
                                 <ArrowLeftOutlined />
-                        </a>
+                        </span>
                     </div>
                     <div className='categoryRight row'>
                         {dataSubCategoria.map(subcategories=>(

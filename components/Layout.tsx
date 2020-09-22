@@ -76,7 +76,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                 </Link>
             </Menu.Item>
             <Menu.Item>
-                <a className='logOutButton' onClick={logout}><PoweroffOutlined/> Cerrar Sesión</a>
+                <span  className='logOutButton' onClick={logout}><PoweroffOutlined/> Cerrar Sesión</span>
             </Menu.Item>
         </Menu>
     )

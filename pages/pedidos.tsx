@@ -8,11 +8,8 @@ import {ArrowLeftOutlined,ShoppingOutlined} from '@ant-design/icons';
 //context
 import useAuth from '../providers/AuthProvider'
 //types
-import {Carrito, Pedidos , Producto} from '../utils/types'
-import { Modal ,Form, Button, message} from 'antd';
+import { Pedidos , Producto} from '../utils/types'
 //axios
-import axios from 'axios'
-type showCarrito = Carrito & {totalPrecio?:number}
 
 const carrito = (props:{url:string}):JSX.Element=>{
     const { url } = props
@@ -34,10 +31,10 @@ const carrito = (props:{url:string}):JSX.Element=>{
                 <div className='pedidosLeft'>
                 <ShoppingOutlined />
 
-                    <a onClick={()=>router.back()} style={{color: "#8D8D8D"}}
+                    <span onClick={()=>router.back()} style={{color: "#8D8D8D", cursor:"pointer"}}
                         className='backArrow'>
                         <ArrowLeftOutlined />
-                    </a>
+                    </span>
                 </div>
                 <div className="pedidosRight">
                     <h2 style={{paddingLeft:"5%"}}>Lista de pedidos:</h2>
@@ -69,11 +66,6 @@ const carrito = (props:{url:string}):JSX.Element=>{
 }
 export async function getServerSideProps (ctx) {
     const URL = process.env.URL_STRAPI;
-    // const dataSubCategory = await fetch(`${URL}/sub-categorias?only=${ctx.query.id}`,{method: 'GET'})
-    // const jsonSubcategory = await dataSubCategory.json()
-    // const dataProducts = await fetch(`${URL}/productos?id_sub_category=${ctx.query.id}`,{method: 'GET'})
-    // const jsonProducts = await dataProducts.json()
-    // const contrast = ctx.query.contrast === "true" ? true : false
-    return {props: {url:URL,/*  contrast: contrast, background: ctx.query.background} */}}
+    return {props: {url:URL}}
 }
 export default React.memo(carrito)

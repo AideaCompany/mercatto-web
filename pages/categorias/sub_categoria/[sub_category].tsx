@@ -131,9 +131,9 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
                         </div>
                         }
 
-                    <a onClick={()=>router.back()} style={{color: `${!contrast ? "#ffffff" :"#8D8D8D"}`}} className='backArrow'>
+                    <span onClick={()=>router.back()} style={{color: `${!contrast ? "#ffffff" :"#8D8D8D"}`}} className='backArrow'>
                             <ArrowLeftOutlined />
-                    </a>
+                    </span>
                 </div>
                 <div className='productRight row'>
                     {dataProducts.map(product=>(

@@ -115,9 +115,9 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Products[], tit
                         </div>
                         }
 
-                    <a onClick={()=>router.back()} style={{color: `${"#8D8D8D"}`}} className='backArrow'>
+                    <span onClick={()=>router.back()} style={{color: `${"#8D8D8D"}`, cursor:"pointer"}} className='backArrow'>
                             <ArrowLeftOutlined />
-                    </a>
+                    </span>
                 </div>
                 <div className='productRight row'>
 

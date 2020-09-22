@@ -131,12 +131,10 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
             <Carousel  minDraggableOffset={20} draggable={dataCategoria.length>3? true : false} slidesPerPage={3} infinite={false}>
               {dataCategoria?.map((categories)=>{
                 return(
-                  <a>
                     <div onClick={()=>router.push({pathname:`/categorias/${categories.Categoria}`, query:{id:categories._id, cr: categories.main_color.split('#')[1], cn: categories.contraste_oscuro}})} style={{background: hexToRgb(categories.main_color)}} className={`${categories._id} categoryTarget`}>
                       <img src={`${urlBack}${categories.portada.url}`} alt={`${categories.Categoria}`}/>
                       <h2 style={{color:`${categories.contraste_oscuro ? '#8D8D8D':'#ffffff'}`}}>{categories.Categoria}</h2>
-                    </div> 
-                  </a>     
+                    </div>
               )})}
             </Carousel>
           </div>

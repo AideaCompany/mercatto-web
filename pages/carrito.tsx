@@ -116,10 +116,10 @@ const carrito = (props:{url:string}):JSX.Element=>{
                 <div className='carritoLeft'>
                     <ShoppingCartOutlined />
 
-                    <a onClick={()=>router.back()} style={{color: "#8D8D8D"}}
+                    <span  onClick={()=>router.back()} style={{color: "#8D8D8D", cursor:'pointer'}}
                         className='backArrow'>
                         <ArrowLeftOutlined />
-                    </a>
+                    </span>
                 </div>
                 <div className="carritoRight">
                     

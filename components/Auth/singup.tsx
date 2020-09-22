@@ -95,7 +95,7 @@ const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, set
                         <img className='facebookAuth' src={`${pathPublic}images/Layout/facebook.svg`} alt="facebook mercatto"/>
                     </a>
                     <br/>
-                    <span><a>Políticas de privacidad</a></span>
+                    <span><a href='#'>Políticas de privacidad</a></span>
                     </>
                     :
                     <p className='messageAfterSignup'>Gracias por registrarte con Mercatto, recibiras un correo para confirmar tu cuenta.</p> }

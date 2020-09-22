@@ -52,7 +52,7 @@ const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, set
                         <Form.Item name='remember' valuePropName="checked">
                             <Checkbox>Recordar la sesión</Checkbox>
                         </Form.Item>
-                        <span><a onClick={()=>setForgotPassword(true)}>Olvide mi contraseña</a></span>
+                        <span style={{cursor:"pointer"}} onClick={()=>setForgotPassword(true)}>Olvide mi contraseña</span>
                         <div className='buttonsAuth'>
                             <Button htmlType="submit">Iniciar Sesión</Button>
                             <Button onClick={()=>{setModalAuthSignUp(true);HandleClose()}}>Registrate</Button>
@@ -66,7 +66,7 @@ const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, set
                         <Form.Item style={{paddingTop:"5vh"}} name='identifier'>
                             <Input  placeholder='Ingresa tu Correo Electrónico'/>
                         </Form.Item>
-                        <span><a onClick={()=>setForgotPassword(false)}>Regresar</a></span>
+                        <span style={{cursor:"pointer"}} onClick={()=>setForgotPassword(false)}>Regresar</span>
                         <div className='buttonsAuth'>
                             <Button htmlType="submit">Acetar</Button>
                         </div>
@@ -79,7 +79,7 @@ const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, set
                             <img className='facebookAuth' src={`${pathPublic}images/Layout/facebook.svg`} alt="facebook mercatto"/>
                         </a>
                         <br/>
-                        <span><a>Políticas de privacidad</a></span>
+                        <span><a href="#">Políticas de privacidad</a></span>
                         <br/>
                         {errorMessage !== "" ?<span style={{color:"#FC3740"}}>{errorMessage}</span>: null}
                     </>
