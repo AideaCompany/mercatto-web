@@ -114,7 +114,6 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
             <Carousel arrows={dataProductos.length>4? true: false} draggable={dataProductos.length>4? true : false} slidesPerPage={4}>
               {dataProductos?.map((products,i)=>(
                 <div className='targetProductsIndex'>
-                  <span className='productDescription'>{`${products.descripcion}`}</span>
                   {products.descuento > 0 ? <span className='productDescuento'>{`$${products.precio}`}</span> : null }
                 <span className='productPrice'>{`$${products.precioDescuento}` } {products.descuento > 0 ? <span style={{fontSize:'0.7vw', color:'#01A22F'}}>{products.descuento}% OFF</span> : ''}</span> 
                   <h3 style={{padding:'1em'}}>{products.nombre} - {products.peso}</h3>

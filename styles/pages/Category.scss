@@ -57,7 +57,7 @@
                         width: 85%;
                         max-height: 15vw;
                         position: absolute;
-                        top: 60%;
+                        top: 65%;
                         left: 50%;
                         transform: translate(-50%, -50%);
                         -webkit-transform: translate(-50%, -50%);  
@@ -65,7 +65,11 @@
                     h2{
                         position: absolute;
                         top: 5%;
-                        left: 10%;
+                        left: 50%;
+                        width: 95%;
+                        text-align: center;
+                        transform: translate(-50%, 0%);
+                        -webkit-transform: translate(-50%, 0%);  
                     }
                 }
             }
