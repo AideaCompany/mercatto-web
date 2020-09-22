@@ -34,7 +34,7 @@ export const AuthProvider = ({children})=>{
     const url = process.env.NEXT_PUBLIC_URL_STRAPI
     useEffect(() => {
             if(Cookie.get('authTokenMercatto') !== undefined){
-                axios.get(`${url}/users/me`, {
+                axios.get(`https://gestion.mercatto.com.co/users/me`, {
                     headers: {
                         Authorization: `Bearer ${Cookie.get('authTokenMercatto')}`
                     }
