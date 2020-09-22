@@ -13,8 +13,9 @@ import {Carrito, Producto} from '../utils/types'
 import { Modal ,Form, Button, message} from 'antd';
 //axios
 import axios from 'axios'
-
-type showCarrito = Carrito & {totalPrecio?:number}
+//utils
+import {getNewPrice} from '../utils/functions'
+type showCarrito = Carrito & {totalPrecio?:number,precio?:number,peso?:string}
 
 const carrito = (props:{url:string}):JSX.Element=>{
     const {url} = props
@@ -30,23 +31,38 @@ const carrito = (props:{url:string}):JSX.Element=>{
 
     useEffect(() => {
         const actual:showCarrito[] = user?.carrito
-        actual?.map(e=>e.totalPrecio=e.cantidad*((e.producto) as Producto).precio)
-        settotalPrice(actual?actual.map(e=>e.totalPrecio).reduce((a,b)=>a+b,0):0)
+        actual?.map(e=>{
+            (e.producto as Producto).precioDescuento = getNewPrice((e.producto as Producto).descuento,(e.producto as Producto).precio) 
+            e.totalPrecio=e.cantidad*((e.producto) as Producto).precio
+            e.precio = getNewPrice((e.producto as Producto).descuento,e.totalPrecio)    
+            e.peso = (e.producto as Producto).peso
+        })
+        settotalPrice(actual?actual.map(e=>e.precio).reduce((a,b)=>a+b,0):0)
         setactualCart(actual?actual:[])
     }, [user])
     //functions
     const plus= (pos)=>{
         actualCart[pos].cantidad +=1
-        actualCart?.map(e=>e.totalPrecio=e.cantidad*((e.producto) as Producto).precio)
-        settotalPrice(actualCart?.map(e=>e.totalPrecio).reduce((a,b)=>a+b,0))
+        actualCart?.map(e=>{
+            (e.producto as Producto).precioDescuento = getNewPrice((e.producto as Producto).descuento,(e.producto as Producto).precio) 
+            e.totalPrecio=e.cantidad*((e.producto) as Producto).precio
+            e.precio = getNewPrice((e.producto as Producto).descuento,e.totalPrecio)            
+            e.peso = (e.producto as Producto).peso
+        })
+        settotalPrice(actualCart?.map(e=>e.precio).reduce((a,b)=>a+b,0))
         setactualCart([...actualCart])
     }
 
     const minus = (pos)=>{
         if(actualCart[pos].cantidad>1){
             actualCart[pos].cantidad -=1
-            actualCart?.map(e=>e.totalPrecio=e.cantidad*((e.producto) as Producto).precio)
-            settotalPrice(actualCart?.map(e=>e.totalPrecio).reduce((a,b)=>a+b,0))
+            actualCart?.map(e=>{
+                (e.producto as Producto).precioDescuento = getNewPrice((e.producto as Producto).descuento,(e.producto as Producto).precio) 
+                e.totalPrecio=e.cantidad*((e.producto) as Producto).precio
+                e.precio = getNewPrice((e.producto as Producto).descuento,e.totalPrecio)            
+                e.peso = (e.producto as Producto).peso
+            })
+            settotalPrice(actualCart?.map(e=>e.precio).reduce((a,b)=>a+b,0))
             setactualCart([...actualCart])
         }else{
             settoDelete(pos)
@@ -78,7 +94,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
     const okCart = ()=>{
         actualCart.map(e=>{delete e._id;delete e.id})
         user.pedidos.push({
-            carrito:actualCart as Carrito[],
+            carrito:(actualCart as Carrito[]),
             Terminado:false
         }) 
         axios.put(`${url}/users/${user._id}`,{
@@ -90,8 +106,10 @@ const carrito = (props:{url:string}):JSX.Element=>{
         }).then(res=>{  
             var carrito = actualCart.map(e=>{
                 return ({
-                    Cantidad: e.cantidad,
-                    Producto: (e.producto as Producto).nombre
+                    cantidad: e.cantidad,
+                    producto: (e.producto as Producto).nombre,
+                    precio : e.precio,
+                    peso: e.peso
                 })
             })
             axios.post(`${url}/pedidos`,{
@@ -138,7 +156,11 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                     <span style={{color:"#787878"}}>{((e.producto)as Producto).descripcion}</span>
                                 </div>
                                 <div className="simbols">
-                                    <div className="price">{`$${e.totalPrecio}`}</div>
+                                    <div className="price">
+                                    {(e.producto as Producto).descuento> 0 ? <span className='productDescuento'><span className={"sub"}>{`$${e.totalPrecio}`}</span><span style={{textDecoration:"none"}}>{`  ${(e.producto as Producto).descuento}%OFF`}</span></span> : null }
+                                        {`$${e.precio}`}
+                                        </div>
+                                    <div className="functions">
                                     <button onClick={()=>minus(i)} className="circle">
                                         -
                                     </button>
@@ -150,6 +172,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                         +
                                     </button>
                                     <DeleteOutlined onClick={()=>{settoDelete(i);setmodalVisible(true)}} className='iconDelete'/>
+                                    </div>
                                 </div>
 
                             </div>

@@ -2,13 +2,12 @@ import {useEffect, useState} from 'react'
 //Layout
 import Layout from '../components/Layout'
 //nextjs
-import Link from 'next/link'
 import {useRouter} from 'next/router'
 //provider
 import useAuth from '../providers/AuthProvider'
 import Carousel from '@brainhubeu/react-carousel';
 //utils
-import {hexToRgb} from '../utils/functions'
+import {hexToRgb, getNewPrice} from '../utils/functions'
 //Types
 import {Producto, Carrito} from '../utils/types'
 
@@ -38,14 +37,16 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
   const {user ,setModalAuthSignIn,updateUser } = useAuth()
   const router = useRouter()
 
-  console.log(user)
   //State
   const [cartProducts, setCartProducts] = useState<countProduct[]>([])
+
 
   //effect
   useEffect(() => {
     var productTemp: countProduct[] = []
+    dataProductos.map(e=>e.precioDescuento=getNewPrice(e.descuento,e.precio))
     for (let k = 0; k < dataProductos.length; k++) {
+      
       productTemp.push({
         count: 0,
         _id: dataProductos[k]._id
@@ -114,8 +115,9 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
               {dataProductos?.map((products,i)=>(
                 <div className='targetProductsIndex'>
                   <span className='productDescription'>{`${products.descripcion}`}</span>
-                  <span className='productPrice'>{`$${products.precio.toString()}`}</span>
-                  <h3>{products.nombre}</h3>
+                  {products.descuento > 0 ? <span className='productDescuento'>{`$${products.precio}`}</span> : null }
+                <span className='productPrice'>{`$${products.precioDescuento}` } {products.descuento > 0 ? <span style={{fontSize:'0.7vw', color:'#01A22F'}}>{products.descuento}% OFF</span> : ''}</span> 
+                  <h3 style={{padding:'1em'}}>{products.nombre} - {products.peso}</h3>
                   <img src={`${urlBack}${products.imagenes.url}`} alt={products.nombre}/>
                   <div>
                     <div onClick={()=>minusProduct(products._id)} className='less'>-</div>

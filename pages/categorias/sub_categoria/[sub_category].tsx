@@ -5,7 +5,7 @@ import {useRouter} from 'next/router'
 //Antd
 import {ArrowLeftOutlined} from '@ant-design/icons';
 //utils
-import {hexToRgb} from '../../../utils/functions'
+import {hexToRgb, getNewPrice} from '../../../utils/functions'
 //axios
 import axios from 'axios'
 //context
@@ -13,14 +13,6 @@ import useAuth from '../../../providers/AuthProvider'
 import { message } from 'antd';
 import { Carrito,Producto } from '../../../utils/types';
 //Types
-type Products = {
-    descripcion: string
-    _id: string
-    imagenes: {url: string}
-    nombre:string
-    precio: number
-    peso : string
-}
 
 type SubCategory = {
     _id:string
@@ -28,32 +20,23 @@ type SubCategory = {
     titulo: string
 }
 
-type newCarrito = {
-    _id?: string,
-    cantidad:Number
-    producto:string
-}
-type newPedido = {
-    _id?:string,
-    carrito:[newCarrito],
-    Terminado?:boolean
-}
-const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataSubCategory: SubCategory, background: string, contrast: boolean}) =>{
+const SubCategoryComponent = (props:{url:string, dataProducts: Producto[], dataSubCategory: SubCategory, background: string, contrast: boolean}) =>{
     //context
-    const {user, logout, loginProvider,setModalAuthSignIn,updateUser} = useAuth()
+    const {user,setModalAuthSignIn,updateUser} = useAuth()
 
     const { dataSubCategory ,background, contrast,  url,  dataProducts } = props
     //state
     const [left, setleft] = useState<Boolean>()
     const [title, settitle] = useState<string>()
     const [quantity, setquantity] = useState(1)
-    const [selectedProduct, setselectedProduct] = useState<Products>()
+    const [selectedProduct, setselectedProduct] = useState<Producto>()
     //router
     const router = useRouter()
 
     useEffect(() => {
+        dataProducts.map(e=>e.precioDescuento=getNewPrice(e.descuento,e.precio))
         setleft(true)
-        settitle(dataSubCategory.titulo)
+        settitle(`${dataSubCategory.titulo}`)
     }, [])
     
     const plus = ()=>{
@@ -66,11 +49,11 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
             setquantity(actual)
         }
     }
-    const handleClickProduct= (product:Products)=>{
+    const handleClickProduct= (product:Producto)=>{
         setquantity(1)
         setselectedProduct(product)
         setleft(false)
-        settitle(product.nombre)
+        settitle(`${product.nombre} - ${product.peso}`)
     }
     // const category = dataCategory[0]
     const addCart = ()=>{
@@ -109,7 +92,8 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
                             <div  className="productPrice" style={{color:!contrast ? "#ffffff" :"#8D8D8D"}}>
                                 <div>
                                     <span className='mainPrice'>
-                                        {`$${selectedProduct?.precio}`}
+                                        {selectedProduct?.descuento>0 ?<> <span className='discounPrice'>${selectedProduct?.precio}</span><span className='percentRight'>-{selectedProduct?.descuento}%</span></> : null}
+                                        {`$${selectedProduct?.precioDescuento}`}
                                     </span>
                                 </div>
                                 <div className="simbols" > 
@@ -139,12 +123,13 @@ const SubCategoryComponent = (props:{url:string, dataProducts: Products[], dataS
                     {dataProducts.map(product=>(
                         <div className='col-lg-4 targetSubProduct' key={product._id}>
                             <div style={{background: hexToRgb(`#${background}`)}}>
-                                        <div  onClick={e=>handleClickProduct(product)}>
-                                            <h2 style={{color: !contrast ? "#ffffff" : "#787878"}}>{product.nombre}</h2>
-                                            <span className='productDescription' style={{color: !contrast ? "#ffffff" : "#787878"}}>{product.descripcion}</span>
-                                            <img src={`${url}${product.imagenes.url}`} alt={`${product.nombre} mercatto`}/>
-                                            <span className='productPrice'  style={{color: !contrast ? "#ffffff" : "#787878"}}>{`$${product.precio}`}</span>
-                                        </div>
+                                <div  onClick={e=>handleClickProduct(product)}>
+                                    <h2 style={{color: !contrast ? "#ffffff" : "#787878"}}>{product.nombre} - {product.peso}</h2>
+                                    <span className='productDescription' style={{color: !contrast ? "#ffffff" : "#787878"}}>{product.descripcion}</span>
+                                    <img src={`${url}${product.imagenes.url}`} alt={`${product.nombre} mercatto`}/>
+                                    {product.descuento>0?<span style={{color: !contrast ? "#ffffff" : "#787878"}} className='productInit'>${product.precio}</span>:null}
+                                    <span className='productPrice'  style={{color: !contrast ? "#ffffff" : "#787878"}}>{`$${product.precioDescuento}`}{product.descuento>0 ? <span style={{fontSize:'1vw' , margin : " 0 0 1vw 0.5vw"}}>{product.descuento}% OFF</span>: null}</span>
+                                </div>
                             </div>
                         </div>
                     ))}

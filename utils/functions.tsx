@@ -8,3 +8,10 @@ export function hexToRgb(hex:string): string {
 
     return `linear-gradient(0deg, rgba(${rgb.r},${rgb.g},${rgb.b},1) 0%, rgba(${rgb.r},${rgb.g},${rgb.b},0.8) 100%)`
 }
+
+export function getNewPrice (percent:number, price: number):number{
+
+    var restValue = (price*percent)/100
+    var newPrice = price-restValue
+    return newPrice
+}

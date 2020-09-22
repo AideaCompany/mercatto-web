@@ -45,13 +45,13 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                 const day = date.getDay();
                                 const month = date.getMonth();
                                 const year  = date.getFullYear();
-                                const precios = e.carrito.map(l=>l.cantidad*(l.producto as Producto).precio)
+                                const precios = e.carrito.map(l=>l.precio)
                                 const total = precios.reduce((a,b)=>a+b,0)
                             return (
                             <div className="productItem" style={{background:background}}>
                                 <div>{`Fecha de pedido: ${year}/${month}/${day}`}</div>
                                 <div>{`Cantidad de productos: ${e.carrito.length}`}</div>
-                                <div>{`Precio total ${total}`}</div>
+                                <div>{`Precio total $ ${total}`}</div>
                             </div>
                             )
                             })}

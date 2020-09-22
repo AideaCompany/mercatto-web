@@ -98,6 +98,9 @@ $darkGrey: #8D8D8D;
                     .titulo{
                         height: 100%;
                         width: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                         text-align: center;
                         h2{
                             margin: 2vh;
@@ -111,30 +114,54 @@ $darkGrey: #8D8D8D;
                         height: 100%;
                         width: 30%;
                         display: flex;
-                        justify-content: center;
-                        align-items: center;
                         font-size: 2.2rem;
+                        position: relative;
                         .price{
-                            margin-right: 15%;
+                            width: 50%;
                             color: $darkGrey;
-                        }
-                        .circle{
+                            position: relative;
+                            height: 100%;
                             display: flex;
                             justify-content: center;
                             align-items: center;
-                            height: 3vh;
-                            width: 3vh;
-                            border-radius: 50%;
-                            cursor: pointer;
+                            .productDescuento{
+                                position: absolute;   
+                                text-align: center;
+                                color: $darkGrey;
+                                left: 0%;
+                                top: 15%;
+                                width: 100%;
+                                font-size: 0.8vw;
+                                .sub{
+                                    text-decoration: line-through;
+                                }
+                            }
                         }
-                        .number{
-                            margin:5%;
-                            color: $darkGrey;
+                        .functions{
+                            width: 50%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            font-size: 2.2rem;
+                            .circle{
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                height: 3vh;
+                                width: 3vh;
+                                border-radius: 50%;
+                                cursor: pointer;
+                            }
+                            .number{
+                                margin:5%;
+                                color: $darkGrey;
+                            }
+                            .iconDelete{
+                                margin: 0 1vw 0 1vw;
+                                color: $darkGrey
+                            }
                         }
-                        .iconDelete{
-                            margin: 0 1vw 0 1vw;
-                            color: $darkGrey
-                        }
+
                     }
                 }
 

@@ -34,7 +34,6 @@ $darkGrey: #8D8D8D;
             height: auto;
             justify-content: center;
             align-items: center;
-
             .productPrice{
                 display: flex;
                 flex-direction: row;
@@ -45,12 +44,33 @@ $darkGrey: #8D8D8D;
                 .mainPrice{
                     font-size: 2.5vw;
                     margin: 1em;
+                    position: relative;
+                    .discounPrice{
+                        position: absolute;
+                        font-size: 1vw;
+                        width: 100%;
+                        top: -50%;
+                        left: 50%;
+                        transform: translate(-50%, 0%);
+                        -webkit-transform: translate(-50%, 0%);  
+                        text-decoration: line-through;
+                    }
+                    .percentRight{
+                        position: absolute;
+                        font-size: 1vw;
+                        width: 100%;
+                        top: -50%;
+                        left: 100%;
+                        transform: translate(-50%, 0%);
+                        -webkit-transform: translate(-50%, 0%); 
+                    }
                 }
                 .simbols{
                     display: flex;
                     width: 10vw;
                     justify-content: center;
                     align-items: center;
+                    margin-top: 1em;
                     .circle{
                         display: flex;
                         justify-content: center;
@@ -135,7 +155,7 @@ $darkGrey: #8D8D8D;
                         transform: translate(-50%, -50%);
                         -webkit-transform: translate(-50%, -50%);  
                     }
-                    h2, .productDescription, .productPrice{
+                    h2, .productDescription, .productPrice, .productInit{
                         position: absolute;
                         top: 5%;
                         left: 50%;
@@ -152,6 +172,11 @@ $darkGrey: #8D8D8D;
                     .productPrice{
                         top: 88%; 
                         font-size: 1.5vw;
+                    }
+                    .productInit{
+                        font-size: 1vw;
+                        top: 82%;
+                        text-decoration: line-through;
                     }
                 }
             }

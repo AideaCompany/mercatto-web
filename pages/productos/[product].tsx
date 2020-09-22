@@ -11,18 +11,10 @@ import axios from 'axios'
 import useAuth from '../../providers/AuthProvider'
 import { message } from 'antd';
 import { Carrito ,Producto} from '../../utils/types';
-//Types
-type Products = {
-    descripcion: string
-    _id: string
-    imagenes: {url: string}
-    nombre:string
-    precio: number
-    peso : string
-}
+//utils
+import {getNewPrice} from '../../utils/functions'
 
-
-const ProductSearchComponent = (props:{url:string, dataProducts: Products[], titleInit: string}) =>{
+const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], titleInit: string}) =>{
     //context
     const {user ,setModalAuthSignIn,updateUser } = useAuth()
 
@@ -31,11 +23,13 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Products[], tit
     const [left, setleft] = useState<Boolean>()
     const [title, settitle] = useState<string>()
     const [quantity, setquantity] = useState(1)
-    const [selectedProduct, setselectedProduct] = useState<Products>()
+    const [selectedProduct, setselectedProduct] = useState<Producto>()
     //router
     const router = useRouter()
 
+
     useEffect(() => {
+        dataProducts.map(e=>e.precioDescuento=getNewPrice(e.descuento,e.precio))
         setleft(true)
         settitle(`Resultados de busqueda para ${titleInit}`)
     }, [])
@@ -50,13 +44,13 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Products[], tit
             setquantity(actual)
         }
     }
-    const handleClickProduct= (product:Products)=>{
+    const handleClickProduct= (product:Producto)=>{
         setquantity(1)
         setselectedProduct(product)
         setleft(false)
-        settitle(product.nombre)
+        settitle(`${product.nombre} - ${product.peso}`)
     }
-    // const category = dataCategory[0]
+
     const addCart = () =>{
         if(user.jwt && quantity>0){
             var carrito: Carrito[] = user.carrito
@@ -93,7 +87,8 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Products[], tit
                             <div  className="productPrice" style={{color:"#8D8D8D"}}>
                                 <div>
                                     <span className='mainPrice'>
-                                        {`$${selectedProduct?.precio}`}
+                                        {selectedProduct?.descuento>0 ?<> <span className='discounPrice'>${selectedProduct?.precio}</span><span style={{color:'#01A22F'}} className='percentRight'>-{selectedProduct?.descuento}%</span></> : null}
+                                        {`$${selectedProduct?.precioDescuento}`}
                                     </span>
                                 </div>
                                 <div className="simbols" > 
@@ -125,10 +120,11 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Products[], tit
                         <div className='col-lg-4 targetSubProduct' key={product._id}>
                             <div className='productTarget'>
                                 <div  onClick={e=>handleClickProduct(product)}>
-                                    <h2 style={{color: "#787878"}}>{product.nombre}</h2>
+                                    <h2 style={{color: "#787878"}}>{product.nombre} - {product.peso}</h2>
                                     <span className='productDescription' style={{color: "#787878"}}>{product.descripcion}</span>
                                     <img src={`${url}${product.imagenes.url}`} alt={`${product.nombre} mercatto`}/>
-                                    <span className='productPrice'  style={{color: "#787878"}}>{`$${product.precio}`}</span>
+                                    {product.descuento>0?<span style={{color: "#787878"}} className='productInit'>${product.precio}</span>:null}
+                                    <span className='productPrice'  style={{color: "#787878"}}>{`$${product.precio}`} {product.descuento>0 ? <span style={{fontSize:'1vw' , margin : " 0 0 1vw 0.5vw", color:'#01A22F'}}>{product.descuento}% OFF</span>: null}</span>
                                 </div>
                             </div>
                         </div>
