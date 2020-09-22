@@ -151,7 +151,6 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Products[], tit
 
 export async function getServerSideProps (ctx) {
     const URL = process.env.URL_STRAPI;
-
     const dataProducts = await fetch(`${URL}/productos?search_product=${ctx.query.product}`,{method: 'GET'})
     const jsonProducts = await dataProducts.json()
     return {props: {url:URL, dataProducts: jsonProducts, titleInit: ctx.query.product}}

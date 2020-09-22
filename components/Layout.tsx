@@ -6,6 +6,7 @@ import ResetPasswordComponent from '../components/Auth/resetPasswor'
 //nextjs
 import Link from 'next/link'
 import router from 'next/router'
+import Head from 'next/head'
 //antD
 import {AutoComplete, Input, Badge, Avatar, Button, message, Menu, Dropdown} from 'antd'
 import {SearchOutlined, ShoppingCartOutlined, UserOutlined, PoweroffOutlined} from '@ant-design/icons';
@@ -81,7 +82,14 @@ const Layout = (props: propsLayout):JSX.Element =>{
     )
 
     return(
+        <>
+        <Head>
+        <title>{`Mercatto | ${title}`}</title>
+        <meta name="description" content="Mercatto tienda de comestibles."/>
+        <link rel="icon" href="/favicon.ico" />
+        </Head> 
         <main>
+            
             <div className='mainLayout'>
                 <div style={{backgroundColor:background}} className='leftContainer' >
                     <div className='containerLogos'>
@@ -100,12 +108,8 @@ const Layout = (props: propsLayout):JSX.Element =>{
                                 <Input onPressEnter={(e)=>{router.push(`/productos/${searchWord}`)}} value={searchWord}   prefix={<SearchOutlined />}  placeholder={"Buscar"}></Input>
                             </AutoComplete>
                         </div>
-                        <div className='socialMedia'>
-                                <a href="/"><img src={`${pathPublic}images/Layout/facebook.svg`} alt="facebook mercatto"/></a>
-                                <a href="/"><img src={`${pathPublic}images/Layout/instagram.svg`} alt="instagram mercatto"/></a>
-                                <a href="/"><img src={`${pathPublic}images/Layout/whatsapp.svg`} alt="whatsapp mercatto"/></a>
-                        </div>
                         <div className='menu'>
+                               
                             {
                                 user.jwt ? 
                                 <>
@@ -128,18 +132,9 @@ const Layout = (props: propsLayout):JSX.Element =>{
                                 </>
 
                             }
-                            
-                            <Link href='/'>
-                                <a>
-                                    Productos
-                                </a>
-                            </Link>
-                            <Link href='/'>
-                                <a>
-                                    Categorías
-                                </a>
-                            </Link>
-                            
+                            <a className='socialIcon' href="/"><img src={`${pathPublic}images/Layout/facebook.svg`} alt="facebook mercatto"/></a>
+                            <a className='socialIcon' href="/"><img src={`${pathPublic}images/Layout/instagram.svg`} alt="instagram mercatto"/></a>
+                            <a className='socialIcon' href="/"><img src={`${pathPublic}images/Layout/whatsapp.svg`} alt="whatsapp mercatto"/></a>
                         </div>
                     </div>
                 </div>
@@ -155,6 +150,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                 <ResetPasswordComponent pathPublic={pathPublic} code={code} setModalResetPassword={setModalResetPassword} modalResetPassword={modalResetPassword} setModalAuthSignIn={setModalAuthSignIn} urlBack={urlBack}/>
             </div>
         </main>
+    </>
     )
 }
 

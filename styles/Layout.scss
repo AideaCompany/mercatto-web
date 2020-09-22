@@ -56,7 +56,7 @@ $mainBlue: #2FAFFF;
                 height: 100%;
             }
             .searchBar{
-                width: 35%;
+                width: 50%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -76,25 +76,19 @@ $mainBlue: #2FAFFF;
                     }
                 }
             }
-            .socialMedia{
-                width: 15%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                a{
-                    margin: 10px;
-                    float: right;
-                    img{
-                        width: 30px;
-                    }
-                }
-            }
             .menu{
                 width: 50%;
                 display: flex;
                 flex-direction: row-reverse;;
                 align-items: center;
                 
+                .socialIcon{
+                    margin: 10px;
+                    float: right;
+                    img{
+                        width: 30px;
+                    }
+                }
 
                 a{
                     color: $darkGrey;
