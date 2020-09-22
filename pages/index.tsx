@@ -128,7 +128,7 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
               ))}
             </Carousel>
           </div>
-          <div className='categoriesTargets'>
+          <div style={{width: dataCategoria.length>3 ? '90vw' : '100vw'}} className='categoriesTargets'>
             <Carousel  minDraggableOffset={20} draggable={dataCategoria.length>3? true : false} slidesPerPage={3} infinite={false}>
               {dataCategoria?.map((categories)=>{
                 return(

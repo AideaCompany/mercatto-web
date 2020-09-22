@@ -55,8 +55,9 @@
                     height: 20vw;
                     position: relative;
                     img{
-                        width: 85%;
+                        width: 100%;
                         max-height: 15vw;
+                        object-fit: cover;
                         position: absolute;
                         top: 65%;
                         left: 50%;

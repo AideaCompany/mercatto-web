@@ -143,7 +143,6 @@ $mainBlue: #2FAFFF;
 
     }
     .categoriesTargets{
-        width: 90vw;
         .BrainhubCarousel__container{
             overflow: inherit ;
             margin-top: 30vh;
@@ -185,10 +184,10 @@ $mainBlue: #2FAFFF;
     
                 h2{
                     position: absolute;
-                    top: 15%;
+                    top: 5%;
                     left: 50%;
-                    transform: translate(-50%, -50%);
-                    -webkit-transform: translate(-50%, -50%); 
+                    transform: translate(-50%, 0%);
+                    -webkit-transform: translate(-50%, 0%); 
                     color: #ffffff;
                     font-size: 2vw;
                     width: 100%;
