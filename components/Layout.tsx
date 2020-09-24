@@ -62,6 +62,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
     useEffect(() => {
         setcartCount(user?user.carrito?.length:0)
     }, [user])
+
     //Functions
     const menu = (
         <Menu>
@@ -80,7 +81,6 @@ const Layout = (props: propsLayout):JSX.Element =>{
             </Menu.Item>
         </Menu>
     )
-
     return(
         <>
         <Head>

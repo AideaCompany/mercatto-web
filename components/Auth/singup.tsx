@@ -65,6 +65,9 @@ const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, set
                           ]}>
                             <Input placeholder='Correo eléctronico'/>
                         </Form.Item>
+                        <Form.Item name='telefono' rules={[{required: true,message: 'Por favor inserta un telefono'}]}>
+                            <Input placeholder='telefono'/>
+                        </Form.Item >
                         <Form.Item name='password' rules={[{required: true,message: 'Por favor inserta una contraseña'}]}>
                             <Input.Password placeholder='Contraseña'/>
                         </Form.Item>

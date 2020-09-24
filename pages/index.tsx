@@ -110,8 +110,7 @@ function Home(props:{dataCategoria:Categorias[], dataProductos:Producto[], urlBa
         <>
           <div className='offer'>
             <h2>Ofertas y recomendaciones</h2>
-            {dataProductos.length>4 ? <span className='alertDrag'>Arrastra hacia la izquierda</span>: null}
-            <Carousel arrows={dataProductos.length>4? true: false} draggable={dataProductos.length>4? true : false} slidesPerPage={4}>
+            <Carousel arrows={dataProductos.length>4? true: false} infinite={true} slidesPerPage={4}>
               {dataProductos?.map((products,i)=>(
                 <div className='targetProductsIndex'>
                   {products.descuento > 0 ? <span className='productDescuento'>{`$${products.precio}`}</span> : null }

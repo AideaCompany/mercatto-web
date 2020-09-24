@@ -31,7 +31,6 @@ export const AuthProvider = ({children})=>{
     //context
     const router = useRouter()
     //Effect
-    const url = process.env.NEXT_PUBLIC_URL_STRAPI
     useEffect(() => {
             if(Cookie.get('authTokenMercatto') !== undefined){
                 axios.get(`https://gestion.mercatto.com.co/users/me`, {
@@ -44,7 +43,10 @@ export const AuthProvider = ({children})=>{
                         nombre: res.data.nombre,
                         jwt: Cookie.get('authTokenMercatto'),
                         pedidos : res.data.Pedidos,
-                        carrito : res.data.carrito
+                        carrito : res.data.carrito, 
+                        telefono: res.data.telefono,
+                        email:  res.data.email,
+                        direccion: res.data.direccion
                     })
                 }).catch(err=>console.log(err))
             }
@@ -63,13 +65,15 @@ export const AuthProvider = ({children})=>{
             }else{
                 Cookie.set('authTokenMercatto', res.data.jwt,{expires:1})
             }
-            console.log(res);
             setUser({
                 _id:res.data.user._id,
                 nombre: res.data.user.nombre,
                 jwt: res.data.jwt,
                 pedidos : res.data.user.Pedidos,
-                carrito : res.data.user.carrito
+                carrito : res.data.user.carrito,
+                telefono: res.data.telefono,
+                email:  res.data.email,
+                direccion: res.data.direccion
             })
             setModalAuthSignIn(false)
         }).catch(err=>{
@@ -83,7 +87,10 @@ export const AuthProvider = ({children})=>{
                 nombre: data.user.username,
                 jwt: data.jwt,
                 pedidos : data.user.Pedidos,
-                carrito : data.user.carrito
+                carrito : data.user.carrito,
+                telefono: data.user.telefono,
+                email:  data.user.email,
+                direccion: data.user.direccion
             })
             Cookie.set('authTokenMercatto',data.jwt, {expires:1})
             router.push('/')

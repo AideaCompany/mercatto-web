@@ -5,17 +5,24 @@ import {useRouter} from 'next/router'
 //components
 import Layout from '../components/Layout';
 //antd
+import { Modal ,Form, Button, message, Input, Checkbox} from 'antd';
 import {ArrowLeftOutlined,ShoppingCartOutlined,DeleteOutlined } from '@ant-design/icons';
 //context
 import useAuth from '../providers/AuthProvider'
 //types
 import {Carrito, Producto} from '../utils/types'
-import { Modal ,Form, Button, message} from 'antd';
 //axios
 import axios from 'axios'
 //utils
 import {getNewPrice} from '../utils/functions'
+//Gsap
+import { TimelineMax, gsap,  CSSPlugin, Power4} from 'gsap'
+
+const {TextArea} = Input
+
 type showCarrito = Carrito & {totalPrecio?:number,precio?:number,peso?:string}
+
+const background = "#fff"
 
 const carrito = (props:{url:string}):JSX.Element=>{
     const {url} = props
@@ -23,13 +30,23 @@ const carrito = (props:{url:string}):JSX.Element=>{
     const [totalPrice, settotalPrice] = useState<Number>(0)
     const [modalVisible, setmodalVisible] = useState<boolean>(false)
     const [toDelete, settoDelete] = useState<number>()
-    const background = "#e5f5ff"
-      //context
-      const {user,updateUser} = useAuth()
+    const [direccion, setDireccion] = useState<string>('')
+    const [Observaciones, setObservaciones] = useState<string>('')
+    const [saveLocation, setSaveLocation] = useState(false)
+
+    
+    //context
+    const {user,updateUser} = useAuth()
+    
     //router
     const router = useRouter()
 
+
     useEffect(() => {
+        if (user.direccion !== '') {
+            setDireccion(user.direccion)
+        }
+        gsap.registerPlugin(CSSPlugin)
         const actual:showCarrito[] = user?.carrito
         actual?.map(e=>{
             (e.producto as Producto).precioDescuento = getNewPrice((e.producto as Producto).descuento,(e.producto as Producto).precio) 
@@ -40,7 +57,17 @@ const carrito = (props:{url:string}):JSX.Element=>{
         settotalPrice(actual?actual.map(e=>e.precio).reduce((a,b)=>a+b,0):0)
         setactualCart(actual?actual:[])
     }, [user])
+
     //functions
+    const divWrapper =  (state: string) => {
+        const t1 = new TimelineMax({paused: true})
+        if (state === 'open') {
+            t1.to('.confirmCart', 0.5 , {opacity: 1 , top: '60vh', ease: Power4.easeInOut}).play()
+        }else{
+            t1.to('.confirmCart', 0.5 , {opacity: 0, top: '100vh', ease: Power4.easeInOut}).play()
+        }
+    }
+
     const plus= (pos)=>{
         actualCart[pos].cantidad +=1
         actualCart?.map(e=>{
@@ -91,6 +118,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
             message.success({content:"Producto eliminado",className: 'messageVerification',duration: '5'})
         }).catch(err=>console.log(err))
     }
+ 
     const okCart = ()=>{
         actualCart.map(e=>{delete e._id;delete e.id})
         user.pedidos.push({
@@ -99,6 +127,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
         }) 
         axios.put(`${url}/users/${user._id}`,{
             carrito: [],
+            direccion: saveLocation ? direccion : user.direccion,
             Pedidos:user.pedidos}, {
             headers: {
                 Authorization: `Bearer ${user.jwt}`
@@ -115,7 +144,10 @@ const carrito = (props:{url:string}):JSX.Element=>{
             axios.post(`${url}/pedidos`,{
                 Carrito: carrito,
                 user: user._id ,
-                Entregado: false
+                Entregado: false,
+                direccion: direccion,
+                telefono_cliente: user.telefono ? user.telefono : '',
+                observaciones: Observaciones
                 }, {
                 headers: {
                     Authorization: `Bearer ${user.jwt}`
@@ -125,6 +157,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                 message.success({content:"Pedido realizado",className: 'messageVerification',duration: '5'})
                 router.push("/pedidos")
             }).catch(err=>console.log(err))
+
         }).catch(err=>console.log(err))
     }
     return (
@@ -140,7 +173,6 @@ const carrito = (props:{url:string}):JSX.Element=>{
                     </span>
                 </div>
                 <div className="carritoRight">
-                    
                     <h2 style={{paddingLeft:"5%"}}>{actualCart?.length>0?"Lista de productos:":null}</h2>
                     <div className='carrito'>
                         <div className="targetSubCategory">
@@ -191,14 +223,37 @@ const carrito = (props:{url:string}):JSX.Element=>{
                             }
                         </div>
                     </div>
+                    {actualCart?.length>0?
+                        <div className='confirmCart'>
+                            <div className='info'>
+                                <Input value={direccion} placeholder='Dirección' onChange={(e)=>setDireccion(e.target.value)}></Input>
+                                <Checkbox checked={saveLocation} onChange={()=>setSaveLocation(!saveLocation)}>Guardar Dirección para futuras compras</Checkbox>
+                                <TextArea style={{resize: 'none'}} placeholder='Observaciones' onChange={(e)=>setObservaciones(e.target.value)}></TextArea>
+                            </div>
+                            <div className='buttons'>
+                                <span>Total: ${totalPrice}</span>
+                                <br/>
+                                <div>
+                                    <button onClick={()=>divWrapper('close')} type="button" className="btn btn-primary btn-lg">
+                                        Cancelar
+                                    </button>
+                                    <button onClick={okCart} type="button" className="btn btn-primary btn-lg">
+                                        Realizar pedido
+                                    </button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    :null}
                     {actualCart?.length>0?                    
                     <div className="totals">
                         <span className="value">
                             {`Total:$${totalPrice}`}
                         </span>
-                        <button onClick={okCart} type="button" className="btn btn-primary btn-lg">
-                            Realizar pedido
+                        <button onClick={()=>divWrapper('open')} className='btn btn-primary btn-lg'>
+                            Aceptar
                         </button>
+                        
                     </div>:null}
 
                 </div>
@@ -213,10 +268,10 @@ const carrito = (props:{url:string}):JSX.Element=>{
 
             </div>
              <Form name='signIn' onFinish={deleteItem}>
-                        <div className='buttonsAuth'>
-                            <Button htmlType="submit">Aceptar</Button>
-                            <Button onClick={HandleClose}>Cancelar</Button>
-                        </div>
+                <div className='buttonsAuth'>
+                    <Button htmlType="submit">Aceptar</Button>
+                    <Button onClick={HandleClose}>Cancelar</Button>
+                </div>
             </Form>
         </div>:null}
     </Modal>
@@ -225,11 +280,6 @@ const carrito = (props:{url:string}):JSX.Element=>{
 }
 export async function getServerSideProps (ctx) {
     const URL = process.env.URL_STRAPI;
-    // const dataSubCategory = await fetch(`${URL}/sub-categorias?only=${ctx.query.id}`,{method: 'GET'})
-    // const jsonSubcategory = await dataSubCategory.json()
-    // const dataProducts = await fetch(`${URL}/productos?id_sub_category=${ctx.query.id}`,{method: 'GET'})
-    // const jsonProducts = await dataProducts.json()
-    // const contrast = ctx.query.contrast === "true" ? true : false
-    return {props: {url:URL,/*  contrast: contrast, background: ctx.query.background} */}}
+    return {props: {url:URL}}
 }
 export default React.memo(carrito)
