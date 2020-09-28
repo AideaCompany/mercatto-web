@@ -140,8 +140,13 @@ $mainBlue: #2FAFFF;
         left: 30vw;
         background-color: #ffffff;
         span{
+            color: $colorText;
             float: right;
             margin-right: 20px;
+            a{
+                color: $colorText;
+            }
+            
         }
     }
 }

@@ -1,4 +1,7 @@
 import React, {useState} from 'react'
+//Next
+import Link from 'next/link'
+//Axios
 import axios from 'axios'
 //AntDesign 
 import {Form, Input, Button, Modal, Select} from 'antd'
@@ -98,13 +101,15 @@ const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, set
                         <img className='facebookAuth' src={`${pathPublic}images/Layout/facebook.svg`} alt="facebook mercatto"/>
                     </a>
                     <br/>
-                    <span><a href='#'>Políticas de privacidad</a></span>
+                    <span>
+                      <Link href='/terminos_condiciones'>
+                        <a onClick={()=>setModalAuthSignUp(false)} >Políticas de privacidad</a>
+                      </Link>
+                      
+                    </span>
                     </>
                     :
                     <p className='messageAfterSignup'>Gracias por registrarte con Mercatto, recibiras un correo para confirmar tu cuenta.</p> }
-                    <div className='buttonsAuth'>
-                      <Button onClick={()=>{HandleClose()}}>Aceptar</Button>
-                    </div>
                 </div>
         </Modal>
     )

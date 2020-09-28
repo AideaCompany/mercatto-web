@@ -1,0 +1,30 @@
+$colorText : #5e5e5e;
+$darkGrey: #8D8D8D;
+.mainTerminos{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    div{
+        height: 100%;
+    }
+    .termsLeft{
+        width: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        svg{
+            font-size: 20vw;
+            color: $darkGrey;
+        }
+    }
+    .termsRight{
+        width: 70%;
+
+        .containerText{
+            padding: 1.5em;
+            overflow-y: scroll;
+            color: $colorText;
+            
+        }
+    }
+}

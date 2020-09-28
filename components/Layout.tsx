@@ -142,8 +142,14 @@ const Layout = (props: propsLayout):JSX.Element =>{
                     {children}
                 </div>
                 <div className='footer'>
-                    <span>Powered by IDEA SAS - AIDEA SAS</span>
-                    <span>Politicas de privacidad</span>
+                   
+                        <Link  href='/terminos_condiciones'>
+                            <a>
+                                <span>Politicas de privacidad</span>
+                            </a>
+                        </Link>
+                        <span>Powered by <a target="_blank" href="https://ideautomation.com.co/">IDEA SAS</a> - AIDEA SAS</span>
+                    
                 </div>
                 <SignInComponent pathPublic={pathPublic} urlBack={urlBack} modalAuthSignIn={modalAuthSignIn} setModalAuthSignIn={setModalAuthSignIn} setModalAuthSignUp={setModalAuthSignUp}/>
                 <SignUpcomponent pathPublic={pathPublic} urlBack={urlBack} modalAuthSignUp={modalAuthSignUp} setModalAuthSignUp={setModalAuthSignUp} setModalAuthSignIn={setModalAuthSignIn}/>

@@ -157,7 +157,6 @@ const carrito = (props:{url:string}):JSX.Element=>{
                 message.success({content:"Pedido realizado",className: 'messageVerification',duration: '5'})
                 router.push("/pedidos")
             }).catch(err=>console.log(err))
-
         }).catch(err=>console.log(err))
     }
     return (
