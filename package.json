@@ -9,13 +9,18 @@
   },
   "dependencies": {
     "@brainhubeu/react-carousel": "^1.19.26",
+    "@fortawesome/fontawesome-svg-core": "^1.2.31",
+    "@fortawesome/free-brands-svg-icons": "^5.15.0",
+    "@fortawesome/free-solid-svg-icons": "^5.15.0",
+    "@fortawesome/react-fontawesome": "^0.1.11",
+    "@types/react-slick": "^0.23.4",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-less": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "antd": "^4.6.2",
+    "antd-mobile": "^2.3.4",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
-    "framer-motion": "^2.6.15",
     "gsap": "^3.5.1",
     "js-cookie": "^2.2.1",
     "less": "^3.12.2",
@@ -24,10 +29,12 @@
     "node-sass": "^4.14.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-slick": "^0.27.11",
     "react-spring": "^8.0.27",
     "react-touch-carousel": "^0.9.4",
     "react-use-gesture": "^7.0.16",
-    "sass": "^1.26.10"
+    "sass": "^1.26.10",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@types/brainhubeu__react-carousel": "^1.15.0",

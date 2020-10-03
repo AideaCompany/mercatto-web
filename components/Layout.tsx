@@ -9,9 +9,12 @@ import router from 'next/router'
 import Head from 'next/head'
 //antD
 import {AutoComplete, Input, Badge, Avatar, Button, message, Menu, Dropdown} from 'antd'
-import {SearchOutlined, ShoppingCartOutlined, UserOutlined, PoweroffOutlined} from '@ant-design/icons';
+import {SearchOutlined, ShoppingCartOutlined, UserOutlined, PoweroffOutlined, FacebookFilled, InstagramFilled} from '@ant-design/icons';
 //Axios
 import axios from 'axios'
+//fontawesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faWhatsapp, faInstagram, faFacebookF} from '@fortawesome/free-brands-svg-icons'
 //context
 import useAuth from '../providers/AuthProvider'
 
@@ -20,12 +23,12 @@ import useAuth from '../providers/AuthProvider'
 type propsLayout ={
     children: JSX.Element
     title: string
-    color: string
-    background: string
+    color?: string
+    background?: string
     urlBack?:string
     confirmed?:boolean
     code?:string
-    pathPublic:string
+    pathPublic?:string
     logoWhite?:boolean
     tokenProvider?: string
 }
@@ -33,7 +36,7 @@ type propsLayout ={
 const Layout = (props: propsLayout):JSX.Element =>{
 
     //Props
-    const {children, title ,color, background, urlBack, confirmed, code, pathPublic, logoWhite, tokenProvider} = props
+    const {children, title , urlBack, confirmed, code, pathPublic, logoWhite, tokenProvider} = props
 
     const [modalResetPassword, setModalResetPassword] = useState<boolean>(false)
     const [cartCount, setcartCount] = useState<Number>(0)
@@ -89,66 +92,68 @@ const Layout = (props: propsLayout):JSX.Element =>{
         <link rel="icon" href="/favicon.ico" />
         </Head> 
         <main>
-            
             <div className='mainLayout'>
-                <div style={{backgroundColor:background}} className='leftContainer' >
-                    <div className='containerLogos'>
-                        <Link href='/'>
-                            <a >
-                                <img className='mainLogo' src={`${pathPublic}images/Layout/mercatto-${!logoWhite ? 'large' : 'white'}.svg`} alt="mercatto logo"/>
-                            </a>
-                        </Link>
-                    </div>
-                    <h1 style={{color: color}}>{title}</h1>
-                </div>
-                <div className='rigthContainer'>
-                    <div className='topContainer'>
+                <header>
+                    <div>
+                        <div className='containerMainLogo'>
+                            <Link href='/'>
+                                <a >
+                                    <img className='mainLogo' src={`${pathPublic}images/Layout/mercatto-${!logoWhite ? 'large' : 'white'}.svg`} alt="mercatto logo"/>
+                                </a>
+                            </Link>
+                        </div>
                         <div className='searchBar'>
                             <AutoComplete onChange={(e)=>setSearchWord(e)}>
                                 <Input onPressEnter={(e)=>{router.push(`/productos/${searchWord}`)}} value={searchWord}   prefix={<SearchOutlined />}  placeholder={"Buscar"}></Input>
                             </AutoComplete>
                         </div>
                         <div className='menu'>
-                               
-                            {
-                                user.jwt ? 
-                                <>
-                                    <Dropdown overlay={menu}>
-                                        <Avatar size={40} className='profileUser' icon={<UserOutlined />}/>
-                                    </Dropdown>
-                                    <Badge count={cartCount}>
-                                        <Link href='/carrito'>
-                                            <a>
-                                                <ShoppingCartOutlined className='iconCart' />
-                                            </a>
-                                        </Link>
-                                    </Badge>
-                                    
-                                </>
-                                :
-                                <>
-                                    <Button style={{margin: '1em'}} onClick={()=>setModalAuthSignUp(true)}>Registrate</Button>
-                                    <Button style={{marginLeft: '1em'}} onClick={()=>setModalAuthSignIn(true)}>Iniciar Sesión</Button>
-                                </>
+                                {
+                                    user.jwt ? 
+                                    <>
+                                        
+                                        <Badge className='cart' count={cartCount}>
+                                            <Link href='/carrito'>
+                                                <a>
+                                                    <ShoppingCartOutlined className='iconCart' />
+                                                </a>
+                                            </Link>
+                                        </Badge>
+                                        <Dropdown overlay={menu}>
+                                            <Avatar size={40} className='profileUser' icon={<UserOutlined />}/>
+                                        </Dropdown>
+                                        
+                                    </>
+                                    :
+                                    <>
+                                        <Button style={{marginLeft: '1em'}} onClick={()=>setModalAuthSignIn(true)}>Iniciar Sesión</Button>
+                                        <Button style={{margin: '1em'}} onClick={()=>setModalAuthSignUp(true)}>Registrate</Button>
+                                        
+                                    </>
 
-                            }
-                            <a className='socialIcon' href="/"><img src={`${pathPublic}images/Layout/facebook.svg`} alt="facebook mercatto"/></a>
-                            <a className='socialIcon' href="/"><img src={`${pathPublic}images/Layout/instagram.svg`} alt="instagram mercatto"/></a>
-                            <a className='socialIcon' href="/"><img src={`${pathPublic}images/Layout/whatsapp.svg`} alt="whatsapp mercatto"/></a>
+                                }
                         </div>
                     </div>
-                </div>
+
+                </header>
                 <div className='mainContent'>
                     {children}
                 </div>
                 <div className='footer'>
-                   
-                        <Link  href='/terminos_condiciones'>
-                            <a>
-                                <span>Politicas de privacidad</span>
-                            </a>
-                        </Link>
-                        <span>Powered by <a target="_blank" href="https://ideautomation.com.co/">IDEA SAS</a> - AIDEA SAS</span>
+                        <div className='socialMediaIcons'>
+                            <a className='socialIcon' href="/"><FontAwesomeIcon icon={faFacebookF}/></a>
+                            <a className='socialIcon' href="/"><FontAwesomeIcon icon={faInstagram} /></a>
+                            <a className='socialIcon' href="/"><FontAwesomeIcon icon={faWhatsapp}/></a>
+                        </div>
+                        <div className='infoSocial'>
+                            <Link  href='/terminos_condiciones'>
+                                <a>
+                                    <span>Politicas de privacidad</span>
+                                </a>
+                            </Link>
+                            <span>Powered by <a target="_blank" href="https://ideautomation.com.co/">IDEA SAS</a> - AIDEA SAS</span>
+                        </div>
+
                     
                 </div>
                 <SignInComponent pathPublic={pathPublic} urlBack={urlBack} modalAuthSignIn={modalAuthSignIn} setModalAuthSignIn={setModalAuthSignIn} setModalAuthSignUp={setModalAuthSignUp}/>

@@ -1,120 +1,113 @@
-$mainGrey: #EEEEEE;
+$mainGrey: #fbfbfc;
 $darkGrey: #8D8D8D;
 $colorText : #5e5e5e;
-$mainBlue: #2FAFFF;
+$mainBlue: #02205E;
+$mainYellow: #FCD330;
 .mainLayout{
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    display: flex;
     position: relative;
-
-    .leftContainer{
-        width: 30%;
-        height: 100%;
-        position: relative;
-        overflow: hidden;
-
-        .containerLogos{
-            position: relative;
-            width: 100%;
-            height: 20%;
-
-            .mainLogo, .logoBack{
-                position: absolute;
-                top: 50%;
-                left: 50%;
-            }
-            .mainLogo{
-                transform: translate(-50%, -50%);
-                -webkit-transform: translate(-50%, -50%);
-                width: 25vw;
-            } 
-        }
-        >h1{
-            top: 30%;
-            left: 50%;
-            position: absolute;
-            transform: translate(-50%, -50%);
-            -webkit-transform: translate(-50%, -50%);
-            font-size: 2.5vw;
-            padding: 1em;
-            width: 100%;
-            text-align: center;
-        }
-        
-    }
-    .rigthContainer{
-        width: 70%;
-        height: 100%;
-        overflow: hidden;
-        
-        .topContainer{
-            width: 100%;
-            height: 10%;
+    background-color: $mainGrey;
+    header{
+        position: fixed;
+        width: 100%;
+        background-color: $mainBlue;
+        display: flex;
+        justify-content: center;
+        -webkit-box-shadow: 0px 16px 16px -15px rgba(0,0,0,0.68);
+        -moz-box-shadow: 0px 16px 16px -15px rgba(0,0,0,0.68);
+        box-shadow: 0px 16px 16px -15px rgba(0,0,0,0.68);
+        >div{
+            width: 1400px;
             display: flex;
-            >div{
-                height: 100%;
+            height: 100px;
+            .containerMainLogo{
+                height: 100px;
+                width: 25%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                img{
+                    width: 300px;
+                }
             }
             .searchBar{
                 width: 50%;
+                height: 100px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 .ant-select{
+                    margin-top: 30px;
                     width: 80%;
                     height: 5vh;
-
+    
                     .ant-input-affix-wrapper{
                         background-color: $mainGrey;
                         height: 5vh;
                         border-radius: 2.5vh;
                         border: none;
-
                         input{
                             background-color: transparent;
+                        }
+                        svg{
+                            font-size: 15pt;
+                            color: $mainBlue;
                         }
                     }
                 }
             }
+    
             .menu{
-                width: 50%;
+                width: 25%;
+                height: 100px;
                 display: flex;
-                flex-direction: row-reverse;;
+                // flex-direction: row-reverse;;
                 align-items: center;
+                justify-content: center;
+                margin-top: 20px;
                 
-                .socialIcon{
-                    margin: 10px;
-                    float: right;
-                    img{
-                        width: 30px;
+                .iconCart{
+                    font-size: 25pt;
+                    color: $mainGrey;
+                }
+                button{
+                    background-color: #ffffff !important;
+                    color: $mainBlue;
+                    font-size: 1em;
+                }
+    
+                .profileUser{
+                    background-color: $mainGrey;
+                    cursor: pointer;
+                    margin: 20px;
+                    svg{
+                        font-size: 25pt;
+                        color: $mainBlue;
                     }
                 }
 
-                a{
-                    color: $darkGrey;
-                    font-size: 1.2em;
-                    margin: 10px;
-                }
-                .iconCart{
-                    font-size: 2em;
-                    color: $darkGrey;
-                }
-
-                .profileUser{
-                    cursor: pointer;
-                    margin: 20px;
+                .cart{
+                    .ant-badge-count{
+                       background-color: $mainYellow;
+                       color: $mainBlue; 
+                       box-shadow: none;
+                    }
                 }
             }
         }
-    }
 
+    }
     .mainContent{
         position: absolute;
         width: 100vw;
-        height: 80vh;
-        top: 20vh;
+        height: calc(100vh - 100px);
+        top: 100px;
         left: 0;
+        display: flex;
+        justify-content: center;
+        
     }
     button{
         border-radius: 50px ;
@@ -134,17 +127,33 @@ $mainBlue: #2FAFFF;
 
     .footer{
         position: absolute;
-        width: calc(70vw - 10px);
-        height: 3vh;
-        top: 97vh;
-        left: 30vw;
-        background-color: #ffffff;
+        width: 100vw;
+        height: 35px;
+        top: 100vh;
+        left: 0vw;
+        background-color: $mainGrey;
+        transform: translate(0%, -100%);
+        -webkit-transform: translate(0%, -100%); 
+        // display: ;
+        >div{
+            display: flex;
+            align-items: center;
+            float: right;
+            height: 30px;
+            svg{
+                width: 25px;
+                height: 25px;
+                margin-right: 1em;
+                color: $mainBlue;
+                font-size: 10pt;
+            }
+        }
         span{
-            color: $colorText;
+            color: $mainBlue;
             float: right;
             margin-right: 20px;
             a{
-                color: $colorText;
+                color: $mainBlue;
             }
             
         }

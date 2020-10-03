@@ -1,13 +1,15 @@
+import {useEffect, useState} from 'react'
 import Layout from '../../components/Layout';
-//Nextjs
-import Link from 'next/link'
-import {useRouter} from 'next/router'
-//Antd
-import {ArrowLeftOutlined} from '@ant-design/icons';
+//axios
+import Axios from 'axios';
+//antD
+import { Skeleton, message } from 'antd';
 //utils
-import {hexToRgb} from '../../utils/functions'
-
+import {getNewPrice} from '../../utils/functions'
+//Auth
+import useAuth from '../../providers/AuthProvider'
 //Types
+import  { Producto, Carrito } from '../../utils/types'
 type Sub_Categorias = {
     categoria: string
     _id: string
@@ -21,42 +23,197 @@ type Data_category ={
     Categoria: string
 }
 
-const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], background:string, contrast:boolean, url:string, dataCategory:Data_category[]}) =>{
+type Count = {
+    count: number
+    _id: string
+}
 
-    const {dataSubCategoria ,background, contrast, url, dataCategory} = props
+const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string, dataCategory:Data_category[]}) =>{
 
-    //router
-    const router = useRouter()
+    const {dataSubCategoria , url, dataCategory} = props
     
     const category = dataCategory[0]
 
+    //Providers
+    const {user ,setModalAuthSignIn,updateUser } = useAuth()
+    //State
+    const [dataProductsToShow, setDataProductsToShow] = useState<Producto[]>([])
+    const [dataProducts, setDataProducts] = useState<Producto[]>([])
+    const [mainUrl, setMainUrl] = useState<string>('')
+    const [textCategory, setTextCategory] = useState<string>('')
+    const [loading, setLoading] = useState<boolean>(true)
+    const [productCart, setProductCart] = useState<Count[]>([])
+
+    //effect
+    useEffect(() => {
+        setTextCategory(category.Categoria)
+        setMainUrl(`${url}${category.portada.url}`)
+        Axios.get(`${url}/productos?category=${category._id}`)
+        .then(res=>{
+            var productTemp: Count[] = []
+            res.data.map((e:Producto)=>e.precioDescuento=getNewPrice(e.descuento,e.precio))
+            if (user.jwt) {
+                for (let k = 0; k < res.data.length; k++) {
+                    var isInCart = user.carrito?.findIndex(e=>(e.producto as Producto)._id === res.data[k]._id)
+                    productTemp.push({
+                        count: isInCart>-1 ? user.carrito[isInCart].cantidad : 0,
+                        _id: res.data[k]._id
+                    })
+                }
+            }
+            setProductCart(productTemp)
+            setDataProducts(res.data);
+            setDataProductsToShow(res.data); 
+            setLoading(false)
+        })
+        .catch(err=>console.log(err))
+    }, [user])
+
+    //functions
+    const filterDataProducts = (_id:string) =>{
+        if (_id === 'all') {
+            setDataProductsToShow(dataProducts)
+            setTextCategory(category.Categoria)
+        }else{
+            var newProducts:Producto[] = []
+            for (let k = 0; k < dataProducts.length; k++) {
+                console.log(dataProducts[k]._id)
+                if (_id === dataProducts[k].sub_categoria) {
+                    newProducts.push(dataProducts[k])
+                }
+            }
+            const subcategory = dataSubCategoria.findIndex(e=>e._id===_id)
+            setTextCategory(`${category.Categoria}: ${dataSubCategoria[subcategory].titulo}`)
+            setMainUrl(`${url}${dataSubCategoria[subcategory].portada.url}`)
+            setDataProductsToShow(newProducts)
+        }
+    }
+
+    //addCart
+    const addCart = (id:string) =>{
+        if (user.jwt) {
+            var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
+            var carrito: Carrito[] = user.carrito
+            var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)._id === id)
+            var index = tempCartProducts.findIndex(e=>e._id === id)
+            tempCartProducts[index].count += 1
+            if (isProdcut >-1) {
+                carrito[isProdcut].cantidad += tempCartProducts[index].count
+            }else{
+                carrito.push({cantidad:tempCartProducts[index].count, producto: tempCartProducts[index]._id })
+            }
+            Axios.put(`${url}/users/${user._id}`,{
+                carrito: carrito
+            },
+            {
+                headers: {
+                Authorization: `Bearer ${user.jwt}`
+                }
+            }
+            ).then(res=>{
+                // message.success({content:"Producto agregado",className: 'messageVerification',duration: '5'})
+                setProductCart(tempCartProducts)
+                updateUser(res)})
+            .catch(err=>{
+                console.log(err)
+            })
+        }
+    }
+
+    //removeCart 
+    const removeCart = (id:string) =>{
+        if (user.jwt) {
+            var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
+            var index = tempCartProducts.findIndex(e=>e._id === id)
+            if (tempCartProducts[index].count>0) {
+                tempCartProducts[index].count -= 1
+                setProductCart(tempCartProducts)
+            }
+        }
+    }
+
+    //get countCart
+    const getCountCart = (id:string) =>{
+        var index = productCart.findIndex(e=>e._id===id)
+        return productCart[index].count
+    }
+
+
     return(
         <div>
-            <Layout urlBack={url} logoWhite={!contrast} pathPublic={'../'} title={category.Categoria} color={!contrast ? "#ffffff" :"#8D8D8D"}  background={`#${background}`}>
+            <Layout urlBack={url} logoWhite={false}   pathPublic={'../'} title={category.Categoria}>
                 <div className='categoryMain'>
+
                     <div className='categoryLeft'>
-                        <img src={`${url}${category.portada.url}`} alt={`mercatto ${category.Categoria}`}/>
-                        <span onClick={()=>router.push('/')} style={{color: `${!contrast ? "#ffffff" :"#8D8D8D"}`, cursor:"pointer"}} className='backArrow'>
-                                <ArrowLeftOutlined />
-                        </span>
+                        <div>
+                            <h1>Categorias de: {category.Categoria}</h1>
+                            <ul>
+                                <li onClick={()=>filterDataProducts('all')}>Todos</li>
+                                {dataSubCategoria.map(subcategoria=>(
+                                    <li onClick={()=>filterDataProducts(subcategoria._id)} key={subcategoria._id}>{subcategoria.titulo}</li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
-                    <div className='categoryRight row'>
-                        {dataSubCategoria.map(subcategories=>(
-                            <div className='col-lg-4 targetSubCategory' key={subcategories._id}>
-                                <div style={{background: hexToRgb(`#${background}`)}}>
-                                    <Link href={{pathname:`sub_categoria/${subcategories.titulo.toLowerCase()}`,query:{id:subcategories._id, contrast: contrast, background: background}}}>
-                                        <a>
-                                            <div>
-                                                <h2 style={{color: !contrast ? "#ffffff" : "#787878"}}>{subcategories.titulo}</h2>
-                                                <img src={`${url}${subcategories.portada.url}`} alt={`${subcategories.titulo} mercatto`}/>
-                                            </div>
-                                        </a>
-                                    </Link>
+                    <div className='categoryRight'>
+                        <div>
+                            <div className='firstTarget'>
+                                <div className='imgCategory'>
+                                    <img src={mainUrl} alt='categorias Mercatto'/>
+                                </div>
+                                <div className='textCategory'>
+                                    <h1>{textCategory}</h1>
                                 </div>
                             </div>
-                        ))}
+                            <div className='row rowTarget'>
+                                {dataProductsToShow.map((producto)=>(
+                                    <div key={producto._id} id={producto._id} className='col-lg-4 mainTargetProduct'>
+                                        <div className='targetProduct'>
+                                        {!loading? 
+                                            <>
+                                                <div className='imgProduct'>
+                                                    <img src={`${url}${producto.imagenes.url}`} alt={`Mercatto ${producto.nombre} `}/>
+                                                </div>
+                                                <div className="targetText">
+                                                    <div>
+                                                        <p className='productName'>{producto.nombre}</p>
+                                                    </div>
+                                                    <div className='containerPrice'>
+                                                        <span className='productPrice'>${producto.precioDescuento}</span> {producto.descuento>0 ? <span className='productDescuento'>${producto.precio}</span> : null}
+                                                    </div>
+                                                    <div>
+                                                        <span className='productDescription'>{producto.descripcion}</span>
+                                                    </div>
+                                                    <div className='addCart'>
+                                                        {productCart.length>0?
+                                                            <>
+                                                                <span>{getCountCart(producto._id)}</span>
+                                                                <button onClick={()=>removeCart(producto._id)} className='buttonCount'>-</button>
+                                                                <button onClick={()=>addCart(producto._id)} className='buttonCount'>+</button>
+                                                            </>
+                                                        :
+                                                            <button onClick={()=>setModalAuthSignIn(true)} className='buttonAdd'>Agregar</button>
+                                                        }
+                                                        
+                                                    </div>
+                                                </div>
+                                                {producto.descuento>0?
+                                                    <div className='desc'>
+                                                        <span>%{producto.descuento}</span>
+                                                    </div>
+                                                :null}
+                                            </>
+                                            :
+                                            <Skeleton  loading={true} active>
+                                            </Skeleton>
+                                            }
+                                        </div>  
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </div> 
             </Layout>
         </div>
     )
@@ -68,9 +225,7 @@ export async function getServerSideProps (ctx) {
     const dataCategory = await fetch(`${URL}/categorias?id=${ctx.query.id}`,{method: 'GET'})
     const dataCategoryJson  = await dataCategory.json()
     const jsonSubCategoria = await subCategoria.json()
-    const background = ctx.query.cr
-    const contrast = ctx.query.cn === "true" ? true : false
-    return {props: {dataSubCategoria:jsonSubCategoria,background:background, contrast: contrast, url:URL, dataCategory: dataCategoryJson}}
+    return {props: {dataSubCategoria:jsonSubCategoria, url:URL, dataCategory: dataCategoryJson}}
 }
 
 export default CategoryComponent
