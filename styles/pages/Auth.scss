@@ -14,8 +14,14 @@ $mainBlue: #2FAFFF;
     .messageAfterSignup{
         margin-top: 20vh;
     }
+    button:active, button:focus{
+        outline: none;
+    }
     .ant-modal-close{
         color: #ffffff;
+        top: -50px;
+        right: -50px;
+        
     }
     .image{
 
@@ -29,7 +35,7 @@ $mainBlue: #2FAFFF;
         width: 400px;
         min-height: 60vh;
         background-color: #ffffff;
-        border-radius: 50px;
+        border-radius: 25px;
         -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
         -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
         box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
@@ -86,6 +92,18 @@ $mainBlue: #2FAFFF;
             width: 30px;
         }
         
+    }
+    
+    .containerProductModal{
+        width: 800px;
+        height: 400px;
+        background-color: #ffffff;
+        border-radius: 25px;
+        -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+        -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+        box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+        text-align: center;
+        padding:1em;
     }
     .ant-modal-footer{
         display: none;

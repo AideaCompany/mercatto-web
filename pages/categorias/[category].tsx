@@ -44,17 +44,19 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     const [loading, setLoading] = useState<boolean>(true)
     const [productCart, setProductCart] = useState<Count[]>([])
     const [firstCall, setFirstCall] = useState<boolean>(false)
+    const [openModalProduct, setOpenModalProduct] = useState(false)
+    const [idProductModal, setIdProductModal] = useState<string>('')
 
     //effect
     useEffect(() => {
         if (!firstCall) {
             setTextCategory(category.Categoria)
             setMainUrl(`${url}${category.portada.url}`)
-            if (user.jwt) {
-                Axios.get(`${url}/productos?category=${category._id}`)
-                .then(res=>{
-                    var productTemp: Count[] = []
-                    res.data.map((e:Producto)=>e.precioDescuento=getNewPrice(e.descuento,e.precio))
+            Axios.get(`${url}/productos?category=${category._id}`)
+            .then(res=>{
+                var productTemp: Count[] = []
+                res.data.map((e:Producto)=>e.precioDescuento=getNewPrice(e.descuento,e.precio))
+                if (user.jwt) {
                     for (let k = 0; k < res.data.length; k++) {
                         var isInCart = user.carrito?.findIndex(e=>(e.producto as Producto)._id === res.data[k]._id)
                         productTemp.push({
@@ -64,14 +66,26 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                     }
                     setProductCart(productTemp)
                     setFirstCall(true)
-                    setDataProducts(res.data);
-                    setDataProductsToShow(res.data); 
-                    setLoading(false)
-                })
-                .catch(err=>console.log(err))
-            }
+                }
+                setDataProducts(res.data);
+                setDataProductsToShow(res.data); 
+                setLoading(false)
+            })
+            .catch(err=>console.log(err))
         }
     }, [user])
+
+    useEffect(() => {
+        if (user.jwt) {
+            var isProduct = productCart.findIndex(e=>e._id===idProductModal)
+            var isProductCart = user.carrito.findIndex(e=>(e.producto as Producto)._id===idProductModal)
+            var productCartTemp: Count[] = JSON.parse(JSON.stringify(productCart))
+            if (isProductCart> -1) {
+                productCartTemp[isProduct].count = user.carrito[isProductCart]?.cantidad
+            }
+            setProductCart(productCartTemp)
+        }
+    }, [openModalProduct])
 
     //functions
     const filterDataProducts = (_id:string) =>{
@@ -93,17 +107,19 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     }
 
     //addCart
-    const addCart = async (id:string) =>{
+    const addCart = async (id:string, e) =>{
+        e.stopPropagation();
         if (user.jwt) {
             var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
             var carrito: Carrito[] = user.carrito
             var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)._id === id)
             var index = tempCartProducts.findIndex(e=>e._id === id)
-            tempCartProducts[index].count += 1
+            var posProduct = dataProducts.findIndex(e=>e._id===id)
+            var count = tempCartProducts[index].count += 1
             if (isProdcut >-1) {
                 carrito[isProdcut].cantidad = tempCartProducts[index].count
             }else{
-                carrito.push({cantidad:tempCartProducts[index].count, producto: tempCartProducts[index]._id })
+                carrito.push({cantidad:count, producto: tempCartProducts[index]._id, peso: dataProducts[posProduct].peso, precio: dataProducts[posProduct].precio})
             }
             await updatecart(carrito)
             setProductCart(tempCartProducts)
@@ -111,19 +127,21 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     }
 
     //removeCart 
-    const removeCart = async (id:string) =>{
+    const removeCart = async (id:string, e) =>{
+        e.stopPropagation();
         if (user.jwt) {
             var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
             var index = tempCartProducts.findIndex(e=>e._id === id)
             var carrito: Carrito[] = user.carrito
             var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)._id === id)
+            var posProduct = dataProducts.findIndex(e=>e._id===id)
             if (tempCartProducts[index].count>0) {
                 var count = tempCartProducts[index].count -= 1
                 if (count > 0) {
                     if (isProdcut>-1) {
                         carrito[isProdcut].cantidad = count
                     }else{
-                        carrito.push({cantidad:count, producto: tempCartProducts[index]._id })
+                        carrito.push({cantidad:count, producto: tempCartProducts[index]._id, peso: dataProducts[posProduct].peso, precio: dataProducts[posProduct].precio})
                     }
                 }else{
                     carrito.splice(isProdcut,1)
@@ -154,14 +172,27 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
 
     //get countCart
     const getCountCart = (id:string) =>{
-        var index = productCart.findIndex(e=>e._id===id)
-        return productCart[index].count
+        if (productCart.length>0) {
+            var index = productCart.findIndex(e=>e._id===id)
+            return productCart[index].count
+        }
+        
+    }
+
+    const openProduct = (id:string) => {
+        setIdProductModal(id)
+        setOpenModalProduct(true)
+    }
+
+    const openAuth = (e) =>{
+        e.stopPropagation();
+        setModalAuthSignIn(true)
     }
 
 
     return(
         <div>
-            <Layout urlBack={url} logoWhite={false}   pathPublic={'../'} title={category.Categoria}>
+            <Layout idProduct={idProductModal} setOpenModalProduct={setOpenModalProduct} openModalProduct={openModalProduct} urlBack={url} logoWhite={false}   pathPublic={'../'} title={category.Categoria}>
                 <div className='categoryMain'>
 
                     <div className='categoryLeft'>
@@ -187,7 +218,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                             </div>
                             <div className='row rowTarget'>
                                 {dataProductsToShow.map((producto)=>(
-                                    <div key={producto._id} id={producto._id} className='col-lg-4 mainTargetProduct'>
+                                    <div onClick={()=>openProduct(producto._id)} key={producto._id} id={producto._id} className='col-lg-4 mainTargetProduct'>
                                         <div className='targetProduct'>
                                         {!loading? 
                                             <>
@@ -208,11 +239,11 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                                                         {user.jwt?
                                                             <>
                                                                 <span>{getCountCart(producto._id)}</span>
-                                                                <button onClick={()=>removeCart(producto._id)} className='buttonCount'>-</button>
-                                                                <button onClick={()=>addCart(producto._id)} className='buttonCount'>+</button>
+                                                                <button onClick={(e)=>removeCart(producto._id,e)} className='buttonCount'>-</button>
+                                                                <button onClick={(e)=>addCart(producto._id, e)} className='buttonCount'>+</button>
                                                             </>
                                                         :
-                                                            <button onClick={()=>setModalAuthSignIn(true)} className='buttonAdd'>Agregar</button>
+                                                            <button onClick={openAuth} className='buttonAdd'>Agregar</button>
                                                         }
                                                         
                                                     </div>

@@ -130,6 +130,7 @@ $colorText : #5e5e5e;
                     padding: 2%;
 
                     .targetProduct {
+                        cursor: pointer;
                         overflow: hidden;
                         width: 100%;
                         height: 100%;
@@ -196,7 +197,7 @@ $colorText : #5e5e5e;
                                     align-items: center;
                                     padding-bottom: 5px;
                                 }
-                                .buttonCount:hover{
+                                .buttonCount:hover, .buttonAdd:hover{
                                     background-color: rgba($color: $mainYellow, $alpha: 0.8) !important;
                                 }
                                 .buttonAdd{

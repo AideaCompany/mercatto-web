@@ -35,7 +35,7 @@ const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, set
     }
 
     return(
-        <Modal centered onCancel={HandleClose} visible={modalAuthSignUp}>
+        <Modal width={400} centered onCancel={HandleClose} visible={modalAuthSignUp}>
                 <div className='containerForm'> 
                     <img className='mainLogo' src={`${pathPublic}images/Layout/mercatto-large.svg`} alt="mercatto logo"/>
                     {!okeyRegister ? 

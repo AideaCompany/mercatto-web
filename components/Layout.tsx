@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react'
 //components
 import SignInComponent from '../components/Auth/singIn'
 import SignUpcomponent from '../components/Auth/singup'
 import ResetPasswordComponent from '../components/Auth/resetPasswor'
+import ModalProduct from '../components/ModalProduct'
 //nextjs
 import Link from 'next/link'
 import router from 'next/router'
@@ -17,6 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faWhatsapp, faInstagram, faFacebookF} from '@fortawesome/free-brands-svg-icons'
 //context
 import useAuth from '../providers/AuthProvider'
+import Modal from 'antd/lib/modal/Modal'
 
 
 
@@ -31,12 +33,15 @@ type propsLayout ={
     pathPublic?:string
     logoWhite?:boolean
     tokenProvider?: string
+    openModalProduct? :boolean
+    setOpenModalProduct?: Dispatch<SetStateAction<boolean>>
+    idProduct?:string
 }
 
 const Layout = (props: propsLayout):JSX.Element =>{
 
     //Props
-    const {children, title , urlBack, confirmed, code, pathPublic, logoWhite, tokenProvider} = props
+    const {children, title , urlBack, confirmed, code, pathPublic, logoWhite, tokenProvider, openModalProduct, setOpenModalProduct , idProduct} = props
 
     const [modalResetPassword, setModalResetPassword] = useState<boolean>(false)
     const [cartCount, setcartCount] = useState<Number>(0)
@@ -156,6 +161,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
 
                     
                 </div>
+                <ModalProduct id={idProduct} urlBack={urlBack} setOpenModalProduct={setOpenModalProduct} openModalProduct={openModalProduct}></ModalProduct>
                 <SignInComponent pathPublic={pathPublic} urlBack={urlBack} modalAuthSignIn={modalAuthSignIn} setModalAuthSignIn={setModalAuthSignIn} setModalAuthSignUp={setModalAuthSignUp}/>
                 <SignUpcomponent pathPublic={pathPublic} urlBack={urlBack} modalAuthSignUp={modalAuthSignUp} setModalAuthSignUp={setModalAuthSignUp} setModalAuthSignIn={setModalAuthSignIn}/>
                 <ResetPasswordComponent pathPublic={pathPublic} code={code} setModalResetPassword={setModalResetPassword} modalResetPassword={modalResetPassword} setModalAuthSignIn={setModalAuthSignIn} urlBack={urlBack}/>
