@@ -43,30 +43,34 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     const [textCategory, setTextCategory] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(true)
     const [productCart, setProductCart] = useState<Count[]>([])
+    const [firstCall, setFirstCall] = useState<boolean>(false)
 
     //effect
     useEffect(() => {
-        setTextCategory(category.Categoria)
-        setMainUrl(`${url}${category.portada.url}`)
-        Axios.get(`${url}/productos?category=${category._id}`)
-        .then(res=>{
-            var productTemp: Count[] = []
-            res.data.map((e:Producto)=>e.precioDescuento=getNewPrice(e.descuento,e.precio))
+        if (!firstCall) {
+            setTextCategory(category.Categoria)
+            setMainUrl(`${url}${category.portada.url}`)
             if (user.jwt) {
-                for (let k = 0; k < res.data.length; k++) {
-                    var isInCart = user.carrito?.findIndex(e=>(e.producto as Producto)._id === res.data[k]._id)
-                    productTemp.push({
-                        count: isInCart>-1 ? user.carrito[isInCart].cantidad : 0,
-                        _id: res.data[k]._id
-                    })
-                }
+                Axios.get(`${url}/productos?category=${category._id}`)
+                .then(res=>{
+                    var productTemp: Count[] = []
+                    res.data.map((e:Producto)=>e.precioDescuento=getNewPrice(e.descuento,e.precio))
+                    for (let k = 0; k < res.data.length; k++) {
+                        var isInCart = user.carrito?.findIndex(e=>(e.producto as Producto)._id === res.data[k]._id)
+                        productTemp.push({
+                            count: isInCart>-1 ? user.carrito[isInCart].cantidad : 0,
+                            _id: res.data[k]._id
+                        })
+                    }
+                    setProductCart(productTemp)
+                    setFirstCall(true)
+                    setDataProducts(res.data);
+                    setDataProductsToShow(res.data); 
+                    setLoading(false)
+                })
+                .catch(err=>console.log(err))
             }
-            setProductCart(productTemp)
-            setDataProducts(res.data);
-            setDataProductsToShow(res.data); 
-            setLoading(false)
-        })
-        .catch(err=>console.log(err))
+        }
     }, [user])
 
     //functions
@@ -77,7 +81,6 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
         }else{
             var newProducts:Producto[] = []
             for (let k = 0; k < dataProducts.length; k++) {
-                console.log(dataProducts[k]._id)
                 if (_id === dataProducts[k].sub_categoria) {
                     newProducts.push(dataProducts[k])
                 }
@@ -90,7 +93,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     }
 
     //addCart
-    const addCart = (id:string) =>{
+    const addCart = async (id:string) =>{
         if (user.jwt) {
             var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
             var carrito: Carrito[] = user.carrito
@@ -98,38 +101,55 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
             var index = tempCartProducts.findIndex(e=>e._id === id)
             tempCartProducts[index].count += 1
             if (isProdcut >-1) {
-                carrito[isProdcut].cantidad += tempCartProducts[index].count
+                carrito[isProdcut].cantidad = tempCartProducts[index].count
             }else{
                 carrito.push({cantidad:tempCartProducts[index].count, producto: tempCartProducts[index]._id })
             }
-            Axios.put(`${url}/users/${user._id}`,{
-                carrito: carrito
-            },
-            {
-                headers: {
-                Authorization: `Bearer ${user.jwt}`
-                }
-            }
-            ).then(res=>{
-                // message.success({content:"Producto agregado",className: 'messageVerification',duration: '5'})
-                setProductCart(tempCartProducts)
-                updateUser(res)})
-            .catch(err=>{
-                console.log(err)
-            })
+            await updatecart(carrito)
+            setProductCart(tempCartProducts)
         }
     }
 
     //removeCart 
-    const removeCart = (id:string) =>{
+    const removeCart = async (id:string) =>{
         if (user.jwt) {
             var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
             var index = tempCartProducts.findIndex(e=>e._id === id)
+            var carrito: Carrito[] = user.carrito
+            var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)._id === id)
             if (tempCartProducts[index].count>0) {
-                tempCartProducts[index].count -= 1
+                var count = tempCartProducts[index].count -= 1
+                if (count > 0) {
+                    if (isProdcut>-1) {
+                        carrito[isProdcut].cantidad = count
+                    }else{
+                        carrito.push({cantidad:count, producto: tempCartProducts[index]._id })
+                    }
+                }else{
+                    carrito.splice(isProdcut,1)
+                }
+                await updatecart(carrito)
                 setProductCart(tempCartProducts)
             }
         }
+    }
+
+    //call Cart 
+    const updatecart = async (carrito: Carrito[]) =>{
+        Axios.put(`${url}/users/${user._id}`,{
+            carrito: carrito
+        },
+        {
+            headers: {
+            Authorization: `Bearer ${user.jwt}`
+            }
+        }
+        ).then(res=>{
+            
+            updateUser(res)})
+        .catch(err=>{
+            console.log(err)
+        })
     }
 
     //get countCart
@@ -146,7 +166,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
 
                     <div className='categoryLeft'>
                         <div>
-                            <h1>Categorias de: {category.Categoria}</h1>
+                            <h1>Categorias</h1>
                             <ul>
                                 <li onClick={()=>filterDataProducts('all')}>Todos</li>
                                 {dataSubCategoria.map(subcategoria=>(
@@ -185,7 +205,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                                                         <span className='productDescription'>{producto.descripcion}</span>
                                                     </div>
                                                     <div className='addCart'>
-                                                        {productCart.length>0?
+                                                        {user.jwt?
                                                             <>
                                                                 <span>{getCountCart(producto._id)}</span>
                                                                 <button onClick={()=>removeCart(producto._id)} className='buttonCount'>-</button>
