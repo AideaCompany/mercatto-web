@@ -1,233 +1,168 @@
 $darkGrey: #8D8D8D;
+$mainBlue: #02205E;
+$mainGrey: #f0f0f0;
+$colorTarget: #f4f4f4;
+$mainYellow: #FCD330;
 $colorText : #5e5e5e;
+
 .carritoMain{
-    width: 100%;
+    width: 1500px;
     height: 100%;
     display: flex;
     position: relative;
-    
-    >div{
-          height: 100%;
-    }
+    padding: 2%;
     .carritoLeft{
-        width: 30vw;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        width: 950px;
+        height: 80vh;
+        -webkit-box-shadow: 2px 6px 18px -6px rgba(78, 29, 29, 0.2);
+        -moz-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.2);
+        box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.2);
+        border-radius: 25px;
         position: relative;
-        svg{
-            font-size: 25vw;
-            color: $darkGrey;
+        background-color: #fff;
+        margin-right: 50px;
+        padding: 2%;
+        >h1{
+            color: $mainBlue;
         }
-        img{
-            width: 25vw;
-        }
-        .backArrow{
-            position: absolute;
-            left: 5%;
-            top: 90%;
-            svg{
-                font-size: 2vw;
+        .containerProducts{
+            width: 100%;
+            height: 90%;
+            overflow-y: scroll;
+            padding: 20px;
+            .productItem{
+                width: 100%;
+                height: 120px;
+                background-color: $colorTarget;
+                margin-bottom: 35px;
+                border-radius: 20px;
+                -webkit-box-shadow: 2px 6px 18px -6px rgba(78, 29, 29, 0.2);
+                -moz-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.2);
+                box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.2);
+                display: flex;
+                overflow: hidden;
+                >div{
+                    height: 100%;               
+                }
+                .productImg{
+                    width: 30%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    img{
+                        width: 40%;
+                    }
+                }
+                .productInfo{
+                    width: 50%;
+                    padding: 10px;
+                    >div{
+                        display: flex;
+                        justify-content: left;
+                        align-items: center;
+                        .priceDescount{
+                            margin: 0 0 0 10px;
+                            font-size: 1.4em;
+                            text-decoration: line-through;
+                        }
+                    }
+                    *{
+                        color: $mainBlue;
+                    }
+                    h2{
+                        font-size: 1.7em;
+                    }
+                    .price{
+                        font-size: 1.7em;
+                    }
 
+                }
+                .productAction{
+                    width: 20%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    span{
+                        font-size: 1.7em;
+                    }
+                    button{
+                        height: 40px;
+                        width: 40px;
+                        border-radius: 10px;
+                        background-color: $mainYellow !important;
+                        color: $mainBlue;
+                        font-size: 2em;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding-bottom: 5px;
+                        margin: 10px;
+                    }
+                    svg{
+                        font-size: 1em;
+                        margin: 10px;
+                        cursor: pointer;
+                    }
+                }
             }
         }
-
 
     }
     .carritoRight{
-        h2{
-            font-size: 2vw;
-            color: $colorText;
-        }
-        .carrito{
-            width: 70vw;
-            margin: 0;
-            height: 60vh;
-            overflow-y: scroll;
-            .targetSubCategory{
-                padding: 1em;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-                .emptyCart{
-                    width: 100%;
-                    height: 40vh;
-                    position: relative;
-                    text-align: center;
-                    h2{
-                        color: $darkGrey;
-                        font-size: 3vw;
-                    }
-                    a{
-                        color: $darkGrey;
-                        font-size: 2vw;
-                    }
-                    img{
-                        width: 25%;
-                        position: absolute;
-                        top: 80%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        -webkit-transform: translate(-50%, -50%);
+        width: 400px;
+        height: 500px;
+        -webkit-box-shadow: 2px 6px 18px -6px rgba(78, 29, 29, 0.2);
+        -moz-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.2);
+        box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.2);
+        border-radius: 25px;
+        position: relative;
+        background-color: #FCD330;
+        padding: 2%;
+        .confirmCart{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            .info{
+                width: 100%;
+                text-align: left;
+                padding-top: 0vh;
+                height: 50%;
+                padding-top: 20px;
+                .ant-input{
+                    width: 90%;
+                    border-radius: 20px; 
+                    border: 1px solid $darkGrey;
+                    
+                }
+                .ant-checkbox-wrapper, .ant-input{
+                    margin: 30px 0 0 20px;
+                }
+                .ant-checkbox{
+                    .ant-checkbox-inner{
+                        background-color: $mainBlue;
+                        border-color: $mainBlue;
+                        border-radius: 50%;
                     }
                 }
-                .productItem:hover{
-                    -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                    -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                    box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);                
-                }
-                .productItem{
-                    display: flex;
-                    align-items: center;
-                    flex-direction: row;
-                    margin-bottom: 1%;
-                    width: 65vw;
-                    height: 15vh;
-                    border-radius: 7vh;
-                    -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                    -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                    box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                    cursor: pointer;
-                    transition: 0.2s ease-in-out;
-
-                    .image{
-                        width: 20%;
-                        height: 100%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        img{
-                            height: 100%;
-                        }
-                    }
-                    .titulo{
-                        height: 100%;
-                        width: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: left;
-                        text-align: left;
-                        h2{
-                            margin: 2vh;
-                            font-size: 1.7vw;
-                        }
-                        span{
-                            font-size: 1vw;
-                        }
-                    }
-                    .simbols{
-                        height: 100%;
-                        width: 30%;
-                        display: flex;
-                        font-size: 2.2rem;
-                        position: relative;
-                        .price{
-                            width: 50%;
-                            color: $darkGrey;
-                            position: relative;
-                            height: 100%;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            .productDescuento{
-                                position: absolute;   
-                                text-align: center;
-                                color: $darkGrey;
-                                left: 0%;
-                                top: 15%;
-                                width: 100%;
-                                font-size: 0.8vw;
-                                .sub{
-                                    text-decoration: line-through;
-                                }
-                            }
-                        }
-                        .functions{
-                            width: 50%;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            font-size: 2.2rem;
-                            .circle{
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                height: 3vh;
-                                width: 3vh;
-                                border-radius: 50%;
-                                cursor: pointer;
-                            }
-                            .number{
-                                margin:5%;
-                                color: $darkGrey;
-                            }
-                            .iconDelete{
-                                margin: 0 1vw 0 1vw;
-                                color: $darkGrey
-                            }
-                        }
-
-                    }
-                }
-
             }
+            .buttons{
+                text-align: center;
+                width: 100%;
+                padding-top: 2vh;
+                span{
+                    font-size: 2.5vw;
+                    color: $mainBlue;
+                    
+                }
+                button{
+                    margin: 1vw;
+                }
+            }
+    
         }
         
     }
-    .confirmCart{
-        width: 70vw;
-        height: 20vh;
-        position: absolute;
-        top: 100vh;
-        left: 30vw;
-        background: #fff;
-        z-index: 100;
-        -webkit-box-shadow: 7px -7px 34px -15px rgba(0,0,0,0.55);
-        -moz-box-shadow: 7px -7px 34px -15px rgba(0,0,0,0.55);
-        box-shadow: 7px -7px 34px -15px rgba(0,0,0,0.55);
-        border-radius: 30px 30px 0 0;
-        display: flex;
-        overflow: hidden;
-        opacity: 0;
 
-        >div{
-            height: 100%;
-        }
-        .info{
-            width: 70%;
-            text-align: left;
-            padding-top: 0vh;
-            .ant-input{
-                width: 80%;
-                border-radius: 20px; 
-                border: 1px solid $darkGrey;
-                
-            }
-            .ant-checkbox-wrapper, .ant-input{
-                margin: 2vh 0 0 5vw;
-            }
-            .ant-checkbox{
-                .ant-checkbox-inner{
-                    border-radius: 50%;
-                }
-            }
-        }
-        .buttons{
-            text-align: center;
-            width: 30%;
-            padding-top: 2vh;
-            span{
-                font-size: 2.5vw;
-                color: $darkGrey;
-                
-            }
-            button{
-                margin: 1vw;
-            }
-        }
-
-    }
     .totals{
        padding-right: 5%;
        float: right; 

@@ -6,7 +6,7 @@ import {useRouter} from 'next/router'
 import Layout from '../components/Layout';
 //antd
 import { Modal ,Form, Button, message, Input, Checkbox} from 'antd';
-import {ArrowLeftOutlined,ShoppingCartOutlined,DeleteOutlined } from '@ant-design/icons';
+import {ArrowLeftOutlined,ShoppingCartOutlined,DeleteOutlined, CloseOutlined } from '@ant-design/icons';
 //context
 import useAuth from '../providers/AuthProvider'
 //types
@@ -17,6 +17,7 @@ import axios from 'axios'
 import {getNewPrice} from '../utils/functions'
 //Gsap
 import { TimelineMax, gsap,  CSSPlugin, Power4} from 'gsap'
+
 
 const {TextArea} = Input
 
@@ -164,64 +165,33 @@ const carrito = (props:{url:string}):JSX.Element=>{
     <Layout urlBack={url}  logoWhite={false} pathPublic={'../../'} title={"Carrito"} color={"#8D8D8D"}  background={"#EEEEEE"}>
             <div className='carritoMain'>
                 <div className='carritoLeft'>
-                    <ShoppingCartOutlined />
+                    <h1>Tu Carrito</h1>
+                    <div className='containerProducts'>
+                        {actualCart?.length>0 ? actualCart?.map((product,i)=>(
+                            <div key={product._id} className='productItem'>
+                                <div className='productImg'>
+                                    <img src={`${url}${(product.producto as Producto).imagenes.url}`} alt={`Mercatto ${(product.producto as Producto).nombre} `}/>
+                                </div>
+                                <div className='productInfo'>
+                                        <div>
+                                            <span className='price'>${(product.producto as Producto).precioDescuento}</span>
+                                            {(product.producto as Producto).descuento>0? <span className='priceDescount'>${(product.producto as Producto).precio}</span> :null}
+                                        </div>
+                                        <h2>{(product.producto as Producto).nombre}</h2>
+                                        <span>{(product.producto as Producto).descripcion}</span>
+                                </div>
+                                <div className='productAction'>
+                                    <span>{product.cantidad}</span>
+                                    <button onClick={()=>minus(i)}>-</button>
+                                    <button onClick={()=>plus(i)}>+</button>
+                                    <CloseOutlined onClick={()=>{settoDelete(i);setmodalVisible(true)}}  />
+                                </div>
+                            </div>
+                        )):null}
 
-                    <span  onClick={()=>router.back()} style={{color: "#8D8D8D", cursor:'pointer'}}
-                        className='backArrow'>
-                        <ArrowLeftOutlined />
-                    </span>
+                    </div>
                 </div>
                 <div className="carritoRight">
-                    <h2 style={{paddingLeft:"5%"}}>{actualCart?.length>0?"Lista de productos:":null}</h2>
-                    <div className='carrito'>
-                        <div className="targetSubCategory">
-                            {actualCart?.length>0?actualCart?.map((e,i)=>{
-                            return (
-                            <div className="productItem" style={{background:background}}>
-                                <div className="image">
-                                    <img src={`${url}${((e.producto) as Producto).imagenes.url}`} alt={`${((e.producto) as Producto).nombre}
-                                        mercatto`} />
-                                </div>
-                                <div className="titulo">
-                                    <h2 style={{color:"#787878"}}>{((e.producto) as Producto).nombre}</h2>
-                                    <span style={{color:"#787878"}}>{((e.producto)as Producto).descripcion}</span>
-                                </div>
-                                <div className="simbols">
-                                    <div className="price">
-                                    {(e.producto as Producto).descuento> 0 ? <span className='productDescuento'><span className={"sub"}>{`$${e.totalPrecio}`}</span><span style={{textDecoration:"none"}}>{`  ${(e.producto as Producto).descuento}%OFF`}</span></span> : null }
-                                        {`$${e.precio}`}
-                                        </div>
-                                    <div className="functions">
-                                    <button onClick={()=>minus(i)} className="circle">
-                                        -
-                                    </button>
-                                    <div className="number">
-                                        {e.cantidad}
-                                    </div>
-                                    
-                                    <button onClick={()=>plus(i)} className="circle">
-                                        +
-                                    </button>
-                                    <DeleteOutlined onClick={()=>{settoDelete(i);setmodalVisible(true)}} className='iconDelete'/>
-                                    </div>
-                                </div>
-
-                            </div>
-                            )
-                            }):
-                            <div className="emptyCart">
-                                <h2>Tu carrito está vacio:(</h2>
-                                <Link href='/'>
-                                    <a>
-                                        Regresa para comprar
-                                    </a>
-                                </Link>
-                                <img src={'./images/Layout/empty-cart.svg'} />
-
-                            </div>
-                            }
-                        </div>
-                    </div>
                     {actualCart?.length>0?
                         <div className='confirmCart'>
                             <div className='info'>
@@ -244,17 +214,6 @@ const carrito = (props:{url:string}):JSX.Element=>{
                             </div>
                         </div>
                     :null}
-                    {actualCart?.length>0?                    
-                    <div className="totals">
-                        <span className="value">
-                            {`Total:$${totalPrice}`}
-                        </span>
-                        <button onClick={()=>divWrapper('open')} className='btn btn-primary btn-lg'>
-                            Aceptar
-                        </button>
-                        
-                    </div>:null}
-
                 </div>
             </div>
     </Layout>
