@@ -39,8 +39,13 @@ const ModalProduct = (props:PropsModal) => {
             axios.get(`${urlBack}/productos/${id}`)
             .then(res=>{
                 res.data.precioDescuento = getNewPrice(res.data.descuento, res.data.precio)
-                var countCart = user.carrito.findIndex(e=>(e.producto as Producto)._id === res.data.id)
-                setCountProduct(countCart>-1?user.carrito[countCart].cantidad:0)
+                if (user.jwt) {
+                    var countCart = user.carrito.findIndex(e=>(e.producto as Producto)._id === res.data.id)
+                    setCountProduct(countCart>-1?user.carrito[countCart].cantidad:0) 
+                }else{
+                    setCountProduct(0) 
+                }
+                
                 setDataProduct(res.data)
                 setLoading(false)
 
