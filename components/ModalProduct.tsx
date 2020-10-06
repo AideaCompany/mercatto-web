@@ -45,7 +45,6 @@ const ModalProduct = (props:PropsModal) => {
                 }else{
                     setCountProduct(0) 
                 }
-                
                 setDataProduct(res.data)
                 setLoading(false)
 

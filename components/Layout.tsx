@@ -4,13 +4,13 @@ import SignInComponent from '../components/Auth/singIn'
 import SignUpcomponent from '../components/Auth/singup'
 import ResetPasswordComponent from '../components/Auth/resetPasswor'
 import ModalProduct from '../components/ModalProduct'
+import Autocomplete from '../components/AutoComplete'
 //nextjs
 import Link from 'next/link'
-import router from 'next/router'
 import Head from 'next/head'
 //antD
-import {AutoComplete, Input, Badge, Avatar, Button, message, Menu, Dropdown} from 'antd'
-import {SearchOutlined, ShoppingCartOutlined, UserOutlined, PoweroffOutlined, FacebookFilled, InstagramFilled} from '@ant-design/icons';
+import { Badge, Avatar, Button, message, Menu, Dropdown} from 'antd'
+import {ShoppingCartOutlined, UserOutlined, PoweroffOutlined} from '@ant-design/icons';
 //Axios
 import axios from 'axios'
 //fontawesome
@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faWhatsapp, faInstagram, faFacebookF} from '@fortawesome/free-brands-svg-icons'
 //context
 import useAuth from '../providers/AuthProvider'
+import { Producto } from '../utils/types'
 
 
 
@@ -44,7 +45,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
 
     const [modalResetPassword, setModalResetPassword] = useState<boolean>(false)
     const [cartCount, setcartCount] = useState<Number>(0)
-    const [searchWord, setSearchWord] = useState<string>('')
+    const [dataProducts, setDataProducts] = useState<Producto[]>([])
     //context
     const {user, logout, loginProvider,modalAuthSignIn,setModalAuthSignIn,modalAuthSignUp,setModalAuthSignUp} = useAuth()
 
@@ -63,9 +64,8 @@ const Layout = (props: propsLayout):JSX.Element =>{
                 loginProvider(res.data)
             ).catch(err=>console.log(err))
         }
-
+        axios.get(`${urlBack}/productos`).then(res=>setDataProducts(res.data)).catch(err=>console.log(err))
     }, [])
-    
     useEffect(() => {
         setcartCount(user?user.carrito?.length:0)
     }, [user])
@@ -107,9 +107,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                             </Link>
                         </div>
                         <div className='searchBar'>
-                            <AutoComplete onChange={(e)=>setSearchWord(e)}>
-                                <Input onPressEnter={(e)=>{router.push(`/productos/${searchWord}`)}} value={searchWord}   prefix={<SearchOutlined />}  placeholder={"Buscar"}></Input>
-                            </AutoComplete>
+                            <Autocomplete dataProducts={dataProducts}/>
                         </div>
                         <div className='menu'>
                                 {
