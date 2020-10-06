@@ -187,7 +187,19 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                     <CloseOutlined onClick={()=>{settoDelete(i);setmodalVisible(true)}}  />
                                 </div>
                             </div>
-                        )):null}
+                        )):
+                        <div className='emptyCart'>
+                            <h1>Tu carrito está vació</h1>
+                            <Link href={'/'}>
+                                <a>
+                                    <button>
+                                        Te invitamos a regresar a la tienda para seguir comprando.
+                                    </button>
+                                    
+                                </a>
+                            </Link>
+                        </div>
+                        }
 
                     </div>
                 </div>

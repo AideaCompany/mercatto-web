@@ -18,7 +18,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faWhatsapp, faInstagram, faFacebookF} from '@fortawesome/free-brands-svg-icons'
 //context
 import useAuth from '../providers/AuthProvider'
-import Modal from 'antd/lib/modal/Modal'
 
 
 
@@ -92,7 +91,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
     return(
         <>
         <Head>
-        <title>{`Mercatto | ${title}`}</title>
+        <title>{`Mercatto | ${title===undefined? '' :title}`}</title>
         <meta name="description" content="Mercatto tienda de comestibles."/>
         <link rel="icon" href="/favicon.ico" />
         </Head> 

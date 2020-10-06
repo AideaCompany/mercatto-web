@@ -3,7 +3,7 @@ import Layout from '../../components/Layout';
 //axios
 import Axios from 'axios';
 //antD
-import { Skeleton, message } from 'antd';
+import { Skeleton } from 'antd';
 //utils
 import {getNewPrice} from '../../utils/functions'
 //Auth
@@ -58,9 +58,9 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                 res.data.map((e:Producto)=>e.precioDescuento=getNewPrice(e.descuento,e.precio))
                 if (user.jwt) {
                     for (let k = 0; k < res.data.length; k++) {
-                        var isInCart = user.carrito?.findIndex(e=>(e.producto as Producto)._id === res.data[k]._id)
+                        var isInCar = user.carrito?.findIndex(e=>(e.producto as Producto)._id === res.data[k]._id)
                         productTemp.push({
-                            count: isInCart>-1 ? user.carrito[isInCart].cantidad : 0,
+                            count: isInCar>-1 ? user.carrito[isInCar].cantidad : 0,
                             _id: res.data[k]._id
                         })
                     }
