@@ -31,7 +31,7 @@ const ResetPasswordComponent = (props:{modalResetPassword:boolean ,setModalReset
     return(
         <Modal width={400} centered onCancel={HandleClose} visible={modalResetPassword}>
                 <div className='containerForm'>
-                    <img className='mainLogo' src={`${pathPublic}images/Layout/mercatto-large.svg`} alt="mercatto logo"/>
+                    <img className='mainLogo' src={`${pathPublic}images/Layout/logoAuth.svg`} alt="mercatto logo"/>
                     <>
                     <h2>Restaurar Contraseña</h2>
                     <Form name='signIn' onFinish={submitForget}>

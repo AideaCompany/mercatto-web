@@ -38,7 +38,7 @@ const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, set
     return(
         <Modal width={400} centered onCancel={HandleClose} visible={modalAuthSignIn}>
                 <div className='containerForm'>
-                    <img className='mainLogo' src={`${pathPublic}images/Layout/mercatto-large.svg`} alt="mercatto logo"/>
+                    <img className='mainLogo' src={`${pathPublic}images/Layout/logoAuth.svg`} alt="mercatto logo"/>
                     {!forgotPassword?
                     <>
                     <h2>Iniciar Sesión</h2>

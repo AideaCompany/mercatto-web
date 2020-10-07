@@ -93,7 +93,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
         <Head>
         <title>{`Mercatto | ${title===undefined? '' :title}`}</title>
         <meta name="description" content="Mercatto tienda de comestibles."/>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
         </Head> 
         <main>
             <div className='mainLayout'>
