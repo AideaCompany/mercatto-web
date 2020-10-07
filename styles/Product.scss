@@ -22,6 +22,9 @@ $mainYellow: #FCD330;
             display: flex;
             justify-content: left;
             align-items: center;
+            p{
+                font-weight: lighter;;
+            }
         }
 
         .productDescription{
@@ -42,6 +45,8 @@ $mainYellow: #FCD330;
             }
             .priceNormal{
                 padding: 0% 0 3% 3%;
+                width: 100%;
+                text-align: left;
             }
         }
         .productCart{

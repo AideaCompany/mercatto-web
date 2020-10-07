@@ -46,7 +46,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     const [firstCall, setFirstCall] = useState<boolean>(false)
     const [openModalProduct, setOpenModalProduct] = useState(false)
     const [idProductModal, setIdProductModal] = useState<string>('')
-
+    const [filterOption, setFilterOption] = useState<string>('')
     //effect
     useEffect(() => {
         if (!firstCall) {
@@ -90,8 +90,31 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     //functions
     const filterDataProducts = (_id:string) =>{
         if (_id === 'all') {
-            setDataProductsToShow(dataProducts)
             setTextCategory(category.Categoria)
+            if (filterOption==='highestPrice') {
+                dataProducts.sort(function (a,b) {
+                    var valueA = a.precioDescuento;
+                    var valueB = b.precioDescuento;
+                    return (valueA>valueB)? -1 : (valueA<valueB) ? 1 : 0;
+                })
+                setDataProductsToShow(dataProducts)
+            }else if (filterOption === 'lowestPrice') {
+                dataProducts.sort(function (a,b) {
+                    var valueA = a.precioDescuento;
+                    var valueB = b.precioDescuento;
+                    return (valueA<valueB)? -1 : (valueA>valueB) ? 1 : 0;
+                })
+                setDataProductsToShow(dataProducts)
+            }else if (filterOption === 'alpha') {
+                dataProducts.sort(function(a,b) {
+                    var textA = a.nombre.toUpperCase();
+                    var textB = b.nombre.toUpperCase();
+                    return (textA<textB)? -1: (textA>textB) ? 1 : 0 ;
+                })
+                setDataProductsToShow(dataProducts)
+            }else{
+                setDataProductsToShow(dataProducts)
+            }
         }else{
             var newProducts:Producto[] = []
             for (let k = 0; k < dataProducts.length; k++) {
@@ -102,7 +125,30 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
             const subcategory = dataSubCategoria.findIndex(e=>e._id===_id)
             setTextCategory(`${category.Categoria}: ${dataSubCategoria[subcategory].titulo}`)
             setMainUrl(`${url}${dataSubCategoria[subcategory].portada.url}`)
-            setDataProductsToShow(newProducts)
+            if (filterOption==='highestPrice') {
+                newProducts.sort(function (a,b) {
+                    var valueA = a.precioDescuento;
+                    var valueB = b.precioDescuento;
+                    return (valueA>valueB)? -1 : (valueA<valueB) ? 1 : 0;
+                })
+                setDataProductsToShow(newProducts)
+            }else if (filterOption === 'lowestPrice') {
+                newProducts.sort(function (a,b) {
+                    var valueA = a.precioDescuento;
+                    var valueB = b.precioDescuento;
+                    return (valueA<valueB)? -1 : (valueA>valueB) ? 1 : 0;
+                })
+                setDataProductsToShow(newProducts)
+            }else if (filterOption === 'alpha') {
+                newProducts.sort(function(a,b) {
+                    var textA = a.nombre.toUpperCase();
+                    var textB = b.nombre.toUpperCase();
+                    return (textA<textB)? -1: (textA>textB) ? 1 : 0 ;
+                })
+                setDataProductsToShow(newProducts)
+            }else{
+                setDataProductsToShow(newProducts)
+            }
         }
     }
 
@@ -189,6 +235,69 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
         setModalAuthSignIn(true)
     }
 
+    const filter = (parameter:string) =>{
+        var productsTemp = JSON.parse(JSON.stringify(dataProductsToShow))
+        var d = Array.from(document.getElementsByClassName(parameter) as HTMLCollectionOf<HTMLElement>)
+        switch (parameter) {
+            case 'alpha':
+                Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
+                if (filterOption===parameter) {
+                    setFilterOption('')
+                    setDataProductsToShow(productsTemp)
+                    d[0].classList.remove('activeFilter')
+                }else{
+                    setFilterOption(parameter)
+                    productsTemp.sort(function(a,b) {
+                        var textA = a.nombre.toUpperCase();
+                        var textB = b.nombre.toUpperCase();
+                        return (textA<textB)? -1: (textA>textB) ? 1 : 0 ;
+                    })
+                    setDataProductsToShow(productsTemp)
+                    d[0].classList.add('activeFilter') 
+                }
+                break;
+            case 'highestPrice':
+                Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
+                if (filterOption===parameter) {
+                    setFilterOption('')
+                    setDataProductsToShow(productsTemp)
+                    d[0].classList.remove('activeFilter')
+                }else{
+                    setFilterOption(parameter)
+                    productsTemp.sort(function (a,b) {
+                        var valueA = a.precioDescuento;
+                        var valueB = b.precioDescuento;
+                        return (valueA>valueB)? -1 : (valueA<valueB) ? 1 : 0;
+                    })
+                    setDataProductsToShow(productsTemp)
+                    d[0].classList.add('activeFilter') 
+                }
+                break;
+            case 'lowestPrice':
+                Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
+                if (filterOption === parameter) {
+                    setFilterOption('')
+                    setDataProductsToShow(productsTemp)
+                    d[0].classList.remove('activeFilter')
+                }else{
+                    setFilterOption(parameter)
+                    productsTemp.sort(function (a,b) {
+                        var valueA = a.precioDescuento;
+                        var valueB = b.precioDescuento;
+                        return (valueA<valueB)? -1 : (valueA>valueB) ? 1 : 0;
+                    })
+                    setDataProductsToShow(productsTemp)
+                    d[0].classList.add('activeFilter') 
+                }
+
+                break;
+            default:
+                break;
+        }
+    }
 
     return(
         <div>
@@ -205,13 +314,22 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                                 ))}
                             </ul>
                         </div>
+                        <div style={{marginTop:'30px'}} className='filter'>
+                            <h1>filtrar por:</h1>
+                            <div onClick={()=>filter('highestPrice')} id='highestPrice' className='highestPrice'>
+                                <span>Mayor Precio</span>
+                            </div>
+                            <div onClick={()=>filter('lowestPrice')} id="lowestPrice" className='lowestPrice'>
+                                <span>Menor precio</span>
+                            </div>
+                            <div onClick={()=>filter('alpha')} id="alpha" className='alpha'>
+                                <span>Orden alfabético</span>
+                            </div>
+                        </div>
                     </div>
                     <div className='categoryRight'>
                         <div>
                             <div className='firstTarget'>
-                                <div className='imgCategory'>
-                                    <img src={mainUrl} alt='categorias Mercatto'/>
-                                </div>
                                 <div className='textCategory'>
                                     <h1>{textCategory}</h1>
                                 </div>

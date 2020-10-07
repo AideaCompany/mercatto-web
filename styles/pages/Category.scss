@@ -17,10 +17,7 @@ $colorText : #5e5e5e;
 
     .categoryLeft, .productLeft {
         width: 300px;
-        max-height: 500px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        max-height: 1000px;
         position: fixed;
         z-index: 3;
         padding: 0.7%;
@@ -114,19 +111,9 @@ $colorText : #5e5e5e;
                     height: 100px;
                 }
 
-                .imgCategory {
-                    width: 30%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    overflow: hidden;
-                    img {
-                        width: 30%;
-                    }
-                }
 
                 .textCategory {
-                    width: 70%;
+                    width: 100%;
                     display: flex;
                     justify-content: left;
                     align-items: center;
@@ -233,7 +220,7 @@ $colorText : #5e5e5e;
                                 .productName {
                                     font-size: 1.5em;
                                     width: 100%;
-                                    font-weight: bold;
+                                    font-weight: lighter;
                                     -webkit-line-clamp: 1;
                                     -webkit-box-orient: vertical;
                                     display: -webkit-box;
@@ -243,7 +230,7 @@ $colorText : #5e5e5e;
 
                                 .productPrice {
                                     font-size: 1.5em;
-                                    font-weight: bold;
+                                    font-weight: 600;
                                     float: left;
                                 }
                                 .productDescuento{
