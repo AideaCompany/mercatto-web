@@ -110,6 +110,11 @@ const Layout = (props: propsLayout):JSX.Element =>{
                             <Autocomplete dataProducts={dataProducts}/>
                         </div>
                         <div className='menu'>
+                                <div className='socialMediaIcons'>
+                                    <a className='socialIcon' href="/"><FontAwesomeIcon icon={faFacebookF}/></a>
+                                    <a className='socialIcon' href="/"><FontAwesomeIcon icon={faInstagram} /></a>
+                                    <a className='socialIcon' href="/"><FontAwesomeIcon icon={faWhatsapp}/></a>
+                                </div>
                                 {
                                     user.jwt ? 
                                     <>
@@ -142,11 +147,6 @@ const Layout = (props: propsLayout):JSX.Element =>{
                     {children}
                 </div>
                 <div className='footer'>
-                        <div className='socialMediaIcons'>
-                            <a className='socialIcon' href="/"><FontAwesomeIcon icon={faFacebookF}/></a>
-                            <a className='socialIcon' href="/"><FontAwesomeIcon icon={faInstagram} /></a>
-                            <a className='socialIcon' href="/"><FontAwesomeIcon icon={faWhatsapp}/></a>
-                        </div>
                         <div className='infoSocial'>
                             <Link  href='/terminos_condiciones'>
                                 <a>

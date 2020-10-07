@@ -63,11 +63,22 @@ $mainYellow: #FCD330;
                 width: 25%;
                 height: 100px;
                 display: flex;
-                // flex-direction: row-reverse;;
                 align-items: center;
                 justify-content: center;
                 margin-top: 20px;
-                
+                .socialMediaIcons{
+                    display: flex;
+                    a{
+                        color: #fff;
+                        font-size: 1em;
+                        margin: 10px;
+                        svg{
+                            width: 25px;
+                            height: 25px;
+                        }
+                    }
+                    margin-right: 50px;;
+                }
                 .iconCart{
                     font-size: 25pt;
                     color: $mainGrey;

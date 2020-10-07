@@ -5,15 +5,8 @@ import Layout from '../components/Layout'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 //provider
-import useAuth from '../providers/AuthProvider'
 import Carousel from '@brainhubeu/react-carousel';
-import { useScroll } from 'react-use-gesture';
 
-//Types
-// import {Producto, Carrito} from '../utils/types'
-
-// import {Button, message} from 'antd'
-// import axios from 'axios'
 
 
 //types
@@ -50,8 +43,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
   //props
   const {dataCategoria, urlBack, confirmed, code, tokenProvider, dataOfertas, dataMarcas} = props
 
-  //Provider
-  const {user ,setModalAuthSignIn,updateUser } = useAuth()
+  //priverder
   const router = useRouter()
   //state
   const [dataOfertaFinal, setDataOfertaFinal] = useState<Ofertas>()
@@ -59,66 +51,9 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
   //effect
   useEffect(() => {
     setDataOfertaFinal(dataOfertas[0])
-    // var productTemp: countProduct[] = []
-    // dataProductos.map(e=>e.precioDescuento=getNewPrice(e.descuento,e.precio))
-    // for (let k = 0; k < dataProductos.length; k++) {
-    //   productTemp.push({
-    //     count: 0,
-    //     _id: dataProductos[k]._id
-    //   })
-    // }
-    // setCartProducts(productTemp)
+
   }, [])
 
-  //functions
-  // const plusProduct = (id:string) =>{
-  //   var tempCartProducts : countProduct[] = JSON.parse(JSON.stringify(cartProducts))
-  //   var index = tempCartProducts.findIndex(e=> e._id === id)
-  //   tempCartProducts[index].count += 1
-  //   setCartProducts(tempCartProducts)
-  // }
-
-  // const minusProduct = (id:string)=>{
-  //   var tempCartProducts : countProduct[] = JSON.parse(JSON.stringify(cartProducts))
-  //   var index = tempCartProducts.findIndex(e=> e._id === id)
-  //   if (tempCartProducts[index].count>0) {
-  //     tempCartProducts[index].count -= 1
-  //   }
-  //   setCartProducts(tempCartProducts)
-  // }
-
-  // const addProduct = (id:string)=>{
-  //   var tempCartProducts : countProduct[] = JSON.parse(JSON.stringify(cartProducts))
-  //   var index = tempCartProducts.findIndex(e=> e._id === id)
-  //   if (user.jwt && tempCartProducts[index].count>0) {
-  //     var carrito: Carrito[] = user.carrito
-  //     var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)._id === id)
-  //     if (isProdcut >-1) {
-  //       carrito[isProdcut].cantidad += tempCartProducts[index].count
-  //     }else{
-  //       carrito.push({cantidad:tempCartProducts[index].count, producto: tempCartProducts[index]._id })
-  //     }
-  //     axios.put(`${urlBack}/users/${user._id}`,{
-  //       carrito: carrito
-  //     },
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${user.jwt}`
-  //       }
-  //     }
-  //     ).then(res=>{
-  //       message.success({content:"Producto agregado",className: 'messageVerification',duration: '5'})
-  //       updateUser(res)})
-  //      .catch(err=>{
-  //        console.log(err)
-  //      })
-  //   }else if (tempCartProducts[index].count==0) {
-  //     message.info({content:"Porfavor indica la cantidad",className: 'messageVerification',duration: '5'})
-  //   }else{
-  //     message.info({content:"Porfavor inicia sesión para usar el carrito",className: 'messageVerification',duration: '5'})
-  //     setModalAuthSignIn(true)
-  //   }
-  // }
   return (
     <div>
       <Layout tokenProvider={tokenProvider} logoWhite={false} pathPublic={'./'} code={code} confirmed={confirmed} urlBack={urlBack} title='Categorías' color='#8D8D8D' background='#EEEEEE'>
@@ -128,7 +63,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
             <Carousel animationSpeed={500} arrows={true} infinite={true}  draggable={true} slidesPerPage={1} >
                 {dataOfertaFinal?.Ofertas?.map(oferta=> {
                   return(
-                  <div className='targetOffer'>
+                  <div onClick={()=>router.push({pathname:`/productos/${oferta.ref.titulo.toLowerCase()}`,query:{ofer:'yes'}})} className='targetOffer'>
                     <h2>{oferta.ref.titulo}</h2>
                     <img src={`${urlBack}${oferta.ref.imagen.url}`} alt={`Mercatto ${oferta.ref.titulo}`}/>
                     <div className='back'></div>

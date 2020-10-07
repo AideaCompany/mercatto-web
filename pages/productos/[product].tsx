@@ -17,11 +17,11 @@ type Count = {
     _id: string
 }
 
-const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], titleInit: string}) =>{
+const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], titleInit: string, ofer?:boolean}) =>{
     //context
     const {user ,setModalAuthSignIn,updateUser } = useAuth()
 
-    const {url,  dataProducts, titleInit } = props
+    const {url,  dataProducts, titleInit, ofer } = props
     //state
     const [title, settitle] = useState<string>()
     const [dataProductsToShow, setDataProductsToShow] = useState<Producto[]>([])
@@ -50,7 +50,20 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
         setProductCart(productTemp)
         setDataProductsToShow(dataProductsTemp)
         setDataProductsInit(dataProductsTemp)
-        settitle(`Resultados de busqueda para: ${titleInit}`)
+        console.log(ofer)
+        if (ofer) {
+            if (titleInit==='promociones') {
+                settitle(`Productos en promoción`)
+            }else if (titleInit==='recomendados') {
+                settitle(`Productos recomendados`)
+            }else if (titleInit === 'combos') {
+                settitle(`Combos`)
+            }
+            
+        }else{
+            settitle(`Resultados de busqueda para: ${titleInit}`)
+        }
+        
     }, [user])
 
     //Functions
@@ -292,9 +305,15 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
 
 export async function getServerSideProps (ctx) {
     const URL = process.env.URL_STRAPI;
-    const dataProducts = await fetch(`${URL}/productos?search_product=${ctx.query.product}`,{method: 'GET'})
+    var dataProducts 
+    if (ctx.query.ofer) {
+        dataProducts = await fetch(`${URL}/productos?${ctx.query.product}`,{method: 'GET'})
+    }else{
+        dataProducts = await fetch(`${URL}/productos?search_product=${ctx.query.product}`,{method: 'GET'})
+
+    }
     const jsonProducts = await dataProducts.json()
-    return {props: {url:URL, dataProducts: jsonProducts, titleInit: ctx.query.product}}
+    return {props: {url:URL, dataProducts: jsonProducts, titleInit: ctx.query.product, ofer: ctx.query.ofer? true : false}}
 }
 
 export default ProductSearchComponent
