@@ -250,8 +250,12 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
                                                         {user.jwt?
                                                             <>
                                                                 <span>{getCountCart(product._id)}</span>
-                                                                <button onClick={(e)=>removeCart(product._id,e)} className='buttonCount'>-</button>
-                                                                <button onClick={(e)=>addCart(product._id, e)} className='buttonCount'>+</button>
+                                                                <button onClick={(e)=>removeCart(product._id,e)} className='buttonCount'>
+                                                                    <span>-</span>
+                                                                </button>
+                                                                <button onClick={(e)=>addCart(product._id, e)} className='buttonCount'>
+                                                                    <span>+</span>
+                                                                </button>
                                                             </>
                                                         :
                                                     <button onClick={openAuth} className='buttonAdd'>Agregar</button>

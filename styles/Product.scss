@@ -8,6 +8,22 @@ $mainYellow: #FCD330;
         width: 50%;
         height: 100%;
     }
+    .imgProduct{
+        position: relative;
+        .off{
+            position: absolute;
+            left: 0;
+            top: 80%;
+            width: 50px;
+            height: 50px;
+            background-color: $mainBlue;
+            color: #ffF;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
 
     .productInfo{
         >div{

@@ -106,12 +106,17 @@ $colorText : #5e5e5e;
                         border-radius: 10px;
                         background-color: $mainYellow !important;
                         color: $mainBlue;
-                        font-size: 2em;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        padding-bottom: 5px;
                         margin: 10px;
+                        position: relative;
+                        span{
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            -webkit-transform: translate(-50%, -50%);
+                            height: 40px;
+                            width: 40px; 
+                        }
                     }
                     svg{
                         font-size: 1em;

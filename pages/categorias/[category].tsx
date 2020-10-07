@@ -357,8 +357,12 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                                                         {user.jwt?
                                                             <>
                                                                 <span>{getCountCart(producto._id)}</span>
-                                                                <button onClick={(e)=>removeCart(producto._id,e)} className='buttonCount'>-</button>
-                                                                <button onClick={(e)=>addCart(producto._id, e)} className='buttonCount'>+</button>
+                                                                <button onClick={(e)=>removeCart(producto._id,e)} className='buttonCount'>
+                                                                    <span>-</span>
+                                                                </button>
+                                                                <button onClick={(e)=>addCart(producto._id, e)} className='buttonCount'>
+                                                                    <span>+</span>
+                                                                </button>
                                                             </>
                                                         :
                                                             <button onClick={openAuth} className='buttonAdd'>Agregar</button>

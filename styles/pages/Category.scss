@@ -196,10 +196,15 @@ $colorText : #5e5e5e;
                                     border-radius: 10px ;
                                     text-align: center;
                                     margin: 5px;
-                                    display: flex;
-                                    justify-content: center;
-                                    align-items: center;
-                                    padding-bottom: 5px;
+                                    position: relative;
+                                    span{
+                                        position: absolute;
+                                        top: 40%;
+                                        left: 50%;
+                                        transform: translate(-50%, -50%);
+                                        -webkit-transform: translate(-50%, -50%);
+                                    }
+
                                 }
                                 .buttonCount:hover, .buttonAdd:hover{
                                     background-color: rgba($color: $mainYellow, $alpha: 0.8) !important;

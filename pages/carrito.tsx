@@ -182,8 +182,12 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                 </div>
                                 <div className='productAction'>
                                     <span>{product.cantidad}</span>
-                                    <button onClick={()=>minus(i)}>-</button>
-                                    <button onClick={()=>plus(i)}>+</button>
+                                    <button onClick={()=>minus(i)}>
+                                        <span>-</span>
+                                    </button>
+                                    <button onClick={()=>plus(i)}>
+                                        <span>+</span>
+                                    </button>
                                     <CloseOutlined onClick={()=>{settoDelete(i);setmodalVisible(true)}}  />
                                 </div>
                             </div>

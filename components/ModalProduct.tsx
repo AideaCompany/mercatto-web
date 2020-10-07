@@ -118,6 +118,11 @@ const ModalProduct = (props:PropsModal) => {
                 {!loading?
                 <>
                     <div className='imgProduct'>
+                        {dataProduct.descuento>0?
+                            <div className='off'>
+                                <span>{dataProduct.descuento}%</span>
+                            </div>
+                        :null}
                         <InnerImageZoom alt={`Mercatto ${dataProduct.nombre}`} src={`${urlBack}${dataProduct.imagenes.url}`}/> 
                     </div>
                     <div className='productInfo'>
