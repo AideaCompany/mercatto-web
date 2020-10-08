@@ -17,11 +17,11 @@ type Count = {
     _id: string
 }
 
-const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], titleInit: string, ofer?:boolean}) =>{
+const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], titleInit: string, ofer?:boolean, brand?:string}) =>{
     //context
     const {user ,setModalAuthSignIn,updateUser } = useAuth()
 
-    const {url,  dataProducts, titleInit, ofer } = props
+    const {url,  dataProducts, titleInit, ofer , brand} = props
     //state
     const [title, settitle] = useState<string>()
     const [dataProductsToShow, setDataProductsToShow] = useState<Producto[]>([])
@@ -75,7 +75,10 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
                 settitle(`Combos`)
             }
             
-        }else{
+        }else if (brand !=='') {
+            settitle(`Productos de la marca: ${brand}`)
+        }
+        else{
             settitle(`Resultados de busqueda para: ${titleInit}`)
         }
         
@@ -357,7 +360,7 @@ export async function getServerSideProps (ctx) {
         dataProducts = await fetch(`${URL}/productos?search_product=${ctx.query.product}`,{method: 'GET'})
     }
     const jsonProducts = await dataProducts.json()
-    return {props: {url:URL, dataProducts: jsonProducts, titleInit: ctx.query.product, ofer: ctx.query.ofer? true : false}}
+    return {props: {url:URL, dataProducts: jsonProducts, titleInit: ctx.query.product, ofer: ctx.query.ofer? true : false, brand: ctx.query.brand? ctx.query.brand:""}}
 }
 
 export default ProductSearchComponent
