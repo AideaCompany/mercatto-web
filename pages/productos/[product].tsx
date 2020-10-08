@@ -41,7 +41,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
             dataProductsTemp.map(e=>e.precioDescuento=getNewPrice(e.descuento, e.precio))
             if (user.jwt) {
                 for (let k = 0; k < dataProductsTemp.length; k++) {
-                    var isInCar = user.carrito?.findIndex(e=>(e.producto as Producto)?._id=== dataProductsTemp[k]._id)
+                    var isInCar = user.carrito?.findIndex(e=>(e?.producto as Producto)?._id=== dataProductsTemp[k]._id)
                     productTemp.push({
                         count: isInCar>-1?user.carrito[isInCar].cantidad:0,
                         _id: dataProductsTemp[k]._id
@@ -52,7 +52,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
             for (let k = 0; k < dataProductsTemp.length; k++) {
                 dataProductsTemp[k].precioDescuento=getNewPrice(0, dataProductsTemp[k].precio)
                 var productsCombo = []
-                var isInCar = user.carrito?.findIndex(e=>(e.combo as ProductoCombo)?._id=== dataProductsTemp[k]._id)
+                var isInCar = user.carrito?.findIndex(e=>(e?.combo as ProductoCombo)?._id=== dataProductsTemp[k]._id)
                 for (let m = 0; m < dataProductsTemp[k].producto.length; m++) {
                     productsCombo.push(` ${(dataProductsTemp[k].producto[m].producto as Producto).nombre} x${dataProductsTemp[k].producto[m].cantidad}U`)
                 }
@@ -69,7 +69,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
         if (ofer) {
             if (titleInit==='promociones') {
                 settitle(`Productos en promoción`)
-            }else if (titleInit==='recomendados') {
+            }else if (titleInit==='productos recomendados') {
                 settitle(`Productos recomendados`)
             }else if (titleInit === 'combos') {
                 settitle(`Combos`)
@@ -93,7 +93,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
             var posProduct = dataProducts.findIndex(e=>e._id===id)
             var count = tempCartProducts[index].count += 1
             if (titleInit !== 'combos') {
-                var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)?._id === id)
+                var isProdcut = user.carrito.findIndex(e=>(e?.producto as Producto)?._id === id)
                 if (isProdcut >-1) {
                     carrito[isProdcut].cantidad = tempCartProducts[index].count
                 }else{
@@ -101,7 +101,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
                 }
                 
             }else{
-                var isProdcut = user.carrito.findIndex(e=>(e.combo as ProductoCombo)?._id === id)
+                var isProdcut = user.carrito.findIndex(e=>(e?.combo as ProductoCombo)?._id === id)
                 if (isProdcut >-1) {
                     carrito[isProdcut].cantidad = tempCartProducts[index].count
                 }else{
@@ -125,7 +125,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
             if (tempCartProducts[index].count>0) {
                 var count = tempCartProducts[index].count -= 1
                 if (titleInit !== 'combos') {
-                    var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)?._id === id)
+                    var isProdcut = user.carrito.findIndex(e=>(e?.producto as Producto)?._id === id)
                     if (count > 0) {
                         if (isProdcut>-1) {
                             carrito[isProdcut].cantidad = count
@@ -136,7 +136,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
                         carrito.splice(isProdcut,1)
                     }
                 }else{
-                    var isProdcut = user.carrito.findIndex(e=>(e.combo as ProductoCombo)?._id === id)
+                    var isProdcut = user.carrito.findIndex(e=>(e?.combo as ProductoCombo)?._id === id)
                     if (count > 0) {
                         if (isProdcut>-1) {
                             carrito[isProdcut].cantidad = count

@@ -38,7 +38,6 @@ export const AuthProvider = ({children})=>{
                         Authorization: `Bearer ${Cookie.get('authTokenMercatto')}`
                     }
                 }).then(res=>{
-                    console.log(res)
                     setUser({
                         _id:res.data._id,
                         nombre: res.data.nombre,

@@ -43,34 +43,33 @@ const carrito = (props:{url:string}):JSX.Element=>{
 
 
     useEffect(() => {
-        console.log(user)
         if (user.direccion !== '' || !user.direccion ) {
             setDireccion(user.direccion)
         }
         gsap.registerPlugin(CSSPlugin)
         var actual:showCarrito[] = user?.carrito
         actual?.map(e=>{
-            if (e.combo) {
-                (e.combo as ProductoCombo).precioDescuento = getNewPrice(0,(e.combo as ProductoCombo).precio) 
-                e.totalPrecio=e.cantidad*((e.combo) as ProductoCombo).precio
-                e.precio = getNewPrice(0,e.totalPrecio)  
-            }else{
-                (e.producto as Producto).precioDescuento = getNewPrice((e.producto as Producto).descuento,(e.producto as Producto).precio)
-                e.totalPrecio=e.cantidad*((e.producto) as Producto).precio 
-                e.precio = getNewPrice((e.producto as Producto).descuento,e.totalPrecio)  
-                e.peso = (e.producto as Producto).peso
-            }         
+            if (e!==null) {
+                if (e?.combo) {
+                    (e?.combo as ProductoCombo).precioDescuento = getNewPrice(0,(e?.combo as ProductoCombo)?.precio) 
+                    e.totalPrecio=e.cantidad*((e.combo) as ProductoCombo).precio
+                    e.precio = getNewPrice(0,e.totalPrecio)  
+                }else{
+                    (e?.producto as Producto).precioDescuento = getNewPrice((e?.producto as Producto)?.descuento,(e?.producto as Producto)?.precio)
+                    e.totalPrecio=e.cantidad*((e.producto) as Producto).precio 
+                    e.precio = getNewPrice((e.producto as Producto).descuento,e.totalPrecio)  
+                    e.peso = (e.producto as Producto).peso
+                }
+            }    
         })
         for (let k = 0; k < actual?.length; k++) {
             if (actual[k]?.combo) {
-                console.log(actual[k]?.combo)
-                var combo = ((actual[k]?.combo as ProductoCombo).producto as ProductoCombo[])
+                var combo = ((actual[k]?.combo as ProductoCombo)?.producto as ProductoCombo[])
                 var tempDes = []
                 for (let m = 0; m < combo.length; m++) {
-                    tempDes.push(`${(combo[m].producto as Producto).nombre} x${combo[m].cantidad}`)
+                    tempDes.push(`${(combo[m]?.producto as Producto).nombre} x${combo[m]?.cantidad}`)
                 }
-                console.log(tempDes);
-                (actual[k].combo as ProductoCombo).descripcion = tempDes.join(', ')
+                (actual[k]?.combo as ProductoCombo).descripcion = tempDes.join(', ')
             }
             
         }
@@ -91,19 +90,19 @@ const carrito = (props:{url:string}):JSX.Element=>{
     const plus= (pos)=>{
         actualCart[pos].cantidad +=1
         actualCart?.map(e=>{
-            if (e.combo) {
-                (e.combo as ProductoCombo).precioDescuento = getNewPrice(0,(e.combo as ProductoCombo).precio) 
-                e.totalPrecio=e.cantidad*((e.combo) as ProductoCombo).precio
-                e.precio = getNewPrice(0,e.totalPrecio)  
+            if (e?.combo) {
+                (e?.combo as ProductoCombo).precioDescuento = getNewPrice(0,(e?.combo as ProductoCombo).precio) 
+                e.totalPrecio=e.cantidad*((e?.combo) as ProductoCombo).precio
+                e.precio = getNewPrice(0,e?.totalPrecio)  
             }else{
-                (e.producto as Producto).precioDescuento = getNewPrice((e.producto as Producto).descuento,(e.producto as Producto).precio) 
-                e.totalPrecio=e.cantidad*((e.producto) as Producto).precio
-                e.precio = getNewPrice((e.producto as Producto).descuento,e.totalPrecio)            
-                e.peso = (e.producto as Producto).peso
+                (e.producto as Producto).precioDescuento = getNewPrice((e?.producto as Producto).descuento,(e?.producto as Producto).precio) 
+                e.totalPrecio=e.cantidad*((e?.producto) as Producto)?.precio
+                e.precio = getNewPrice((e?.producto as Producto).descuento,e?.totalPrecio)            
+                e.peso = (e?.producto as Producto)?.peso
             }
 
         })
-        settotalPrice(actualCart?.map(e=>e.precio).reduce((a,b)=>a+b,0))
+        settotalPrice(actualCart?.map(e=>e?.precio).reduce((a,b)=>a+b,0))
         setactualCart([...actualCart])
     }
 
@@ -111,18 +110,18 @@ const carrito = (props:{url:string}):JSX.Element=>{
         if(actualCart[pos].cantidad>1){
             actualCart[pos].cantidad -=1
             actualCart?.map(e=>{
-                if (e.combo) {
-                    (e.combo as ProductoCombo).precioDescuento = getNewPrice(0,(e.combo as ProductoCombo).precio) 
-                    e.totalPrecio=e.cantidad*((e.combo) as ProductoCombo).precio
-                    e.precio = getNewPrice(0,e.totalPrecio)  
+                if (e?.combo) {
+                    (e?.combo as ProductoCombo).precioDescuento = getNewPrice(0,(e?.combo as ProductoCombo)?.precio) 
+                    e.totalPrecio=e.cantidad*((e?.combo) as ProductoCombo)?.precio
+                    e.precio = getNewPrice(0,e?.totalPrecio)  
                 }else{
-                    (e.producto as Producto).precioDescuento = getNewPrice((e.producto as Producto).descuento,(e.producto as Producto).precio) 
-                    e.totalPrecio=e.cantidad*((e.producto) as Producto).precio
-                    e.precio = getNewPrice((e.producto as Producto).descuento,e.totalPrecio)            
-                    e.peso = (e.producto as Producto).peso
+                    (e?.producto as Producto).precioDescuento = getNewPrice((e?.producto as Producto)?.descuento,(e?.producto as Producto)?.precio) 
+                    e.totalPrecio=e?.cantidad*((e?.producto) as Producto)?.precio
+                    e.precio = getNewPrice((e?.producto as Producto)?.descuento,e?.totalPrecio)            
+                    e.peso = (e?.producto as Producto)?.peso
                 }
             })
-            settotalPrice(actualCart?.map(e=>e.precio).reduce((a,b)=>a+b,0))
+            settotalPrice(actualCart?.map(e=>e?.precio).reduce((a,b)=>a+b,0))
             setactualCart([...actualCart])
         }else{
             settoDelete(pos)

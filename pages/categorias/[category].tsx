@@ -83,10 +83,12 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
             var productCartTemp: Count[] = JSON.parse(JSON.stringify(productCart))
             if (isProductCart> -1) {
                 productCartTemp[isProduct].count = user.carrito[isProductCart]?.cantidad
+            }else{
+                productCartTemp[isProduct].count = 0
             }
             setProductCart(productCartTemp)
         }
-    }, [openModalProduct])
+    }, [user])
 
     //functions
     const filterDataProducts = (_id:string) =>{
