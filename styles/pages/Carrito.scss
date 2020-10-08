@@ -191,11 +191,25 @@ $colorText : #5e5e5e;
                 }
             }
             .buttons{
-                text-align: center;
                 width: 100%;
                 padding-top: 2vh;
+                text-align: center;
+                .totalsCarrito{
+                  width: 90%;
+                  height: 100px;  
+                  text-align: right;
+                  .subTotal{
+                    font-size: 1.5em;
+                    width: 100%;
+                    text-align: right !important;
+                    color: $mainBlue;
+                    }
+                    .total{
+                        font-size: 2em;
+                    }
+                }
+                
                 span{
-                    font-size: 2.5vw;
                     color: $mainBlue;
                     
                 }
