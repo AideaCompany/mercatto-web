@@ -22,8 +22,19 @@ $colorText : #5e5e5e;
         background-color: #fff;
         margin-right: 50px;
         padding: 2%;
-        >h1{
-            color: $mainBlue;
+        
+        .titleCarrito{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            >h1{
+                color: $mainBlue;
+            }
+            span{
+                color: $mainBlue;
+                font-size: 1.5em;
+            }
         }
         .containerProducts{
             width: 100%;
@@ -189,7 +200,7 @@ $colorText : #5e5e5e;
                     
                 }
                 button{
-                    margin: 1vw;
+                    margin: 0.5vw;
                 }
             }
     

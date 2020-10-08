@@ -6,7 +6,7 @@ import {useRouter} from 'next/router'
 import Layout from '../components/Layout';
 //antd
 import { Modal ,Form, Button, message, Input, Checkbox} from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined , CheckCircleTwoTone, WarningTwoTone} from '@ant-design/icons';
 //context
 import useAuth from '../providers/AuthProvider'
 //types
@@ -78,16 +78,15 @@ const carrito = (props:{url:string}):JSX.Element=>{
     }, [user])
 
     //functions
-    const divWrapper =  (state: string) => {
-        const t1 = new TimelineMax({paused: true})
-        if (state === 'open') {
-            t1.to('.confirmCart', 0.5 , {opacity: 1 , top: '60vh', ease: Power4.easeInOut}).play()
-        }else{
-            t1.to('.confirmCart', 0.5 , {opacity: 0, top: '100vh', ease: Power4.easeInOut}).play()
-        }
+    const vaciarCarrito =  () => {
+        setactualCart([])
     }
 
-    const plus= (pos)=>{
+    useEffect(() => {
+        updateCart()
+    }, [actualCart])
+
+    const plus= async (pos)=>{
         actualCart[pos].cantidad +=1
         actualCart?.map(e=>{
             if (e?.combo) {
@@ -106,7 +105,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
         setactualCart([...actualCart])
     }
 
-    const minus = (pos)=>{
+    const minus = async (pos)=>{
         if(actualCart[pos].cantidad>1){
             actualCart[pos].cantidad -=1
             actualCart?.map(e=>{
@@ -127,7 +126,16 @@ const carrito = (props:{url:string}):JSX.Element=>{
             settoDelete(pos)
             setmodalVisible(true);
         }
+    }
 
+    const updateCart = async () =>{
+        await axios.put(`${url}/users/${user._id}`,{
+            carrito:actualCart
+        },{
+            headers:{
+                Authorization: `Bearer ${user.jwt}`  
+            }
+        }).then(res=>updateUser(res)).catch(err=>console.log(err))
     }
 
     const HandleClose = ()=>{
@@ -210,7 +218,15 @@ const carrito = (props:{url:string}):JSX.Element=>{
     <Layout urlBack={url}  logoWhite={false} pathPublic={'../../'} title={"Carrito"} color={"#8D8D8D"}  background={"#EEEEEE"}>
             <div className='carritoMain'>
                 <div className='carritoLeft'>
-                    <h1>Tu Carrito</h1>
+                    <div className='titleCarrito'>
+                        <h1>Tu Carrito</h1>
+                        {totalPrice>30000?
+                            <span><CheckCircleTwoTone twoToneColor="#52c41a"/> Has completado el pedido mínimo</span>
+                        :
+                            <span><WarningTwoTone twoToneColor="#eb2f96"/> Te faltan: <span>${30000-totalPrice}</span>para completar el pedido minimo</span>   
+                        }
+                    </div>
+                    
                     <div className='containerProducts'>
                         {actualCart?.length>0 ? actualCart?.map((product,i)=>(
                             <div key={product._id} className='productItem'>
@@ -280,10 +296,10 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                 <span>Total: ${formatNumber(totalPrice)}</span>
                                 <br/>
                                 <div>
-                                    <button onClick={()=>divWrapper('close')} type="button" className="btn btn-primary btn-lg">
-                                        Cancelar
+                                    <button onClick={()=>vaciarCarrito()} type="button" className="btn btn-primary btn-lg">
+                                        Vaciar Carrito
                                     </button>
-                                    <button onClick={okCart} type="button" className="btn btn-primary btn-lg">
+                                    <button disabled={totalPrice>=30000?false:true} onClick={okCart} type="button" className="btn btn-primary btn-lg">
                                         Realizar pedido
                                     </button>
                                 </div>
