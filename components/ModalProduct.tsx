@@ -2,7 +2,7 @@ import React, {useState, useEffect, Dispatch, SetStateAction} from 'react'
 //reactImg
 import InnerImageZoom from 'react-inner-image-zoom';
 //AntDesign 
-import { Modal} from 'antd'
+import { Modal, message} from 'antd'
 //provider
 import useAuth from '../providers/AuthProvider'
 //axios
@@ -159,6 +159,7 @@ const ModalProduct = (props:PropsModal) => {
                 Authorization: `Bearer ${user.jwt}`
             }
         }).then(res=>{
+            message.success({content:"Producto agregado al carrito",className: 'messageVerification',duration: '10'})
             updateUser(res)
         }).catch(err=>console.log(err))
     }

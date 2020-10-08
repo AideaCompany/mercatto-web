@@ -167,7 +167,6 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
             }
         }
         ).then(res=>{
-            
             updateUser(res)})
         .catch(err=>{
             console.log(err)
