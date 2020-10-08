@@ -155,7 +155,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
             }
         }).then(res=>{  
             updateUser(res);
-            message.success({content:"Producto eliminado",className: 'messageVerification',duration: '60'})
+            message.success({content:"Producto eliminado",className: 'messageVerification',duration: '10'})
         }).catch(err=>console.log(err))
     }
  
@@ -223,7 +223,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                         {totalPrice>30000?
                             <span><CheckCircleTwoTone twoToneColor="#52c41a"/> Has completado el pedido mínimo</span>
                         :
-                            <span><WarningTwoTone twoToneColor="#eb2f96"/> Te faltan: <span>${30000-totalPrice}</span>para completar el pedido minimo</span>   
+                            <span><WarningTwoTone twoToneColor="#eb2f96"/> Te faltan: <span>${30000-totalPrice}</span>para completar el pedido mínimo</span>   
                         }
                     </div>
                     

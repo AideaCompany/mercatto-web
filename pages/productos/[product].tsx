@@ -351,6 +351,8 @@ export async function getServerSideProps (ctx) {
         }else{
             dataProducts = await fetch(`${URL}/productos?${ctx.query.product}`,{method: 'GET'})
         }
+    }else if (ctx.query.brand) {
+            dataProducts = await fetch(`${URL}/productos?brand=${ctx.query.product}`,{method: 'GET'})
     }else{
         dataProducts = await fetch(`${URL}/productos?search_product=${ctx.query.product}`,{method: 'GET'})
     }

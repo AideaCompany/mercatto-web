@@ -75,9 +75,12 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
           <div className='brands'>
             <Carousel arrows={true} infinite={true} slidesPerPage={3}>
               {dataMarcas?.map(marca=>(
-                <div className='targetBrand'>
-                  <img src={`${urlBack}${marca.logo.url}`} alt={`Mercatto ${marca.nombre}`}/>
-                </div>
+                <Link href={{pathname:`/productos/${marca._id}`, query:{brand:'yes'}}}>
+                  <a key={marca._id} className='targetBrand'>
+                      <img src={`${urlBack}${marca.logo.url}`} alt={`Mercatto ${marca.nombre}`}/>
+                  </a>
+                </Link>
+                
               ))}
             </Carousel>
           </div>
