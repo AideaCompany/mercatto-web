@@ -5,11 +5,12 @@ import Axios from 'axios';
 //antD
 import { Skeleton } from 'antd';
 //utils
-import {getNewPrice} from '../../utils/functions'
+import {getNewPrice, formatNumber} from '../../utils/functions'
 //Auth
 import useAuth from '../../providers/AuthProvider'
 //Types
 import  { Producto, Carrito } from '../../utils/types'
+
 type Sub_Categorias = {
     categoria: string
     _id: string
@@ -58,7 +59,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                 res.data.map((e:Producto)=>e.precioDescuento=getNewPrice(e.descuento,e.precio))
                 if (user.jwt) {
                     for (let k = 0; k < res.data.length; k++) {
-                        var isInCar = user.carrito?.findIndex(e=>(e.producto as Producto)._id === res.data[k]._id)
+                        var isInCar = user.carrito?.findIndex(e=>(e.producto as Producto)?._id === res.data[k]._id)
                         productTemp.push({
                             count: isInCar>-1 ? user.carrito[isInCar].cantidad : 0,
                             _id: res.data[k]._id
@@ -78,7 +79,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     useEffect(() => {
         if (user.jwt) {
             var isProduct = productCart.findIndex(e=>e._id===idProductModal)
-            var isProductCart = user.carrito.findIndex(e=>(e.producto as Producto)._id===idProductModal)
+            var isProductCart = user.carrito.findIndex(e=>(e.producto as Producto)?._id===idProductModal)
             var productCartTemp: Count[] = JSON.parse(JSON.stringify(productCart))
             if (isProductCart> -1) {
                 productCartTemp[isProduct].count = user.carrito[isProductCart]?.cantidad
@@ -158,7 +159,8 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
         if (user.jwt) {
             var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
             var carrito: Carrito[] = user.carrito
-            var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)._id === id)
+            console.log(user.carrito)
+            var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)?._id === id)
             var index = tempCartProducts.findIndex(e=>e._id === id)
             var posProduct = dataProducts.findIndex(e=>e._id===id)
             var count = tempCartProducts[index].count += 1
@@ -179,7 +181,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
             var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
             var index = tempCartProducts.findIndex(e=>e._id === id)
             var carrito: Carrito[] = user.carrito
-            var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)._id === id)
+            var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)?._id === id)
             var posProduct = dataProducts.findIndex(e=>e._id===id)
             if (tempCartProducts[index].count>0) {
                 var count = tempCartProducts[index].count -= 1
@@ -301,7 +303,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
 
     return(
         <div>
-            <Layout idProduct={idProductModal} setOpenModalProduct={setOpenModalProduct} openModalProduct={openModalProduct} urlBack={url} logoWhite={false}   pathPublic={'../'} title={category.Categoria}>
+            <Layout idProduct={idProductModal} isCombo={false} setOpenModalProduct={setOpenModalProduct} openModalProduct={openModalProduct} urlBack={url} logoWhite={false}   pathPublic={'../'} title={category.Categoria}>
                 <div className='categoryMain'>
 
                     <div className='categoryLeft'>
@@ -348,7 +350,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                                                         <p className='productName'>{producto.nombre}</p>
                                                     </div>
                                                     <div className='containerPrice'>
-                                                        <span className='productPrice'>${producto.precioDescuento}</span> {producto.descuento>0 ? <span className='productDescuento'>${producto.precio}</span> : null}
+                                                        <span className='productPrice'>${formatNumber(producto.precioDescuento)}</span> {producto.descuento>0 ? <span className='productDescuento'>${formatNumber(producto.precio)}</span> : null}
                                                     </div>
                                                     <div>
                                                         <span className='productDescription'>{producto.descripcion}</span>

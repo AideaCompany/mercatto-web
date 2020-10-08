@@ -15,3 +15,7 @@ export function getNewPrice (percent:number, price: number):number{
     var newPrice = price-restValue
     return newPrice
 }
+
+export function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }

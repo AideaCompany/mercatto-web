@@ -6,11 +6,11 @@ import {useRouter} from 'next/router'
 import Layout from '../components/Layout';
 //antd
 import { Modal ,Form, Button, message, Input, Checkbox} from 'antd';
-import {ArrowLeftOutlined,ShoppingCartOutlined,DeleteOutlined, CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 //context
 import useAuth from '../providers/AuthProvider'
 //types
-import {Carrito, Producto} from '../utils/types'
+import {Carrito, Producto, ProductoCombo} from '../utils/types'
 //axios
 import axios from 'axios'
 //utils
@@ -23,7 +23,6 @@ const {TextArea} = Input
 
 type showCarrito = Carrito & {totalPrecio?:number,precio?:number,peso?:string}
 
-const background = "#fff"
 
 const carrito = (props:{url:string}):JSX.Element=>{
     const {url} = props
@@ -48,13 +47,32 @@ const carrito = (props:{url:string}):JSX.Element=>{
             setDireccion(user.direccion)
         }
         gsap.registerPlugin(CSSPlugin)
-        const actual:showCarrito[] = user?.carrito
+        var actual:showCarrito[] = user?.carrito
         actual?.map(e=>{
-            (e.producto as Producto).precioDescuento = getNewPrice((e.producto as Producto).descuento,(e.producto as Producto).precio) 
-            e.totalPrecio=e.cantidad*((e.producto) as Producto).precio
-            e.precio = getNewPrice((e.producto as Producto).descuento,e.totalPrecio)    
-            e.peso = (e.producto as Producto).peso
+            if (e.combo) {
+                (e.combo as ProductoCombo).precioDescuento = getNewPrice(0,(e.combo as ProductoCombo).precio) 
+                e.totalPrecio=e.cantidad*((e.combo) as ProductoCombo).precio
+                e.precio = getNewPrice(0,e.totalPrecio)  
+            }else{
+                (e.producto as Producto).precioDescuento = getNewPrice((e.producto as Producto).descuento,(e.producto as Producto).precio)
+                e.totalPrecio=e.cantidad*((e.producto) as Producto).precio 
+                e.precio = getNewPrice((e.producto as Producto).descuento,e.totalPrecio)  
+                e.peso = (e.producto as Producto).peso
+            }         
         })
+        for (let k = 0; k < actual?.length; k++) {
+            if (actual[k]?.combo) {
+                console.log(actual[k]?.combo)
+                var combo = ((actual[k]?.combo as ProductoCombo).producto as ProductoCombo[])
+                var tempDes = []
+                for (let m = 0; m < combo.length; m++) {
+                    tempDes.push(`${(combo[m].producto as Producto).nombre} x${combo[m].cantidad}`)
+                }
+                console.log(tempDes);
+                (actual[k].combo as ProductoCombo).descripcion = tempDes.join(', ')
+            }
+            
+        }
         settotalPrice(actual?actual.map(e=>e.precio).reduce((a,b)=>a+b,0):0)
         setactualCart(actual?actual:[])
     }, [user])
@@ -170,15 +188,31 @@ const carrito = (props:{url:string}):JSX.Element=>{
                         {actualCart?.length>0 ? actualCart?.map((product,i)=>(
                             <div key={product._id} className='productItem'>
                                 <div className='productImg'>
-                                    <img src={`${url}${(product.producto as Producto).imagenes.url}`} alt={`Mercatto ${(product.producto as Producto).nombre} `}/>
+                                    {product.combo?
+                                        <img src={`${url}${(product.combo as ProductoCombo).imagenes.url}`} alt={`Mercatto ${(product.combo as ProductoCombo).nombre} `}/>
+                                        :
+                                        <img src={`${url}${(product.producto as Producto).imagenes.url}`} alt={`Mercatto ${(product.producto as Producto).nombre} `}/>
+                                    }
                                 </div>
                                 <div className='productInfo'>
+                                    {product.combo?
+                                    <>
+                                        <div>
+                                            <span className='price'>${(product.combo as ProductoCombo).precioDescuento}</span>
+                                        </div>
+                                        <h2>{(product.combo as ProductoCombo).nombre}</h2>
+                                        <span className='productDesc'>{(product.combo as ProductoCombo).descripcion}</span>
+                                    </>
+                                    :
+                                    <>
                                         <div>
                                             <span className='price'>${(product.producto as Producto).precioDescuento}</span>
                                             {(product.producto as Producto).descuento>0? <span className='priceDescount'>${(product.producto as Producto).precio}</span> :null}
                                         </div>
                                         <h2>{(product.producto as Producto).nombre}</h2>
-                                        <span>{(product.producto as Producto).descripcion}</span>
+                                        <span className='productDesc'>{(product.producto as Producto).descripcion}</span>
+                                    </>
+                                    }
                                 </div>
                                 <div className='productAction'>
                                     <span>{product.cantidad}</span>

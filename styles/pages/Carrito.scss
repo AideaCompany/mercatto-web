@@ -80,6 +80,7 @@ $colorText : #5e5e5e;
                             font-size: 1.4em;
                             text-decoration: line-through;
                         }
+                       
                     }
                     *{
                         color: $mainBlue;
@@ -89,6 +90,14 @@ $colorText : #5e5e5e;
                     }
                     .price{
                         font-size: 1.7em;
+                    }
+                    .productDesc{
+                        overflow: hidden;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 1;
+                        -webkit-box-orient: vertical;
+                        white-space: normal;
+                        text-overflow: ellipsis;
                     }
 
                 }

@@ -8,9 +8,9 @@ import { FrownOutlined} from '@ant-design/icons';
 import axios from 'axios'
 //context
 import useAuth from '../../providers/AuthProvider'
-import { Carrito ,Producto} from '../../utils/types';
+import { Carrito ,Producto, ProductoCombo} from '../../utils/types';
 //utils
-import {getNewPrice} from '../../utils/functions'
+import {getNewPrice, formatNumber} from '../../utils/functions'
 
 type Count = {
     count: number
@@ -37,20 +37,35 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
     useEffect(() => {
         var productTemp: Count[] = []
         var dataProductsTemp:Producto[] = JSON.parse(JSON.stringify(dataProducts))
-        dataProductsTemp.map(e=>e.precioDescuento=getNewPrice(e.descuento, e.precio))
-        if (user.jwt) {
+        if (titleInit !== 'combos') {
+            dataProductsTemp.map(e=>e.precioDescuento=getNewPrice(e.descuento, e.precio))
+            if (user.jwt) {
+                for (let k = 0; k < dataProductsTemp.length; k++) {
+                    var isInCar = user.carrito?.findIndex(e=>(e.producto as Producto)._id=== dataProductsTemp[k]._id)
+                    productTemp.push({
+                        count: isInCar>-1?user.carrito[isInCar].cantidad:0,
+                        _id: dataProductsTemp[k]._id
+                    })
+                }
+            } 
+        }else{
             for (let k = 0; k < dataProductsTemp.length; k++) {
-                var isInCar = user.carrito?.findIndex(e=>(e.producto as Producto)._id=== dataProductsTemp[k]._id)
+                dataProductsTemp[k].precioDescuento=getNewPrice(0, dataProductsTemp[k].precio)
+                var productsCombo = []
+                var isInCar = user.carrito?.findIndex(e=>(e.combo as ProductoCombo)._id=== dataProductsTemp[k]._id)
+                for (let m = 0; m < dataProductsTemp[k].producto.length; m++) {
+                    productsCombo.push(` ${(dataProductsTemp[k].producto[m].producto as Producto).nombre} x${dataProductsTemp[k].producto[m].cantidad}U`)
+                }
                 productTemp.push({
-                    count: isInCar>-1?user.carrito[isInCar].cantidad:0,
+                    count: isInCar>-1?user.carrito[isInCar].cantidad : 0,
                     _id: dataProductsTemp[k]._id
                 })
+                dataProductsTemp[k].descripcion= productsCombo.join()
             }
         }
         setProductCart(productTemp)
         setDataProductsToShow(dataProductsTemp)
         setDataProductsInit(dataProductsTemp)
-        console.log(ofer)
         if (ofer) {
             if (titleInit==='promociones') {
                 settitle(`Productos en promoción`)
@@ -74,14 +89,24 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
         if (user.jwt) {
             var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
             var carrito: Carrito[] = user.carrito
-            var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)._id === id)
             var index = tempCartProducts.findIndex(e=>e._id === id)
             var posProduct = dataProducts.findIndex(e=>e._id===id)
             var count = tempCartProducts[index].count += 1
-            if (isProdcut >-1) {
-                carrito[isProdcut].cantidad = tempCartProducts[index].count
+            if (titleInit !== 'combos') {
+                var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)._id === id)
+                if (isProdcut >-1) {
+                    carrito[isProdcut].cantidad = tempCartProducts[index].count
+                }else{
+                    carrito.push({cantidad:count, producto: tempCartProducts[index]._id, peso: dataProducts[posProduct].peso, precio: dataProducts[posProduct].precio})
+                }
+                
             }else{
-                carrito.push({cantidad:count, producto: tempCartProducts[index]._id, peso: dataProducts[posProduct].peso, precio: dataProducts[posProduct].precio})
+                var isProdcut = user.carrito.findIndex(e=>(e.combo as ProductoCombo)._id === id)
+                if (isProdcut >-1) {
+                    carrito[isProdcut].cantidad = tempCartProducts[index].count
+                }else{
+                    carrito.push({cantidad:count, combo: tempCartProducts[index]._id, peso: dataProducts[posProduct].peso, precio: dataProducts[posProduct].precio})
+                } 
             }
             await updatecart(carrito)
             setProductCart(tempCartProducts)
@@ -95,21 +120,35 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
             var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
             var index = tempCartProducts.findIndex(e=>e._id === id)
             var carrito: Carrito[] = user.carrito
-            var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)._id === id)
+            
             var posProduct = dataProducts.findIndex(e=>e._id===id)
             if (tempCartProducts[index].count>0) {
                 var count = tempCartProducts[index].count -= 1
-                if (count > 0) {
-                    if (isProdcut>-1) {
-                        carrito[isProdcut].cantidad = count
+                if (titleInit !== 'combos') {
+                    var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)._id === id)
+                    if (count > 0) {
+                        if (isProdcut>-1) {
+                            carrito[isProdcut].cantidad = count
+                        }else{
+                            carrito.push({cantidad:count, producto: tempCartProducts[index]._id, peso: dataProducts[posProduct].peso, precio: dataProducts[posProduct].precio})
+                        }
                     }else{
-                        carrito.push({cantidad:count, producto: tempCartProducts[index]._id, peso: dataProducts[posProduct].peso, precio: dataProducts[posProduct].precio})
+                        carrito.splice(isProdcut,1)
                     }
                 }else{
-                    carrito.splice(isProdcut,1)
+                    var isProdcut = user.carrito.findIndex(e=>(e.combo as ProductoCombo)._id === id)
+                    if (count > 0) {
+                        if (isProdcut>-1) {
+                            carrito[isProdcut].cantidad = count
+                        }else{
+                            carrito.push({cantidad:count, combo: tempCartProducts[index]._id, peso: dataProducts[posProduct].peso, precio: dataProducts[posProduct].precio})
+                        }
+                    }else{
+                        carrito.splice(isProdcut,1)
+                    }
                 }
                 await updatecart(carrito)
-                setProductCart(tempCartProducts)
+                setProductCart(tempCartProducts)                
             }
         }
     }
@@ -217,7 +256,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
     }
 
     return(
-        <Layout setOpenModalProduct={setOpenModalProduct} openModalProduct={openModalProduct} idProduct={idProductModal} urlBack={url}  logoWhite={false} pathPublic={'../'} title={title} color={"#8D8D8D"}  background={`#EEEEEE`}>
+        <Layout isCombo={titleInit!=='combos'?false:true} setOpenModalProduct={setOpenModalProduct} openModalProduct={openModalProduct} idProduct={idProductModal} urlBack={url}  logoWhite={false} pathPublic={'../'} title={title} color={"#8D8D8D"}  background={`#EEEEEE`}>
             <div className='productMain'>
                 <div className='productLeft'>
                     <div className='filter'>
@@ -254,7 +293,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
                                                 <p className='productName'>{product.nombre}</p>
                                             </div>
                                             <div className='containerPrice'>
-                                                <span className='productPrice'>${product.precioDescuento}</span> {product.descuento>0 ? <span className='productDescuento'>${product.precio}</span> : null}
+                                                <span className='productPrice'>${formatNumber(product.precioDescuento)}</span> {product.descuento>0 ? <span className='productDescuento'>${formatNumber(product.precio)}</span> : null}
                                             </div>
                                             <div>
                                                 <span className='productDescription'>{product.descripcion}</span>
@@ -307,10 +346,13 @@ export async function getServerSideProps (ctx) {
     const URL = process.env.URL_STRAPI;
     var dataProducts 
     if (ctx.query.ofer) {
-        dataProducts = await fetch(`${URL}/productos?${ctx.query.product}`,{method: 'GET'})
+        if (ctx.query.product === 'combos') {
+            dataProducts = await fetch(`${URL}/combos`,{method: 'GET'})
+        }else{
+            dataProducts = await fetch(`${URL}/productos?${ctx.query.product}`,{method: 'GET'})
+        }
     }else{
         dataProducts = await fetch(`${URL}/productos?search_product=${ctx.query.product}`,{method: 'GET'})
-
     }
     const jsonProducts = await dataProducts.json()
     return {props: {url:URL, dataProducts: jsonProducts, titleInit: ctx.query.product, ofer: ctx.query.ofer? true : false}}

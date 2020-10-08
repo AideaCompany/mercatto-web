@@ -36,12 +36,13 @@ type propsLayout ={
     openModalProduct? :boolean
     setOpenModalProduct?: Dispatch<SetStateAction<boolean>>
     idProduct?:string
+    isCombo?:boolean
 }
 
 const Layout = (props: propsLayout):JSX.Element =>{
 
     //Props
-    const {children, title , urlBack, confirmed, code, pathPublic, logoWhite, tokenProvider, openModalProduct, setOpenModalProduct , idProduct} = props
+    const {children, title , urlBack, confirmed, code, pathPublic, logoWhite, tokenProvider, openModalProduct, setOpenModalProduct , idProduct, isCombo} = props
 
     const [modalResetPassword, setModalResetPassword] = useState<boolean>(false)
     const [cartCount, setcartCount] = useState<Number>(0)
@@ -158,7 +159,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
 
                     
                 </div>
-                <ModalProduct id={idProduct} urlBack={urlBack} setOpenModalProduct={setOpenModalProduct} openModalProduct={openModalProduct}></ModalProduct>
+                <ModalProduct isCombo={isCombo} id={idProduct} urlBack={urlBack} setOpenModalProduct={setOpenModalProduct} openModalProduct={openModalProduct}></ModalProduct>
                 <SignInComponent pathPublic={pathPublic} urlBack={urlBack} modalAuthSignIn={modalAuthSignIn} setModalAuthSignIn={setModalAuthSignIn} setModalAuthSignUp={setModalAuthSignUp}/>
                 <SignUpcomponent pathPublic={pathPublic} urlBack={urlBack} modalAuthSignUp={modalAuthSignUp} setModalAuthSignUp={setModalAuthSignUp} setModalAuthSignIn={setModalAuthSignIn}/>
                 <ResetPasswordComponent pathPublic={pathPublic} code={code} setModalResetPassword={setModalResetPassword} modalResetPassword={modalResetPassword} setModalAuthSignIn={setModalAuthSignIn} urlBack={urlBack}/>
