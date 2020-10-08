@@ -112,9 +112,9 @@ const Layout = (props: propsLayout):JSX.Element =>{
                         </div>
                         <div className='menu'>
                                 <div className='socialMediaIcons'>
-                                    <a className='socialIcon' href="/"><FontAwesomeIcon icon={faFacebookF}/></a>
-                                    <a className='socialIcon' href="/"><FontAwesomeIcon icon={faInstagram} /></a>
-                                    <a className='socialIcon' href="/"><FontAwesomeIcon icon={faWhatsapp}/></a>
+                                    <a className='socialIcon' target="_blank" href="/" ><FontAwesomeIcon icon={faFacebookF}/></a>
+                                    <a className='socialIcon' target="_blank" href="/"><FontAwesomeIcon icon={faInstagram} /></a>
+                                    <a className='socialIcon' target="_blank" href="https://api.whatsapp.com/send?phone=573186352419" ><FontAwesomeIcon icon={faWhatsapp}/></a>
                                 </div>
                                 {
                                     user.jwt ? 
