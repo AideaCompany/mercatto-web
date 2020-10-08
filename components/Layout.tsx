@@ -68,7 +68,11 @@ const Layout = (props: propsLayout):JSX.Element =>{
         axios.get(`${urlBack}/productos`).then(res=>setDataProducts(res.data)).catch(err=>console.log(err))
     }, [])
     useEffect(() => {
-        setcartCount(user?user.carrito?.length:0)
+        var countTemp = 0
+        user?.carrito?.forEach(e => {
+            countTemp += e.cantidad
+        });
+        setcartCount(countTemp)
     }, [user])
 
     //Functions
