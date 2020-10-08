@@ -27,7 +27,7 @@ type showCarrito = Carrito & {totalPrecio?:number,precio?:number,peso?:string}
 const carrito = (props:{url:string}):JSX.Element=>{
     const {url} = props
     const [actualCart, setactualCart] = useState<showCarrito[]>()
-    const [totalPrice, settotalPrice] = useState<Number>(0)
+    const [totalPrice, settotalPrice] = useState<number>(0)
     const [modalVisible, setmodalVisible] = useState<boolean>(false)
     const [toDelete, settoDelete] = useState<number>()
     const [direccion, setDireccion] = useState<string>('')
@@ -147,7 +147,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
             }
         }).then(res=>{  
             updateUser(res);
-            message.success({content:"Producto eliminado",className: 'messageVerification',duration: '5'})
+            message.success({content:"Producto eliminado",className: 'messageVerification',duration: '60'})
         }).catch(err=>console.log(err))
     }
  
@@ -155,7 +155,8 @@ const carrito = (props:{url:string}):JSX.Element=>{
         actualCart.map(e=>{delete e._id;delete e.id})
         user.pedidos.push({
             carrito:(actualCart as Carrito[]),
-            Terminado:false
+            Terminado:false, 
+            total: totalPrice
         }) 
         axios.put(`${url}/users/${user._id}`,{
             carrito: [],
@@ -189,7 +190,10 @@ const carrito = (props:{url:string}):JSX.Element=>{
                 Entregado: false,
                 direccion: direccion,
                 telefono_cliente: user.telefono ? user.telefono : '',
-                observaciones: Observaciones
+                observaciones: Observaciones,
+                total: totalPrice,
+                nombre_cliente: user.nombre?user.nombre:user.username,
+                correo_cliente: user.email
                 }, {
                 headers: {
                     Authorization: `Bearer ${user.jwt}`

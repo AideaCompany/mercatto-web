@@ -221,6 +221,15 @@ $mainBlue: #02205E;
     margin-top: 90vh;
     .ant-message-notice-content{
         border-radius: 50px;
+        .ant-message-success{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            span{
+                font-size: 1.5em;
+            }
+        }
+        
     }
 }
 

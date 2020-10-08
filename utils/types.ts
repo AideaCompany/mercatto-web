@@ -40,7 +40,8 @@ export type Pedidos = {
     _id ? : string,
     carrito ? : Carrito[],
     Terminado: boolean,
-    createdAt ? : string
+    createdAt ? : string,
+    total?: number
 }
 export type typeUser = {
     _id ? : string,
@@ -50,5 +51,6 @@ export type typeUser = {
     carrito ? : Carrito[],
     telefono ? : string,
     email ? : string,
-    direccion ? : string
+    direccion ? : string,
+    username?:string
 }

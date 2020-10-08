@@ -1,7 +1,7 @@
 $mainGrey: #EEEEEE;
 $darkGrey: #8D8D8D;
 $colorText : #5e5e5e;
-$mainBlue: #2FAFFF;
+$mainBlue: #02205E;
 .ant-modal-mask{
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
@@ -48,11 +48,11 @@ $mainBlue: #2FAFFF;
         h2{
             margin: 1em 0 0.5em 0;
             font-size: 2.5em;  
-            color: $darkGrey;
+            color: $mainBlue;
         }
 
         a{
-            color: $darkGrey;
+            color: $mainBlue;
         }
         .ant-input , .ant-input-password, .ant-select{
             
