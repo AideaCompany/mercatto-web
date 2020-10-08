@@ -39,7 +39,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                             <div className="productItem">
                                 <div>{`Fecha de pedido: ${year}/${month}/${day}`}</div>
                                 <div>{`Cantidad de productos: ${e.carrito.length}`}</div>
-                                <div>{`Precio total $ ${formatNumber(total)}`}</div>
+                                <div>{`Precio total $ ${formatNumber(total+4500)}`}</div>
                             </div>
                             )
                             })}
