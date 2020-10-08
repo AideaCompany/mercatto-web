@@ -14,7 +14,7 @@ import {Carrito, Producto, ProductoCombo} from '../utils/types'
 //axios
 import axios from 'axios'
 //utils
-import {getNewPrice} from '../utils/functions'
+import {getNewPrice, formatNumber} from '../utils/functions'
 //Gsap
 import { TimelineMax, gsap,  CSSPlugin, Power4} from 'gsap'
 
@@ -43,7 +43,8 @@ const carrito = (props:{url:string}):JSX.Element=>{
 
 
     useEffect(() => {
-        if (user.direccion !== '') {
+        console.log(user)
+        if (user.direccion !== '' || !user.direccion ) {
             setDireccion(user.direccion)
         }
         gsap.registerPlugin(CSSPlugin)
@@ -90,10 +91,17 @@ const carrito = (props:{url:string}):JSX.Element=>{
     const plus= (pos)=>{
         actualCart[pos].cantidad +=1
         actualCart?.map(e=>{
-            (e.producto as Producto).precioDescuento = getNewPrice((e.producto as Producto).descuento,(e.producto as Producto).precio) 
-            e.totalPrecio=e.cantidad*((e.producto) as Producto).precio
-            e.precio = getNewPrice((e.producto as Producto).descuento,e.totalPrecio)            
-            e.peso = (e.producto as Producto).peso
+            if (e.combo) {
+                (e.combo as ProductoCombo).precioDescuento = getNewPrice(0,(e.combo as ProductoCombo).precio) 
+                e.totalPrecio=e.cantidad*((e.combo) as ProductoCombo).precio
+                e.precio = getNewPrice(0,e.totalPrecio)  
+            }else{
+                (e.producto as Producto).precioDescuento = getNewPrice((e.producto as Producto).descuento,(e.producto as Producto).precio) 
+                e.totalPrecio=e.cantidad*((e.producto) as Producto).precio
+                e.precio = getNewPrice((e.producto as Producto).descuento,e.totalPrecio)            
+                e.peso = (e.producto as Producto).peso
+            }
+
         })
         settotalPrice(actualCart?.map(e=>e.precio).reduce((a,b)=>a+b,0))
         setactualCart([...actualCart])
@@ -103,10 +111,16 @@ const carrito = (props:{url:string}):JSX.Element=>{
         if(actualCart[pos].cantidad>1){
             actualCart[pos].cantidad -=1
             actualCart?.map(e=>{
-                (e.producto as Producto).precioDescuento = getNewPrice((e.producto as Producto).descuento,(e.producto as Producto).precio) 
-                e.totalPrecio=e.cantidad*((e.producto) as Producto).precio
-                e.precio = getNewPrice((e.producto as Producto).descuento,e.totalPrecio)            
-                e.peso = (e.producto as Producto).peso
+                if (e.combo) {
+                    (e.combo as ProductoCombo).precioDescuento = getNewPrice(0,(e.combo as ProductoCombo).precio) 
+                    e.totalPrecio=e.cantidad*((e.combo) as ProductoCombo).precio
+                    e.precio = getNewPrice(0,e.totalPrecio)  
+                }else{
+                    (e.producto as Producto).precioDescuento = getNewPrice((e.producto as Producto).descuento,(e.producto as Producto).precio) 
+                    e.totalPrecio=e.cantidad*((e.producto) as Producto).precio
+                    e.precio = getNewPrice((e.producto as Producto).descuento,e.totalPrecio)            
+                    e.peso = (e.producto as Producto).peso
+                }
             })
             settotalPrice(actualCart?.map(e=>e.precio).reduce((a,b)=>a+b,0))
             setactualCart([...actualCart])
@@ -153,12 +167,22 @@ const carrito = (props:{url:string}):JSX.Element=>{
             }
         }).then(res=>{  
             var carrito = actualCart.map(e=>{
-                return ({
-                    cantidad: e.cantidad,
-                    producto: (e.producto as Producto).nombre,
-                    precio : e.precio,
-                    peso: e.peso
-                })
+                if (e.combo) {
+                    return ({
+                        cantidad: e.cantidad,
+                        producto: (e.combo as ProductoCombo).nombre,
+                        precio : e.precio,
+                        peso: e.peso
+                    })
+                }else{
+                    return ({
+                        cantidad: e.cantidad,
+                        producto: (e.producto as Producto).nombre,
+                        precio : e.precio,
+                        peso: e.peso
+                    })
+                }
+
             })
             axios.post(`${url}/pedidos`,{
                 Carrito: carrito,
@@ -198,7 +222,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                     {product.combo?
                                     <>
                                         <div>
-                                            <span className='price'>${(product.combo as ProductoCombo).precioDescuento}</span>
+                                            <span className='price'>${formatNumber((product.combo as ProductoCombo).precioDescuento)}</span>
                                         </div>
                                         <h2>{(product.combo as ProductoCombo).nombre}</h2>
                                         <span className='productDesc'>{(product.combo as ProductoCombo).descripcion}</span>
@@ -206,7 +230,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                     :
                                     <>
                                         <div>
-                                            <span className='price'>${(product.producto as Producto).precioDescuento}</span>
+                                            <span className='price'>${formatNumber((product.producto as Producto).precioDescuento) }</span>
                                             {(product.producto as Producto).descuento>0? <span className='priceDescount'>${(product.producto as Producto).precio}</span> :null}
                                         </div>
                                         <h2>{(product.producto as Producto).nombre}</h2>
@@ -250,7 +274,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                 <TextArea style={{resize: 'none'}} placeholder='Observaciones' onChange={(e)=>setObservaciones(e.target.value)}></TextArea>
                             </div>
                             <div className='buttons'>
-                                <span>Total: ${totalPrice}</span>
+                                <span>Total: ${formatNumber(totalPrice)}</span>
                                 <br/>
                                 <div>
                                     <button onClick={()=>divWrapper('close')} type="button" className="btn btn-primary btn-lg">
@@ -270,10 +294,17 @@ const carrito = (props:{url:string}):JSX.Element=>{
     <Modal centered onCancel={HandleClose} visible={modalVisible}>
         {actualCart?
         <div className='containerForm'>
-            <h2>{`¿Deseas eliminar el producto ${(actualCart[toDelete]?.producto as Producto)?.nombre}?`}</h2>
+            {actualCart[toDelete]?.combo?
+                <h2>{`¿Deseas eliminar el combo: ${(actualCart[toDelete]?.combo as ProductoCombo)?.nombre}?`}</h2>
+            :
+                <h2>{`¿Deseas eliminar el producto ${(actualCart[toDelete]?.producto as Producto)?.nombre}?`}</h2>
+            }
             <div className="image">
-            <img src={`${url}${(actualCart[toDelete]?.producto as Producto)?.imagenes.url}`} alt={`${(actualCart[toDelete]?.producto as Producto)?.nombre}mercatto`} />   
-
+                {actualCart[toDelete]?.combo?
+                    <img src={`${url}${(actualCart[toDelete]?.combo as ProductoCombo)?.imagenes.url}`} alt={`${(actualCart[toDelete]?.combo as ProductoCombo)?.nombre} mercatto`} />   
+                :
+                    <img src={`${url}${(actualCart[toDelete]?.producto as Producto)?.imagenes.url}`} alt={`${(actualCart[toDelete]?.producto as Producto)?.nombre} mercatto`} />   
+                }
             </div>
              <Form name='signIn' onFinish={deleteItem}>
                 <div className='buttonsAuth'>

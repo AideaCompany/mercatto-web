@@ -48,7 +48,7 @@ const ModalProduct = (props:PropsModal) => {
                     }
                     res.data.descripcion = tempDesc.join(', ')
                     if (user.jwt) {
-                        var countCart = user.carrito.findIndex(e=>(e.combo as ProductoCombo)._id === res.data.id)
+                        var countCart = user.carrito.findIndex(e=>(e.combo as ProductoCombo)?._id === res.data.id)
                         setCountProduct(countCart>-1?user.carrito[countCart].cantidad:0) 
                     }else{
                         setCountProduct(0) 
@@ -102,7 +102,7 @@ const ModalProduct = (props:PropsModal) => {
                     carrito.push({cantidad:count, producto: dataProduct._id, peso: dataProduct.peso, precio: dataProduct.precio})
                 }
             }else{
-                var isProduct = user.carrito.findIndex(e=>(e.combo as ProductoCombo)._id === dataProduct._id)
+                var isProduct = user.carrito.findIndex(e=>(e.combo as ProductoCombo)?._id === dataProduct._id)
                 if (isProduct >-1) {
                     carrito[isProduct].cantidad = count
                 }else{
@@ -133,7 +133,7 @@ const ModalProduct = (props:PropsModal) => {
                         carrito.splice(isProduct,1)
                     }
                 }else{
-                    var isProduct = user.carrito.findIndex(e=>(e.combo as ProductoCombo)._id === dataProduct._id)
+                    var isProduct = user.carrito.findIndex(e=>(e.combo as ProductoCombo)?._id === dataProduct._id)
                     if (count>0) {
                         if (isProduct>-1) {
                             carrito[isProduct].cantidad = count

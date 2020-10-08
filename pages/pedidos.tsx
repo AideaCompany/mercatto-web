@@ -1,11 +1,11 @@
 import React,{useEffect,useState} from 'react'
 //components
 import Layout from '../components/Layout';
-//antd
 //context
 import useAuth from '../providers/AuthProvider'
 //types
 import {Pedidos} from '../utils/types'
+import {formatNumber} from '../utils/functions'
 
 const carrito = (props:{url:string}):JSX.Element=>{
     const { url } = props
@@ -39,7 +39,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                             <div className="productItem">
                                 <div>{`Fecha de pedido: ${year}/${month}/${day}`}</div>
                                 <div>{`Cantidad de productos: ${e.carrito.length}`}</div>
-                                <div>{`Precio total $ ${total}`}</div>
+                                <div>{`Precio total $ ${formatNumber(total)}`}</div>
                             </div>
                             )
                             })}
