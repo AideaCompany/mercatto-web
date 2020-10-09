@@ -294,3 +294,110 @@ $mainBlue: #02205E;
         }
     }
 }
+
+
+// tablets portrait
+@media screen and (max-width: 1024px) and (orientation : portrait) {
+    .mainContent{
+        .mainContainerCategory{
+            .categoriesTargets{
+                height: 33%;
+                >div{
+                    .BrainhubCarousel__container{
+                        .categoryTarget{
+                            h2{
+                                font-size: 1.5em;
+                            }
+                        }
+                    }
+                }
+            }
+            .offerBrand{
+                height: 77%;
+                >div{
+                    display: block;
+                    >div{
+                        width: 100%;
+                        height: 50%;
+                    }
+                    .offer{
+                        .BrainhubCarousel__container{
+                            .targetOffer{
+                                height: 350px;
+                                .back{
+                                    width: 70vw !important;
+                                    height: 70vw !important;
+                                }
+                                img{
+                                    width: 50%;
+                                    top: 55%;
+                                    left: 30%;
+                                }
+                                h2{
+                                    font-size: 3em;
+                                }
+                            }
+                        }
+                    }
+                    .brands{
+                        .BrainhubCarousel__container{
+                            .targetBrand{
+                                width: 250px !important;
+                                height: 250px !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    
+}
+
+@media screen and (max-width: 834px) and (orientation : portrait){
+    .mainContent{
+        .mainContainerCategory{
+            .categoriesTargets{
+                >div{
+                    padding: 0 10px 0 10px;
+                    width: 800px;
+                    .categoryTarget{
+                        width: 250px !important;
+                        height: 200px !important;
+                    }
+                }
+            }
+            .offerBrand{
+                >div{
+                    width: 800px;
+                    .offer{
+                        .BrainhubCarousel__container{
+                            .targetOffer{
+                                height: 250px;
+                                .back{
+                                    width: 70vw !important;
+                                    height: 70vw !important;
+                                }
+                            }
+                        }
+                    }
+                    .brands{
+                        .BrainhubCarousel__container{
+                            .targetBrand{
+                                width: 200px !important;
+                                height: 150px !important;
+                            }
+                        }
+                    }
+                }
+            }
+            .brands{
+                .targetBrand{
+                    width: 150px !important;
+                    height: 150px !important;
+                }
+            }
+        }
+    }
+}

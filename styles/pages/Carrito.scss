@@ -300,3 +300,13 @@ $colorText : #5e5e5e;
         }
     }
 }
+
+@media screen and (max-width: 1024px) and (orientation : portrait) {
+    .carritoMain{
+        width: 1000px;
+        .carritoLeft{
+            width: 650px;
+            height: 85vh;
+        }
+    }
+}

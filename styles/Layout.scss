@@ -248,3 +248,25 @@ $mainYellow: #FCD330;
         }
     }
 }
+
+@media screen and (max-width: 834px) and (orientation : portrait) {
+    .mainLayout{
+        header{
+            >div{
+                width: 800px;
+                .containerMainLogo{
+                    img{
+                        width: 200px;
+                    }
+                }
+
+                .menu{
+                    width: 40%;
+                    .socialMediaIcons{
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
