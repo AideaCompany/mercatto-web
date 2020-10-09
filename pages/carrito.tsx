@@ -305,7 +305,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                     <button onClick={()=>vaciarCarrito()} type="button" className="btn btn-primary btn-lg">
                                         Vaciar Carrito
                                     </button>
-                                    <button disabled={totalPrice>=30000?false:true} onClick={okCart} type="button" className="btn btn-primary btn-lg">
+                                    <button disabled={totalPrice>=30000 && direccion !== '' && direccion ?false:true} onClick={okCart} type="button" className="btn btn-primary btn-lg">
                                         Realizar pedido
                                     </button>
                                 </div>

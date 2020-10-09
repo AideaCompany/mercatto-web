@@ -2,215 +2,207 @@ $mainGrey: #EEEEEE;
 $darkGrey: #6c6c6c;
 $mainBlue: #02205E;
 .mainContent{
+    .mainContainerCategory{
+        width: 100%;
+        height: 100%;
 
-    .brands{
-        position: absolute;
-        width: 45vw;
-        height: 20vh;
-        top: 55vh;
-        left: 50vw;
-        padding: 1vw;
-
-        .BrainhubCarousel__container{
-            overflow-x: hidden ;
-            overflow-y: inherit;    
-            cursor: grab;
-            div{     
-                overflow: inherit;
-    
-                ul{
-                    overflow: inherit !important;
+        .categoriesTargets{
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            >div{   
+                h1{
+                    margin-left: 25px;
+                    color: $mainBlue;
                 }
-            }
-            .targetBrand:hover{
-                -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-            }
-            .targetBrand{
-                width: 100%;
-                height: 20vh;
-                background: #ffffff;
-                border-radius: 25px;
-                -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                overflow: hidden;
-                margin:  1vw;
-                transition: 0.2s ease-in-out;
-                    img{
-                        width: 60%;
+                width: 1500px;
+                .BrainhubCarousel__container{
+                    overflow: inherit ;
+                    div{
+                        overflow: inherit ;
+                        width: 100%;
+            
+                        ul{
+                            overflow: inherit !important;
+                        }
                     }
+                    .categoryTarget:hover{
+                        -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+                        -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+                        box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+                    }
+                    .categoryTarget{
+                        width: 450px;
+                        margin: 0px;
+                        height: 250px;
+                        border-radius: 25px;
+                        cursor: grab;
+                        -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                        -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                        box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                        position: relative;
+                        transition: 0.2s ease-in-out ;
+                        overflow: hidden;
+                        background-color: #ffffff;
+                        img{
+                            position: absolute;
+                            top: 60%;
+                            left: 0%;
+                            transform: translate(0%, -50%);
+                            -webkit-transform: translate(0%, -50%);
+                            width: 60%;
+                        }
+            
+                        h2{
+                            position: absolute;
+                            top: 50%;
+                            left: 77%;
+                            transform: translate(-50%, -50%);
+                            -webkit-transform: translate(-50%, -50%); 
+                            color: $mainBlue;
+                            font-size: 1.7vw;
+                            width: 45%;
+                            text-align: center;
+                        }
+                    }
+                }
             }
-        }
-
-    }
-    .offer{
-        position: absolute;
-        width: 40vw;
-        height: 20vh;
-        top: 50vh;
-        left: 7vw;
-        padding: 1vw;
-        // border: 1px solid black;
-
-        .alertDrag{
-            float: right;
-            margin: 0 1vw 0 0;
-        }
-        .BrainhubCarousel__container{
-            overflow-x: hidden ;
-            overflow-y: inherit;    
-            cursor: grab;
-            div{     
-                overflow: inherit;
     
-                ul{
-                    overflow: inherit !important;
-                }
-            }
+        }
 
-            .targetOffer:hover{
-                -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-            }
-
-            .targetOffer{
-                width: 100%;
-                height: 30vh;
-                background: #ffffff;
-                border-radius: 25px;
-                -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                position: relative;
-                overflow: hidden;
-                margin:  1vw;
-                transition: 0.2s ease-in-out;
-                .back{
-                    border-radius: 50%;
-                    position: absolute;
-                    top: 50%;
-                    left: 15%;
-                    transform: translate(-50%, -50%);
-                    -webkit-transform: translate(-50%, -50%);
-                    width: 20vw;
-                    height: 20vw;
-                    background: linear-gradient(270deg, rgba(2,32,94,1) 20%, rgba(11,70,189,1) 100%);
-                }
-                img{
-                    position: absolute;
-                    top: 70%;
-                    left: 20%;
-                    transform: translate(-50%, -50%);
-                    -webkit-transform: translate(-50%, -50%); 
-                    z-index: 2;
-                    width: 40%;
-                }
-                h2{
-                    position: absolute;
-                    transform: translate(-50%, -50%);
-                    -webkit-transform: translate(-50%, -50%);
-                    width: 50%;
-                    top: 50%;
-                    left: 75%;
-                    text-align: center;
-                    color: $mainBlue;
-                }
+        .offerBrand{
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+           
+            >div{
+                width: 1500px;
+                height: 100%;
+                display: flex;
+                align-items: center;
                 
+                >div{
+                    width: 50%;
+                    padding: 20px;
+                    h2{
+                        color: $mainBlue; 
+                    }
+                }
+                .offer{
+                    .alertDrag{
+                        float: right;
+                        margin: 0 1vw 0 0;
+                    }
+                    .BrainhubCarousel__container{
+                        overflow-x: hidden ;
+                        overflow-y: inherit;    
+                        cursor: grab;
+                        div{     
+                            overflow: inherit;
+                
+                            ul{
+                                overflow: inherit !important;
+                            }
+                        }
+            
+                        .targetOffer:hover{
+                            -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+                            -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+                            box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+                        }
+            
+                        .targetOffer{
+                            width: 100%;
+                            height: 30vh;
+                            background: #ffffff;
+                            border-radius: 25px;
+                            -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                            -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                            box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                            position: relative;
+                            overflow: hidden;
+                            margin:  20px;
+                            transition: 0.2s ease-in-out;
+                            .back{
+                                border-radius: 50%;
+                                position: absolute;
+                                top: 50%;
+                                left: 15%;
+                                transform: translate(-50%, -50%);
+                                -webkit-transform: translate(-50%, -50%);
+                                width: 20vw;
+                                height: 20vw;
+                                background: linear-gradient(270deg, rgba(2,32,94,1) 20%, rgba(11,70,189,1) 100%);
+                            }
+                            img{
+                                position: absolute;
+                                top: 70%;
+                                left: 20%;
+                                transform: translate(-50%, -50%);
+                                -webkit-transform: translate(-50%, -50%); 
+                                z-index: 2;
+                                width: 40%;
+                            }
+                            h2{
+                                position: absolute;
+                                transform: translate(-50%, -50%);
+                                -webkit-transform: translate(-50%, -50%);
+                                width: 50%;
+                                top: 50%;
+                                left: 75%;
+                                text-align: center;
+                                color: $mainBlue;
+                            }
+                            
+                        }
+                    }
+            
+                }
+                .brands{
+                    .BrainhubCarousel__container{
+                        overflow-x: hidden ;
+                        overflow-y: inherit;    
+                        cursor: grab;
+                        div{     
+                            overflow: inherit;
+                
+                            ul{
+                                overflow: inherit !important;
+                            }
+                        }
+                        .targetBrand:hover{
+                            -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+                            -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+                            box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+                        }
+                        .targetBrand{
+                            width: 200px;
+                            height: 200px;
+                            background: #ffffff;
+                            border-radius: 25px;
+                            -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                            -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                            box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                            display: flex;
+                            margin: 10px;
+                            justify-content: center;
+                            align-items: center;
+                            overflow: hidden;
+                            transition: 0.2s ease-in-out;
+                                img{
+                                    width: 60%;
+                                }
+                        }
+                    }
+            
+                }
+            
             }
         }
-
-        h2{
-            font-size: 2vw;
-            color: $darkGrey;
-        }
-
-        
-
     }
-    .titleCategorias, .titleOfertas, .titleBrand{
-        position: absolute;
-        left: 50%;
-        top: 5%;
-        width: 90vw;
-        margin-left: 2vw;
-        text-align: left;
-        transform: translate(-50%, 0%);
-        -webkit-transform: translate(-50%, 0%);
-        color: $mainBlue;
-    }
-    .titleBrand{
-        top: 53%;
-        left: 93%;
-    }
-    .titleOfertas{
-        top: 53%;
-    }
-    .categoriesTargets{
-        position: absolute;
-        width: 90vw;
-        left: 50%;
-        top: 10%;
-        transform: translate(-50%, 0%);
-        -webkit-transform: translate(-50%, 0%);
-        .BrainhubCarousel__container{
-            overflow: inherit ;
-            div{
-                overflow: inherit ;
-                width: 100%;
-    
-                ul{
-                    overflow: inherit !important;
-                }
-            }
-            .categoryTarget:hover{
-                -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-            }
-            .categoryTarget{
-                width: 30vw;
-                margin: 2vw;
-                height: 30vh;
-                border-radius: 25px;
-                cursor: grab;
-                -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                position: relative;
-                transition: 0.2s ease-in-out ;
-                overflow: hidden;
-                background-color: #ffffff;
-                img{
-                    position: absolute;
-                    top: 60%;
-                    left: 0%;
-                    transform: translate(0%, -50%);
-                    -webkit-transform: translate(0%, -50%);
-                    width: 60%;
-                }
-    
-                h2{
-                    position: absolute;
-                    top: 50%;
-                    left: 77%;
-                    transform: translate(-50%, -50%);
-                    -webkit-transform: translate(-50%, -50%); 
-                    color: $mainBlue;
-                    font-size: 1.7vw;
-                    width: 45%;
-                    text-align: center;
-                }
-            }
-        }
-    }
-    
-
         
 }
 
