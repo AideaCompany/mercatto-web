@@ -83,7 +83,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
     }
 
     useEffect(() => {
-        updateCart()
+        
     }, [actualCart])
 
     const plus= async (pos)=>{
@@ -103,6 +103,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
         })
         settotalPrice(actualCart?.map(e=>e?.precio).reduce((a,b)=>a+b,0))
         setactualCart([...actualCart])
+        await updateCart()
     }
 
     const minus = async (pos)=>{
@@ -122,6 +123,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
             })
             settotalPrice(actualCart?.map(e=>e?.precio).reduce((a,b)=>a+b,0))
             setactualCart([...actualCart])
+            await updateCart()
         }else{
             settoDelete(pos)
             setmodalVisible(true);
