@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 //context
 import useAuth from '../providers/AuthProvider'
 //types
-import {Pedidos} from '../utils/types'
+import {Carrito, Pedidos} from '../utils/types'
 import {formatNumber} from '../utils/functions'
 
 const carrito = (props:{url:string}):JSX.Element=>{
@@ -19,6 +19,16 @@ const carrito = (props:{url:string}):JSX.Element=>{
         const actual:Pedidos[] = user?.pedidos
         setpedidos(actual?actual:[])
     }, [user])
+
+    //getCountPr
+
+    const getCountProduct = (carrito: Carrito[]) => {
+        var suma = 0
+        carrito.forEach(element => {
+            suma += element.cantidad
+        });
+        return suma
+    }
 
     return (
         <>
@@ -38,7 +48,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                             return (
                             <div className="productItem">
                                 <div>{`Fecha de pedido: ${year}/${month}/${day}`}</div>
-                                <div>{`Cantidad de productos: ${e.carrito.length}`}</div>
+                                <div>{`Cantidad de productos: ${getCountProduct(e.carrito)}`}</div>
                                 <div>{`Precio total $ ${formatNumber(total+4500)}`}</div>
                             </div>
                             )
