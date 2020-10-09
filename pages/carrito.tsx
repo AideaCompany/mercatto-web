@@ -83,7 +83,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
     }
 
     useEffect(() => {
-        updateCart()
+        
     }, [actualCart])
 
     const plus= async (pos)=>{
@@ -103,6 +103,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
         })
         settotalPrice(actualCart?.map(e=>e?.precio).reduce((a,b)=>a+b,0))
         setactualCart([...actualCart])
+        await updateCart()
     }
 
     const minus = async (pos)=>{
@@ -122,6 +123,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
             })
             settotalPrice(actualCart?.map(e=>e?.precio).reduce((a,b)=>a+b,0))
             setactualCart([...actualCart])
+            await updateCart()
         }else{
             settoDelete(pos)
             setmodalVisible(true);
@@ -386,7 +388,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                         {totalPrice>30000?
                             <span><CheckCircleTwoTone twoToneColor="#52c41a"/> Has completado el pedido mínimo</span>
                         :
-                            <span><WarningTwoTone twoToneColor="#eb2f96"/> Te faltan: <span>${30000-totalPrice}</span>para completar el pedido mínimo</span>   
+                            <span><WarningTwoTone twoToneColor="#eb2f96"/> Te faltan: <span>${formatNumber(30000-totalPrice)}</span>para completar el pedido mínimo</span>   
                         }
                     </div>
                     
@@ -456,13 +458,19 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                 <TextArea style={{resize: 'none'}} placeholder='Observaciones' onChange={(e)=>setObservaciones(e.target.value)}></TextArea>
                             </div>
                             <div className='buttons'>
-                                <span>Total: ${formatNumber(totalPrice)}</span>
+                                <div className='totalsCarrito'>
+                                    <span className='subTotal'>Sub Total: ${formatNumber(totalPrice)}</span>
+                                    <br/>
+                                    <span style={{fontSize:'1.5em'}}>Envio: $4,500</span>
+                                    <br/>
+                                    <span className='total'>Total + envio ${formatNumber(totalPrice+4500)}</span>
+                                </div>
                                 <br/>
                                 <div>
                                     <button onClick={()=>vaciarCarrito()} type="button" className="btn btn-primary btn-lg">
                                         Vaciar Carrito
                                     </button>
-                                    <button disabled={totalPrice>=30000?false:true} onClick={okCart} type="button" className="btn btn-primary btn-lg">
+                                    <button disabled={totalPrice>=30000 && direccion !== '' && direccion ?false:true} onClick={okCart} type="button" className="btn btn-primary btn-lg">
                                         Realizar pedido
                                     </button>
                                 </div>
