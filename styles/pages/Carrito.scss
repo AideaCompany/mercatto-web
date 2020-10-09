@@ -32,6 +32,9 @@ $colorText : #5e5e5e;
                 color: $mainBlue;
             }
             span{
+                svg{
+                    padding-bottom: 10px;
+                }
                 color: $mainBlue;
                 font-size: 1.5em;
             }
@@ -192,7 +195,7 @@ $colorText : #5e5e5e;
             }
             .buttons{
                 width: 100%;
-                padding-top: 2vh;
+                padding-top: 20px;
                 text-align: center;
                 .totalsCarrito{
                   width: 90%;
@@ -220,5 +223,80 @@ $colorText : #5e5e5e;
     
         }
         
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    .carritoMain{
+        width: 1300px;
+        .carritoLeft{
+            height: 75vh;
+            .containerProducts{
+                .emptyCart{
+                    margin-top: 100px;
+                }
+            }
+        }
+        .carritoRight{
+            padding: 1%;
+        }
+    }
+}
+
+@media screen and (max-width: 1112px) {
+    .carritoMain{
+        width: 1000px;
+        .carritoLeft{
+            width: 650px;
+            height: 75vh;
+            .titleCarrito{
+                h1{
+                    font-size: 1.5em;
+                }
+                span{
+                    svg{
+                        font-size: 1.5em;
+                    }
+                    font-size: 1em;
+                }
+            }
+            .containerProducts{
+                .productItem{
+                    .productImg{
+                        img{
+                            width: 90%;
+                        }
+                    }
+                    .productInfo{
+                        width: 40%;
+                    }
+                    .productAction{
+                        width: 30%;
+                        span{
+                            font-size: 1.3em;
+                        }
+                        button{
+                            height: 30px;
+                            width: 30px;
+                            margin: 5px;
+                            span{
+                                top: 60%;
+                                left: 50%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .carritoRight{
+            width: 300px;
+            padding: 10px;
+            .confirmCart{
+                .info{
+                    padding-top: 10px;
+                    height: 40%;
+                }
+            }
+        }
     }
 }

@@ -15,8 +15,7 @@ import {Carrito, Producto, ProductoCombo} from '../utils/types'
 import axios from 'axios'
 //utils
 import {getNewPrice, formatNumber} from '../utils/functions'
-//Gsap
-import { TimelineMax, gsap,  CSSPlugin, Power4} from 'gsap'
+
 
 
 const {TextArea} = Input
@@ -46,7 +45,6 @@ const carrito = (props:{url:string}):JSX.Element=>{
         if (user.direccion !== '' || !user.direccion ) {
             setDireccion(user.direccion)
         }
-        gsap.registerPlugin(CSSPlugin)
         var actual:showCarrito[] = user?.carrito
         actual?.map(e=>{
             if (e!==null) {
@@ -388,7 +386,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                         {totalPrice>30000?
                             <span><CheckCircleTwoTone twoToneColor="#52c41a"/> Has completado el pedido mínimo</span>
                         :
-                            <span><WarningTwoTone twoToneColor="#eb2f96"/> Te faltan: <span>${formatNumber(30000-totalPrice)}</span>para completar el pedido mínimo</span>   
+                            <span><WarningTwoTone  twoToneColor="#eb2f96"/> Te faltan: <span>${formatNumber(30000-totalPrice)}</span>para completar el pedido mínimo</span>   
                         }
                     </div>
                     

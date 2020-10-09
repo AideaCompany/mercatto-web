@@ -33,7 +33,7 @@ $mainYellow: #FCD330;
                 }
             }
             .searchBar{
-                width: 50%;
+                width: 40%;
                 height: 100px;
                 display: flex;
                 justify-content: center;
@@ -41,12 +41,12 @@ $mainYellow: #FCD330;
                 .ant-select{
                     margin-top: 30px;
                     width: 80%;
-                    height: 5vh;
+                    height: 50px;
     
                     .ant-input-affix-wrapper{
                         background-color: $mainGrey;
-                        height: 5vh;
-                        border-radius: 2.5vh;
+                        height: 50px;
+                        border-radius: 24px;
                         border: none;
                         input{
                             background-color: transparent;
@@ -60,7 +60,7 @@ $mainYellow: #FCD330;
             }
     
             .menu{
-                width: 25%;
+                width: 35%;
                 height: 100px;
                 display: flex;
                 align-items: center;
@@ -180,5 +180,71 @@ $mainYellow: #FCD330;
     .logOutButton{
         color: #FC3740;
         
+    }
+}
+
+@media screen and (max-width: 1366px) {
+    .mainLayout{
+        header{
+            >div{
+                width: 1300px;
+                .searchBar{
+                    width: 40%;
+                }
+                .menu{
+                    width: 35%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1112px) {
+    .mainLayout{
+        header{
+            >div{
+                width: 1000px;
+                .containerMainLogo{
+                    img{
+                        width: 250px;
+                    }
+                }
+                .searchBar{
+                    width: 40%;
+                    .ant-select{
+                        height: 40px;
+                        .ant-input-affix-wrapper{
+                            height: 40px;
+                            border-radius: 20px;
+                        }
+                    }
+                }
+                .menu{
+                    width: 35%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .mainLayout{
+        header{
+            >div{
+                width: 1000px;
+                .containerMainLogo{
+                    img{
+                        width: 200px;
+                    }
+                }
+
+                .menu{
+                    width: 35%;
+                    .socialMediaIcons{
+                        margin-right: 20px;
+                    }
+                }
+            }
+        }
     }
 }

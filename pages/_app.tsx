@@ -3,7 +3,6 @@ import '../styles/Layout.scss'
 import '../styles/pages/Index.scss'
 import '../styles/pages/Auth.scss'
 import '../styles/pages/Category.scss'
-import '../styles/pages/Products.scss';
 import '../styles/pages/Carrito.scss';
 import '../styles/pages/Pedidos.scss';
 import '../styles/pages/Terminos.scss'

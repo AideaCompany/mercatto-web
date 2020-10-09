@@ -18,6 +18,7 @@ $mainBlue: #02205E;
                     color: $mainBlue;
                 }
                 width: 1500px;
+                padding: 1%;
                 .BrainhubCarousel__container{
                     overflow: inherit ;
                     div{
@@ -36,7 +37,7 @@ $mainBlue: #02205E;
                     .categoryTarget{
                         width: 450px;
                         margin: 0px;
-                        height: 250px;
+                        height: 200px;
                         border-radius: 25px;
                         cursor: grab;
                         -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
@@ -83,7 +84,7 @@ $mainBlue: #02205E;
                 height: 100%;
                 display: flex;
                 align-items: center;
-                
+                padding: 1%;
                 >div{
                     width: 50%;
                     padding: 20px;
@@ -228,5 +229,68 @@ $mainBlue: #02205E;
 .BrainhubCarousel__arrows{
     span{
         width: 20%;
+    }
+}
+@media screen and (max-width: 1440px) {
+    .mainContent{
+        .mainContainerCategory{
+            .categoriesTargets{
+                >div{
+                    padding: 0 20px 0 20px;
+                    width: 1300px;
+                    h1{
+                        margin-left: 0;
+                        
+                    }
+                    .categoryTarget{
+                        width: 400px !important;
+                        height: 200px !important;
+                    }
+                }
+            }
+            .offerBrand{
+                >div{
+                    width: 1300px;
+                    
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1112px) {
+    .mainContent{
+        .mainContainerCategory{
+            .categoriesTargets{
+                >div{
+                    padding: 0 20px 0 20px;
+                    width: 1000px;
+                    h1{
+                        margin-left: 0;
+                        
+                    }
+                    .categoryTarget{
+                        width: 300px !important;
+                        height: 200px !important;
+                    }
+                }
+            }
+            .offerBrand{
+                >div{
+                    width: 1000px;
+                    .back{
+                        width: 30vw !important;
+                        height: 30vw !important;
+                        left: 5% !important;
+                    }
+                }
+            }
+            .brands{
+                .targetBrand{
+                    width: 150px !important;
+                    height: 150px !important;
+                }
+            }
+        }
     }
 }
