@@ -401,3 +401,94 @@ $mainBlue: #02205E;
         }
     }
 }
+
+@media screen and (max-width: 768px) and (orientation : portrait) {
+    .mainContent{
+        .mainContainerCategory{
+            .categoriesTargets{
+                >div{
+                    padding: 0 10px 0 10px;
+                    width: 700px;
+                    .categoryTarget{
+                        width: 220px !important;
+                        height: 170px !important;
+                        h2{
+                            font-size: 1.3em !important;
+                        }
+                    }
+                }
+            }
+            .offerBrand{
+                >div{
+                    width: 700px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 414px) and (orientation : portrait){
+    .mainContent{
+        .mainContainerCategory{
+            .categoriesTargets{
+                >div{
+                    h1{
+                        font-size: 2em;
+                    };
+                    padding: 0 10px 0 10px;
+                    width: 360px;
+                    .categoryTarget{
+                        width: 100% !important;
+                        height: 140px !important;
+                        margin: 0 10px 0 10px !important;
+                        h2{
+                            font-size: 1.3em !important;
+                        }
+                    }
+                }
+            }
+            .offerBrand{
+                >div{
+                    width: 360px;
+                    padding: 0;
+                    >div{
+                        padding:10px 0 10px 0;
+                        h2{
+                            font-size: 1.5em;
+                        }
+                    }
+                    .offer{
+                        .BrainhubCarousel__container{
+                            .targetOffer{
+                                width: 400px !important;
+                                height: 140px;
+                                margin:  10px ;
+                                .back{
+                                    width: 40vw !important;
+                                    height: 40vw !important;
+                                }
+                                img{
+                                    width: 50%;
+                                    top: 55%;
+                                    left: 30%;
+                                }
+                                h2{
+                                    font-size: 1.3em;
+                                }
+                            }
+                        } 
+                    } 
+                    .brands{
+                        .BrainhubCarousel__container{
+                            .targetBrand{
+                                width: 150px !important;
+                                height: 100px !important;
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+}

@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css';
 import 'antd/dist/antd.css';
 import '@brainhubeu/react-carousel/lib/style.css';
-import 'antd-mobile/lib/carousel/style/index.css'
+import 'antd-mobile/lib/popover/style/index.css';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 

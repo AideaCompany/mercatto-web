@@ -45,10 +45,16 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
   const router = useRouter()
   //state
   const [dataOfertaFinal, setDataOfertaFinal] = useState<Ofertas>()
+  const [colCategory, setColCategory] = useState<number>(3)
+  const [arrowOffer, setArrowOffer] = useState<boolean>(true)
 
   //effect
   useEffect(() => {
     setDataOfertaFinal(dataOfertas[0])
+    if (window.matchMedia("(max-width: 414px)").matches){
+      setColCategory(1)
+      setArrowOffer(false)
+    }
 
   }, [])
 
@@ -61,7 +67,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
           <div className='categoriesTargets'>
             <div>
             <h1 className='titleCategorias'>Categorias</h1>
-              <Carousel minDraggableOffset={20} draggable={dataCategoria.length>3? true : false} slidesPerPage={3} infinite={false}>
+              <Carousel minDraggableOffset={20} draggable={true} slidesPerPage={colCategory} infinite={false}>
                   {dataCategoria?.map((categories)=>{
                     return(
                       <Link  href={{pathname:`/categorias/${categories.Categoria.toLowerCase()}`, query:{id:categories._id}}}>
@@ -82,7 +88,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
               {/* offer */}
               <div className='offer'>  
               <h2 className='titleOfertas'>Especiales para ti</h2> 
-                <Carousel animationSpeed={500} arrows={true} infinite={true}  draggable={true} slidesPerPage={1} >
+                <Carousel /* autoPlay={3000}  */minDraggableOffset={20}  animationSpeed={500} arrows={arrowOffer} infinite={true}  draggable={true}  >
                     {dataOfertaFinal?.Ofertas?.map(oferta=> {
                       return(
                       <div onClick={()=>router.push({pathname:`/productos/${oferta.ref.titulo.toLowerCase()}`,query:{ofer:'yes'}})} className='targetOffer'>

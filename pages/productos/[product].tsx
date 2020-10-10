@@ -3,7 +3,9 @@ import Layout from '../../components/Layout';
 //Nextjs
 import Link from 'next/link'
 //Antd
-import { FrownOutlined} from '@ant-design/icons';
+//antD
+import { Popover } from 'antd';
+import { FrownOutlined, FilterFilled} from '@ant-design/icons';
 //axios
 import axios from 'axios'
 //context
@@ -257,6 +259,23 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
         
     }
 
+    const contentFilter = (
+        <div className='filterPopOver'>
+            <div style={{marginTop:'30px'}} className='filter'>
+                <h2>filtrar por:</h2>
+                <div onClick={()=>filter('highestPrice')} id='highestPrice' className='highestPrice'>
+                    <span>Mayor Precio</span>
+                </div>
+                <div onClick={()=>filter('lowestPrice')} id="lowestPrice" className='lowestPrice'>
+                    <span>Menor precio</span>
+                </div>
+                <div onClick={()=>filter('alpha')} id="alpha" className='alpha'>
+                    <span>Orden alfabético</span>
+                </div>
+            </div>
+        </div>
+    )
+
     return(
         <Layout isCombo={titleInit!=='combos'?false:true} setOpenModalProduct={setOpenModalProduct} openModalProduct={openModalProduct} idProduct={idProductModal} urlBack={url}  logoWhite={false} pathPublic={'../'} title={title} color={"#8D8D8D"}  background={`#EEEEEE`}>
             <div className='productMain'>
@@ -279,13 +298,16 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
                         <div className='firstTarget'>
                             <div className='textCategory'>
                                 <h1>{title} </h1>
+                                <Popover placement='bottomLeft' content={contentFilter}>
+                                    <span> <FilterFilled className='iconFilter' /> Filtrar</span>
+                                </Popover>
                             </div>
                                 
                         </div>
                     <div className='row rowTarget'>
                         {dataProductsToShow.length >0 ? dataProductsToShow.map(product=>{
                             return (
-                            <div onClick={()=>openProduct(product._id)} className='col-lg-4 mainTargetProduct' key={product._id}>
+                            <div onClick={()=>openProduct(product._id)} className='col-lg-4 col-sm-4 col-6  col-md-4 mainTargetProduct' key={product._id}>
                                 <div className='targetProduct'>
                                         <div className="imgProduct">
                                             <img src={`${url}${product.imagenes.url}`} alt={`${product.nombre} mercatto`}/>

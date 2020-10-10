@@ -18,6 +18,9 @@ $mainYellow: #FCD330;
         -webkit-box-shadow: 0px 16px 16px -15px rgba(0,0,0,0.68);
         -moz-box-shadow: 0px 16px 16px -15px rgba(0,0,0,0.68);
         box-shadow: 0px 16px 16px -15px rgba(0,0,0,0.68);
+        .headerCel{
+            display: none;
+        }
         >div{
             width: 1400px;
             display: flex;
@@ -113,7 +116,7 @@ $mainYellow: #FCD330;
     .mainContent{
         position: absolute;
         width: 100vw;
-        height: calc(100vh - 135px);
+        height:  calc(100vh - 135px);
         top: 100px;
         left: 0;
         display: flex;
@@ -137,10 +140,11 @@ $mainYellow: #FCD330;
     }
 
     .footer{
-        position: absolute;
+        display: none;
+        position: fixed;
         width: 100vw;
         height: 35px;
-        top: 100vh;
+        top: calc(100vh);
         left: 0vw;
         background-color: $mainGrey;
         transform: translate(0%, -100%);
@@ -267,6 +271,184 @@ $mainYellow: #FCD330;
                     }
                 }
             }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) and (orientation : portrait) {
+
+    .mainLayout{
+        header{
+            >div{
+                .containerMainLogo{
+                    img{
+                        width: 150px;
+                    };
+                }
+                .searchBar{
+                    width: 50%;
+                }
+                .menu{
+                    display: block;
+                    width: 30%;
+                    margin-top: 0;
+                    .socialMediaIcons{
+                        height: 50%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin-right: 0px;
+                        a{
+                            svg{
+                                width: 20px;
+                                height: 20px;
+                            }
+                        }
+                    }
+                    .buttonsAuth, .itemUser{
+                        display: flex;
+                        height: 50%;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                    }
+                    .profileUser{
+                        margin: 10px;
+                        svg{
+                            font-size: 20pt;
+                        }
+                    }
+                    .cart{
+                        margin: 10px;
+                    }
+                    
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 414px) and (orientation : portrait) {
+    .mainLayout{
+        overflow: inherit;
+    }
+    .mainLayout{
+        header{
+            z-index: 100;
+            >div{
+                width: 400px;
+            }
+            .headerBig{
+                display: none;
+            }
+            .headerCel{
+                display: block;
+                .containerUp{
+                    width: 100%;
+                    height: 50%;
+                    display: flex;
+                    .containerLogo{
+                        width: 50%;
+                        height: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        img{
+                            width: 150px;
+                        }
+                    }
+                    .complement{
+                        width: 50%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .socialMediaIcons{
+                            display: flex;
+                            a{
+                                font-size: 1em;
+                                color: #fff;
+                                margin: 5px;
+                                svg{
+                                    width: 20px;
+                                    height: 20px;
+                                }
+                            }
+                        }
+                        .itemUser{
+                            
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            .iconCart{
+                                margin-left: 30px;
+                                font-size: 20pt;
+                                color: #fff;
+                            }
+                            .profileUser{
+                                background-color: $mainGrey;
+                                cursor: pointer;
+                                margin: 15px;
+                                svg{
+                                    font-size: 15pt;
+                                    color: $mainBlue;
+                                }
+                            }
+                            .cart{
+                                .ant-badge-count{
+                                   background-color: $mainYellow;
+                                   color: $mainBlue; 
+                                   box-shadow: none;
+                                }
+                            }
+                        }
+                        
+                        .buttonsAuth{
+                            .profileUser{
+                                background-color: $mainGrey;
+                                cursor: pointer;
+                                margin: 5px;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                svg{
+                                    font-size: 12pt;
+                                    color: $mainBlue;
+                                }
+                            }
+                        }
+                    }
+                }
+                .containerDown{
+                    width: 100%;
+                    height: 50%;
+                    display: flex;
+                    >div{
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .ant-select{
+                            width: 95%;
+                            height: 30px;
+            
+                            .ant-input-affix-wrapper{
+                                background-color: $mainGrey;
+                                height: 30px;
+                                border-radius: 24px;
+                                border: none;
+                                input{
+                                    background-color: transparent;
+                                }
+                                svg{
+                                    font-size: 15pt;
+                                    color: $mainBlue;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
         }
     }
 }

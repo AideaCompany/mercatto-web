@@ -32,9 +32,15 @@ const ModalProduct = (props:PropsModal) => {
     const [dataProduct, setDataProduct] = useState<Producto>()
     const [loading, setLoading] = useState<boolean>(true)
     const [countProduct, setCountProduct] = useState<number>(null)
+    const [widthModal, setWidthModal] = useState<number>(800)
 
     //effect
     useEffect(() => {
+        if (window.matchMedia("(max-width: 835px)").matches) {
+            setWidthModal(600)
+        }else if (window.matchMedia("(max-width: 500px)").matches) {
+            setWidthModal(340)
+        }
         setLoading(true)
         if (openModalProduct) {
             if (isCombo) {
@@ -164,7 +170,7 @@ const ModalProduct = (props:PropsModal) => {
         }).catch(err=>console.log(err))
     }
     return(
-        <Modal width={800} centered onCancel={HandleClose} visible={openModalProduct}>
+        <Modal width={widthModal} centered onCancel={HandleClose} visible={openModalProduct}>
             <div className='containerProductModal'>
                 {!loading?
                 <>

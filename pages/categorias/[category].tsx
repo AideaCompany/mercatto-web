@@ -3,7 +3,8 @@ import Layout from '../../components/Layout';
 //axios
 import Axios from 'axios';
 //antD
-import { Skeleton } from 'antd';
+import { Skeleton, Popover } from 'antd';
+import { FilterFilled} from '@ant-design/icons';
 //utils
 import {getNewPrice, formatNumber} from '../../utils/functions'
 //Auth
@@ -243,10 +244,13 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
             case 'alpha':
                 Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
                 Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[1].classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[1].classList.remove('activeFilter')
                 if (filterOption===parameter) {
                     setFilterOption('')
                     setDataProductsToShow(productsTemp)
                     d[0].classList.remove('activeFilter')
+                    d[1].classList.remove('activeFilter')
                 }else{
                     setFilterOption(parameter)
                     productsTemp.sort(function(a,b) {
@@ -256,15 +260,19 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                     })
                     setDataProductsToShow(productsTemp)
                     d[0].classList.add('activeFilter') 
+                    d[1].classList.add('activeFilter') 
                 }
                 break;
             case 'highestPrice':
                 Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
                 Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[1].classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[1].classList.remove('activeFilter')
                 if (filterOption===parameter) {
                     setFilterOption('')
                     setDataProductsToShow(productsTemp)
                     d[0].classList.remove('activeFilter')
+                    d[1].classList.remove('activeFilter')
                 }else{
                     setFilterOption(parameter)
                     productsTemp.sort(function (a,b) {
@@ -274,15 +282,19 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                     })
                     setDataProductsToShow(productsTemp)
                     d[0].classList.add('activeFilter') 
+                    d[1].classList.add('activeFilter') 
                 }
                 break;
             case 'lowestPrice':
                 Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
                 Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[1].classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[1].classList.remove('activeFilter')
                 if (filterOption === parameter) {
                     setFilterOption('')
                     setDataProductsToShow(productsTemp)
                     d[0].classList.remove('activeFilter')
+                    d[1].classList.remove('activeFilter')
                 }else{
                     setFilterOption(parameter)
                     productsTemp.sort(function (a,b) {
@@ -292,6 +304,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                     })
                     setDataProductsToShow(productsTemp)
                     d[0].classList.add('activeFilter') 
+                    d[1].classList.add('activeFilter') 
                 }
 
                 break;
@@ -299,6 +312,34 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                 break;
         }
     }
+
+    const contentFilter = (
+        <div className='filterPopOver'>
+            <div>
+                <h2>Categorias:</h2>
+                <ul>
+                    <li onClick={()=>filterDataProducts('all')}>Todos</li>
+                    {dataSubCategoria.map(subcategoria=>(
+                        <li>
+                            <li onClick={()=>filterDataProducts(subcategoria._id)} key={subcategoria._id}>{subcategoria.titulo}</li>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div style={{marginTop:'30px'}} className='filter'>
+                <h2>filtrar por:</h2>
+                <div onClick={()=>filter('highestPrice')} id='highestPrice' className='highestPrice'>
+                    <span>Mayor Precio</span>
+                </div>
+                <div onClick={()=>filter('lowestPrice')} id="lowestPrice" className='lowestPrice'>
+                    <span>Menor precio</span>
+                </div>
+                <div onClick={()=>filter('alpha')} id="alpha" className='alpha'>
+                    <span>Orden alfabético</span>
+                </div>
+            </div>
+        </div>
+    )
 
     return(
         <div>
@@ -333,11 +374,14 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                             <div className='firstTarget'>
                                 <div className='textCategory'>
                                     <h1>{textCategory}</h1>
+                                    <Popover placement='bottomLeft' content={contentFilter}>
+                                        <span> <FilterFilled className='iconFilter' /> Filtrar</span>
+                                    </Popover>
                                 </div>
                             </div>
                             <div className='row rowTarget'>
                                 {dataProductsToShow.map((producto)=>(
-                                    <div onClick={()=>openProduct(producto._id)} key={producto._id} id={producto._id} className='col-lg-4 mainTargetProduct'>
+                                    <div onClick={()=>openProduct(producto._id)} key={producto._id} id={producto._id} className='col-lg-4 col-6 col-md-4 col-sm-4 mainTargetProduct'>
                                         <div className='targetProduct'>
                                         {!loading? 
                                             <>

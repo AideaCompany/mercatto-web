@@ -10,7 +10,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 //antD
 import { Badge, Avatar, Button, message, Menu, Dropdown} from 'antd'
-import {ShoppingCartOutlined, UserOutlined, PoweroffOutlined} from '@ant-design/icons';
+import {ShoppingCartOutlined, UserOutlined, PoweroffOutlined, LoginOutlined} from '@ant-design/icons';
 //Axios
 import axios from 'axios'
 //fontawesome
@@ -47,11 +47,15 @@ const Layout = (props: propsLayout):JSX.Element =>{
     const [modalResetPassword, setModalResetPassword] = useState<boolean>(false)
     const [cartCount, setcartCount] = useState<Number>(0)
     const [dataProducts, setDataProducts] = useState<Producto[]>([])
+    const [sizeProfile, setSizeProfile] = useState<number>(40)
     //context
     const {user, logout, loginProvider,modalAuthSignIn,setModalAuthSignIn,modalAuthSignUp,setModalAuthSignUp} = useAuth()
 
     //Effect
     useEffect(() => {
+        if (window.matchMedia("(max-width: 768px)").matches) {
+            setSizeProfile(30)
+        }
         if (confirmed) {
             message.success({content:"Activación de cuenta concretada",className: 'messageVerification',duration: '5'})
             setModalAuthSignIn(true)
@@ -65,8 +69,10 @@ const Layout = (props: propsLayout):JSX.Element =>{
                 loginProvider(res.data)
             ).catch(err=>console.log(err))
         }
+        
         axios.get(`${urlBack}/productos`).then(res=>setDataProducts(res.data)).catch(err=>console.log(err))
     }, [])
+
     useEffect(() => {
         var countTemp = 0
         user?.carrito?.forEach(e => {
@@ -93,6 +99,18 @@ const Layout = (props: propsLayout):JSX.Element =>{
             </Menu.Item>
         </Menu>
     )
+
+    const menuAuth = (
+        <Menu>
+            <Menu.Item>
+                <span onClick={()=>setModalAuthSignIn(true)}>Iniciar Sesión</span>
+            </Menu.Item>
+            <Menu.Item>
+                <span onClick={()=>setModalAuthSignUp(true)}>Registrate</span>
+            </Menu.Item>
+        </Menu>
+    )
+
     return(
         <>
         <Head>
@@ -102,8 +120,8 @@ const Layout = (props: propsLayout):JSX.Element =>{
         </Head> 
         <main>
             <div className='mainLayout'>
-                <header>
-                    <div>
+                <header >
+                    <div className='headerBig'>
                         <div className='containerMainLogo'>
                             <Link href='/'>
                                 <a >
@@ -123,30 +141,84 @@ const Layout = (props: propsLayout):JSX.Element =>{
                                 {
                                     user.jwt ? 
                                     <>
-                                        
-                                        <Badge className='cart' count={cartCount}>
-                                            <Link href='/carrito'>
-                                                <a>
-                                                    <ShoppingCartOutlined className='iconCart' />
-                                                </a>
-                                            </Link>
-                                        </Badge>
-                                        <Dropdown overlay={menu}>
-                                            <Avatar size={40} className='profileUser' icon={<UserOutlined />}/>
-                                        </Dropdown>
+                                        <div className='itemUser'>
+                                            <Badge className='cart' count={cartCount}>
+                                                <Link href='/carrito'>
+                                                    <a>
+                                                        <ShoppingCartOutlined className='iconCart' />
+                                                    </a>
+                                                </Link>
+                                            </Badge>
+                                            <Dropdown overlay={menu}>
+                                                <Avatar size={sizeProfile} className='profileUser' icon={<UserOutlined />}/>
+                                            </Dropdown>
+                                        </div>
+
                                         
                                     </>
                                     :
                                     <>
+                                    <div className='buttonsAuth'>
                                         <Button style={{marginLeft: '1em'}} onClick={()=>setModalAuthSignIn(true)}>Iniciar Sesión</Button>
                                         <Button style={{margin: '1em'}} onClick={()=>setModalAuthSignUp(true)}>Registrate</Button>
+                                    </div>
                                         
                                     </>
 
                                 }
                         </div>
                     </div>
+                    <div className='headerCel'>
+                        <div className='containerUp'>
+                            <div className='containerLogo'>
+                                <Link href='/'>
+                                    <a >
+                                        <img className='mainLogo' src={`${pathPublic}images/Layout/mercatto-${!logoWhite ? 'large' : 'white'}.svg`} alt="mercatto logo"/>
+                                    </a>
+                                </Link>
+                            </div>
+                            <div className='complement'>
+                                <div className='socialMediaIcons'>
+                                    <a className='socialIcon' target="_blank" href="/" ><FontAwesomeIcon icon={faFacebookF}/></a>
+                                    <a className='socialIcon' target="_blank" href="/"><FontAwesomeIcon icon={faInstagram} /></a>
+                                    <a className='socialIcon' target="_blank" href="https://api.whatsapp.com/send?phone=573186352419" ><FontAwesomeIcon icon={faWhatsapp}/></a>
+                                </div>
+                                {
+                                    user.jwt ? 
+                                    <>
+                                        <div className='itemUser'>
+                                            <Badge className='cart' count={cartCount}>
+                                                <Link href='/carrito'>
+                                                    <a>
+                                                        <ShoppingCartOutlined className='iconCart' />
+                                                    </a>
+                                                </Link>
+                                            </Badge>
+                                            <Dropdown overlay={menu}>
+                                                <Avatar size={sizeProfile} className='profileUser' icon={<UserOutlined />}/>
+                                            </Dropdown>
+                                        </div>
 
+                                        
+                                    </>
+                                    :
+                                    <>
+                                    <div className='buttonsAuth'>
+                                        <Dropdown overlay={menuAuth}>
+                                            <Avatar size={25} className='profileUser' icon={<LoginOutlined  />}/>
+                                        </Dropdown>
+                                    </div>
+                                        
+                                    </>
+                                }
+                            </div>
+                        </div>
+                        <div className='containerDown'>
+                            <div className='bar'>
+                                <Autocomplete dataProducts={dataProducts}/>
+                            </div>
+                        </div>
+                    </div>
                 </header>
                 <div className='mainContent'>
                     {children}
@@ -160,8 +232,6 @@ const Layout = (props: propsLayout):JSX.Element =>{
                             </Link>
                             <span>Powered by <a target="_blank" href="https://ideautomation.com.co/">IDEA SAS</a> - AIDEA SAS</span>
                         </div>
-
-                    
                 </div>
                 <ModalProduct isCombo={isCombo} id={idProduct} urlBack={urlBack} setOpenModalProduct={setOpenModalProduct} openModalProduct={openModalProduct}></ModalProduct>
                 <SignInComponent pathPublic={pathPublic} urlBack={urlBack} modalAuthSignIn={modalAuthSignIn} setModalAuthSignIn={setModalAuthSignIn} setModalAuthSignUp={setModalAuthSignUp}/>
