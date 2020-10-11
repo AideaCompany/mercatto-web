@@ -82,7 +82,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
             var isProduct = productCart.findIndex(e=>e._id===idProductModal)
             var isProductCart = user.carrito.findIndex(e=>(e.producto as Producto)?._id===idProductModal)
             var productCartTemp: Count[] = JSON.parse(JSON.stringify(productCart))
-            if (isProductCart> -1) {
+            if (isProductCart> -1 && productCartTemp.length>0) {
                 productCartTemp[isProduct].count = user.carrito[isProductCart]?.cantidad
             }
             setProductCart(productCartTemp)

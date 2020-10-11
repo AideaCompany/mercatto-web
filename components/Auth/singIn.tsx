@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 //AntDesign 
 import {Form, Input, Button, Modal, Checkbox, message} from 'antd'
+import { Modal as ModalMobile } from 'antd-mobile';
 //provider
 import useAuth from '../../providers/AuthProvider'
 //axios
@@ -36,7 +37,7 @@ const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, set
     }
 
     return(
-        <Modal width={400} centered onCancel={HandleClose} visible={modalAuthSignIn}>
+        <Modal width={400} closable={false} centered onCancel={HandleClose} visible={modalAuthSignIn}>
                 <div className='containerForm'>
                     <img className='mainLogo' src={`${pathPublic}images/Layout/logoAuth.svg`} alt="mercatto logo"/>
                     {!forgotPassword?
@@ -68,7 +69,7 @@ const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, set
                         </Form.Item>
                         <span style={{cursor:"pointer"}} onClick={()=>setForgotPassword(false)}>Regresar</span>
                         <div className='buttonsAuth'>
-                            <Button htmlType="submit">Acetar</Button>
+                            <Button htmlType="submit">Aceptar</Button>
                         </div>
                     </Form>
                     </>

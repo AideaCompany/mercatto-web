@@ -19,16 +19,7 @@ $mainBlue: #02205E;
                 }
                 width: 1500px;
                 padding: 1%;
-                .BrainhubCarousel__container{
-                    overflow: inherit ;
-                    div{
-                        overflow: inherit ;
-                        width: 100%;
-            
-                        ul{
-                            overflow: inherit !important;
-                        }
-                    }
+                .sliderCategory {
                     .categoryTarget:hover{
                         -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
                         -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
@@ -36,7 +27,7 @@ $mainBlue: #02205E;
                     }
                     .categoryTarget{
                         width: 450px;
-                        margin: 0px;
+                        margin: 10px 20px 10px 20px;
                         height: 200px;
                         border-radius: 25px;
                         cursor: grab;
@@ -97,18 +88,7 @@ $mainBlue: #02205E;
                         float: right;
                         margin: 0 1vw 0 0;
                     }
-                    .BrainhubCarousel__container{
-                        overflow-x: hidden ;
-                        overflow-y: inherit;    
-                        cursor: grab;
-                        div{     
-                            overflow: inherit;
-                
-                            ul{
-                                overflow: inherit !important;
-                            }
-                        }
-            
+                    .offerSlider{
                         .targetOffer:hover{
                             -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
                             -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
@@ -116,7 +96,7 @@ $mainBlue: #02205E;
                         }
             
                         .targetOffer{
-                            width: 100%;
+                            width: auto;
                             height: 30vh;
                             background: #ffffff;
                             border-radius: 25px;
@@ -163,17 +143,8 @@ $mainBlue: #02205E;
             
                 }
                 .brands{
-                    .BrainhubCarousel__container{
-                        overflow-x: hidden ;
-                        overflow-y: inherit;    
-                        cursor: grab;
-                        div{     
-                            overflow: inherit;
-                
-                            ul{
-                                overflow: inherit !important;
-                            }
-                        }
+                    .sliderBrand{
+
                         .targetBrand:hover{
                             -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
                             -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
@@ -224,6 +195,14 @@ $mainBlue: #02205E;
         }
         
     }
+}
+
+.react-multiple-carousel__arrow--left {
+    left: 0% !important;
+}
+
+.react-multiple-carousel__arrow--right {
+    right: 0 !important;
 }
 
 .BrainhubCarousel__arrows{
@@ -321,9 +300,9 @@ $mainBlue: #02205E;
                         height: 50%;
                     }
                     .offer{
-                        .BrainhubCarousel__container{
+
                             .targetOffer{
-                                height: 350px;
+                                height: 350px !important;
                                 .back{
                                     width: 70vw !important;
                                     height: 70vw !important;
@@ -337,15 +316,15 @@ $mainBlue: #02205E;
                                     font-size: 3em;
                                 }
                             }
-                        }
+                        
                     }
                     .brands{
-                        .BrainhubCarousel__container{
+
                             .targetBrand{
-                                width: 250px !important;
+                                width: auto !important;
                                 height: 250px !important;
                             }
-                        }
+                        
                     }
                 }
             }
@@ -360,10 +339,10 @@ $mainBlue: #02205E;
         .mainContainerCategory{
             .categoriesTargets{
                 >div{
-                    padding: 0 10px 0 10px;
+                    padding: 0 !important;
                     width: 800px;
                     .categoryTarget{
-                        width: 250px !important;
+                        width: auto !important;
                         height: 200px !important;
                     }
                 }
@@ -372,23 +351,22 @@ $mainBlue: #02205E;
                 >div{
                     width: 800px;
                     .offer{
-                        .BrainhubCarousel__container{
                             .targetOffer{
-                                height: 250px;
+                                height: 250px !important;
                                 .back{
                                     width: 70vw !important;
                                     height: 70vw !important;
                                 }
                             }
-                        }
+                        
                     }
                     .brands{
-                        .BrainhubCarousel__container{
+
                             .targetBrand{
-                                width: 200px !important;
+                                width: auto !important;
                                 height: 150px !important;
                             }
-                        }
+                        
                     }
                 }
             }
@@ -431,16 +409,16 @@ $mainBlue: #02205E;
     .mainContent{
         .mainContainerCategory{
             .categoriesTargets{
+                height: 40% !important;
                 >div{
                     h1{
                         font-size: 2em;
                     };
-                    padding: 0 10px 0 10px;
-                    width: 360px;
+                    width: 100%;
                     .categoryTarget{
-                        width: 100% !important;
+                        width: auto !important;
                         height: 140px !important;
-                        margin: 0 10px 0 10px !important;
+                        margin: 10px !important;
                         h2{
                             font-size: 1.3em !important;
                         }
@@ -458,11 +436,11 @@ $mainBlue: #02205E;
                         }
                     }
                     .offer{
-                        .BrainhubCarousel__container{
+                        height: 40%;
                             .targetOffer{
-                                width: 400px !important;
-                                height: 140px;
-                                margin:  10px ;
+                                width: auto !important;
+                                height: 140px !important;
+                                margin:  10px !important;
                                 .back{
                                     width: 40vw !important;
                                     height: 40vw !important;
@@ -479,16 +457,12 @@ $mainBlue: #02205E;
                         } 
                     } 
                     .brands{
-                        .BrainhubCarousel__container{
                             .targetBrand{
-                                width: 150px !important;
+                                width: 100px !important;
                                 height: 100px !important;
                             }
                         }
                     }
-                    
-                }
-            }
         }
     }
 }

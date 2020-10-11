@@ -115,3 +115,12 @@ $mainBlue: #02205E;
 .ant-select-dropdown{
     border-radius: 25px !important;
 }
+
+@media screen and (max-width: 414px) and (orientation : portrait){
+        .ant-modal-wrap{
+            overflow: hidden !important;
+            .containerForm{
+                width: 300px;
+            }
+        }
+}

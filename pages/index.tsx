@@ -5,7 +5,7 @@ import Layout from '../components/Layout'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 //provider
-import Carousel from '@brainhubeu/react-carousel';
+import Carousel from 'react-multi-carousel';
 
 //types
 type Categorias = {
@@ -47,13 +47,17 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
   const [dataOfertaFinal, setDataOfertaFinal] = useState<Ofertas>()
   const [colCategory, setColCategory] = useState<number>(3)
   const [arrowOffer, setArrowOffer] = useState<boolean>(true)
+  const [infinitySlider, setInfinitySlider] = useState(false)
+  const [firstRender, setFirstRender] = useState(false)
 
   //effect
   useEffect(() => {
+    setFirstRender(true)
     setDataOfertaFinal(dataOfertas[0])
     if (window.matchMedia("(max-width: 414px)").matches){
       setColCategory(1)
       setArrowOffer(false)
+      setInfinitySlider(true)
     }
 
   }, [])
@@ -67,12 +71,35 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
           <div className='categoriesTargets'>
             <div>
             <h1 className='titleCategorias'>Categorias</h1>
-              <Carousel minDraggableOffset={20} draggable={true} slidesPerPage={colCategory} infinite={false}>
+              <Carousel 
+                ssr
+                partialVisbile={false}
+                arrows={dataCategoria.length>3?true:false}
+                className='sliderCategory'
+                draggable={false}  
+                infinite={true}
+                additionalTransfrom={0}
+                removeArrowOnDeviceType={["mobile"]}
+                responsive={{
+                  desktop:{
+                    breakpoint:{max:3000, min: 768},
+                    items:3
+                  },
+                  mobile:{
+                    breakpoint:{max:464, min: 0},
+                    items:1,
+                    partialVisibilityGutter: 30
+                  },
+                }}
+                showDots={false}
+                slidesToSlide={1}
+                // swipeable
+              >
                   {dataCategoria?.map((categories)=>{
                     return(
-                      <Link  href={{pathname:`/categorias/${categories.Categoria.toLowerCase()}`, query:{id:categories._id}}}>
-                        <a className={`${categories._id} categoryTarget`}>
-                          <div >
+                      <Link key={categories._id} href={{pathname:`/categorias/${categories.Categoria.toLowerCase()}`, query:{id:categories._id}}}>
+                        <a className={`${categories._id}`}>
+                          <div className='categoryTarget' >
                             <img src={`${urlBack}${categories.portada.url}`} alt={`${categories.Categoria}`}/>
                             <h2>{categories.Categoria}</h2>
                           </div>
@@ -88,7 +115,20 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
               {/* offer */}
               <div className='offer'>  
               <h2 className='titleOfertas'>Especiales para ti</h2> 
-                <Carousel /* autoPlay={3000}  */minDraggableOffset={20}  animationSpeed={500} arrows={arrowOffer} infinite={true}  draggable={true}  >
+              {firstRender?
+                <Carousel 
+                ssr 
+                draggable={true}  
+                arrows={arrowOffer} 
+                infinite={true}   
+                className='offerSlider'
+                responsive={{
+                  desktop:{
+                    breakpoint:{max:3000, min: 0},
+                    items:1
+                  },
+                }}
+                >
                     {dataOfertaFinal?.Ofertas?.map(oferta=> {
                       return(
                       <div onClick={()=>router.push({pathname:`/productos/${oferta.ref.titulo.toLowerCase()}`,query:{ofer:'yes'}})} className='targetOffer'>
@@ -98,21 +138,53 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                     </div>
                     )})}
                 </Carousel>
+              :null}
+
               </div>
 
               {/* brands */}
               <div className='brands'>
                 <h2 className='titleBrand'>Trabajamos con las siguientes marcas</h2>
-                <Carousel arrows={dataMarcas.length>3?true:false} infinite={true} slidesPerPage={3}>
-                  {dataMarcas?.map(marca=>(
-                    <Link href={{pathname:`/productos/${marca._id}`, query:{brand:marca.nombre}}}>
-                      <a key={marca._id} className='targetBrand'>
-                          <img src={`${urlBack}${marca.logo.url}`} alt={`Mercatto ${marca.nombre}`}/>
-                      </a>
-                    </Link>
-                    
-                  ))}
-                </Carousel>
+                {
+                  firstRender?
+                  <Carousel 
+                  ssr 
+                  draggable={true}  
+                  arrows={arrowOffer} 
+                  infinite={true}   
+                  className='sliderBrand'
+                  responsive={{
+                    desktop:{
+                      breakpoint:{max:3000, min: 0},
+                      items:1
+                    },
+                  }}
+                  >
+                    {dataMarcas?.map(marca=>(
+                      <div style={{display:'flex'}}>
+                      <Link href={{pathname:`/productos/${marca._id}`, query:{brand:marca.nombre}}}>
+                        <a key={marca._id} className='targetBrand'>
+                            <img src={`${urlBack}${marca.logo.url}`} alt={`Mercatto ${marca.nombre}`}/>
+                        </a>
+                      </Link>
+                      <Link href={{pathname:`/productos/${marca._id}`, query:{brand:marca.nombre}}}>
+                        <a key={marca._id} className='targetBrand'>
+                            <img src={`${urlBack}${marca.logo.url}`} alt={`Mercatto ${marca.nombre}`}/>
+                        </a>
+                      </Link>
+                      <Link href={{pathname:`/productos/${marca._id}`, query:{brand:marca.nombre}}}>
+                        <a key={marca._id} className='targetBrand'>
+                            <img src={`${urlBack}${marca.logo.url}`} alt={`Mercatto ${marca.nombre}`}/>
+                        </a>
+                      </Link>
+                      </div>
+                      
+                    ))}
+                  </Carousel>
+                  :
+                  null
+                }
+
               </div>
             </div>
           </div>

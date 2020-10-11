@@ -140,15 +140,12 @@ $mainYellow: #FCD330;
     }
 
     .footer{
-        display: none;
         position: fixed;
         width: 100vw;
         height: 35px;
-        top: calc(100vh);
+        bottom: 0;
         left: 0vw;
         background-color: $mainGrey;
-        transform: translate(0%, -100%);
-        -webkit-transform: translate(0%, -100%); 
         // display: ;
         >div{
             display: flex;
