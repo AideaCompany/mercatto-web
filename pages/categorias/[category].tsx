@@ -242,15 +242,15 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
         var d = Array.from(document.getElementsByClassName(parameter) as HTMLCollectionOf<HTMLElement>)
         switch (parameter) {
             case 'alpha':
-                Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
-                Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
-                Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[1].classList.remove('activeFilter')
-                Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[1].classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[0]?.classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[0]?.classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[1]?.classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[1]?.classList.remove('activeFilter')
                 if (filterOption===parameter) {
                     setFilterOption('')
                     setDataProductsToShow(productsTemp)
-                    d[0].classList.remove('activeFilter')
-                    d[1].classList.remove('activeFilter')
+                    d[0]?.classList.remove('activeFilter')
+                    d[1]?.classList.remove('activeFilter')
                 }else{
                     setFilterOption(parameter)
                     productsTemp.sort(function(a,b) {
@@ -259,20 +259,20 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                         return (textA<textB)? -1: (textA>textB) ? 1 : 0 ;
                     })
                     setDataProductsToShow(productsTemp)
-                    d[0].classList.add('activeFilter') 
-                    d[1].classList.add('activeFilter') 
+                    d[0]?.classList.add('activeFilter') 
+                    d[1]?.classList.add('activeFilter') 
                 }
                 break;
             case 'highestPrice':
-                Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
-                Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
-                Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[1].classList.remove('activeFilter')
-                Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[1].classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[0]?.classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[0]?.classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[1]?.classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('lowestPrice') as HTMLCollectionOf<HTMLElement>)[1]?.classList.remove('activeFilter')
                 if (filterOption===parameter) {
                     setFilterOption('')
                     setDataProductsToShow(productsTemp)
-                    d[0].classList.remove('activeFilter')
-                    d[1].classList.remove('activeFilter')
+                    d[0]?.classList.remove('activeFilter')
+                    d[1]?.classList.remove('activeFilter')
                 }else{
                     setFilterOption(parameter)
                     productsTemp.sort(function (a,b) {
@@ -281,20 +281,20 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                         return (valueA>valueB)? -1 : (valueA<valueB) ? 1 : 0;
                     })
                     setDataProductsToShow(productsTemp)
-                    d[0].classList.add('activeFilter') 
-                    d[1].classList.add('activeFilter') 
+                    d[0]?.classList.add('activeFilter') 
+                    d[1]?.classList.add('activeFilter') 
                 }
                 break;
             case 'lowestPrice':
-                Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
-                Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[0].classList.remove('activeFilter')
-                Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[1].classList.remove('activeFilter')
-                Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[1].classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[0]?.classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[0]?.classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('highestPrice') as HTMLCollectionOf<HTMLElement>)[1]?.classList.remove('activeFilter')
+                Array.from(document.getElementsByClassName('alpha') as HTMLCollectionOf<HTMLElement>)[1]?.classList.remove('activeFilter')
                 if (filterOption === parameter) {
                     setFilterOption('')
                     setDataProductsToShow(productsTemp)
-                    d[0].classList.remove('activeFilter')
-                    d[1].classList.remove('activeFilter')
+                    d[0]?.classList.remove('activeFilter')
+                    d[1]?.classList.remove('activeFilter')
                 }else{
                     setFilterOption(parameter)
                     productsTemp.sort(function (a,b) {
@@ -303,8 +303,8 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                         return (valueA<valueB)? -1 : (valueA>valueB) ? 1 : 0;
                     })
                     setDataProductsToShow(productsTemp)
-                    d[0].classList.add('activeFilter') 
-                    d[1].classList.add('activeFilter') 
+                    d[0]?.classList.add('activeFilter') 
+                    d[1]?.classList.add('activeFilter') 
                 }
 
                 break;

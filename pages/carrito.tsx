@@ -374,8 +374,8 @@ const carrito = (props:{url:string}):JSX.Element=>{
                     },
                     {headers: {"Accept": "application/json"}}
                     ).then(e=>{
-                        console.log(e)
                         updateUser(res);
+                        alert('pedido realizado')
                         if (date>=15) {
                             message.success({content:"Pedido realizado, pronto nos comunicaremos contigo, tu pedido llegara en las proximas 48 horas",className: 'messageVerification',duration: '30'})
                         }else{
