@@ -32,6 +32,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
     const [openModalProduct, setOpenModalProduct] = useState(false)
     const [idProductModal, setIdProductModal] = useState<string>('')
     const [filterOption, setFilterOption] = useState<string>('')
+    const [openFilter, setOpenFilter] = useState(false)
     
     
 
@@ -187,6 +188,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
 
 
     const filter = (parameter:string) => {
+        setOpenFilter(false)
         var productsTemp = JSON.parse(JSON.stringify(dataProductsInit))
         var d = Array.from(document.getElementsByClassName(parameter) as HTMLCollectionOf<HTMLElement>)
         switch (parameter) {
@@ -298,8 +300,8 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
                         <div className='firstTarget'>
                             <div className='textCategory'>
                                 <h1>{title} </h1>
-                                <Popover placement='bottomLeft' content={contentFilter}>
-                                    <span> <FilterFilled className='iconFilter' /> Filtrar</span>
+                                <Popover visible={openFilter} placement='bottomLeft' content={contentFilter}>
+                                    <span onClick={()=>setOpenFilter(true)}> <FilterFilled className='iconFilter' /> Filtrar</span>
                                 </Popover>
                             </div>
                                 

@@ -201,7 +201,7 @@ $mainBlue: #02205E;
     .ant-message-notice-content {
         border-radius: 50px;
 
-        .ant-message-success {
+        .ant-message-success, .ant-message-loading {
             display: flex;
             justify-content: center;
             align-items: center;

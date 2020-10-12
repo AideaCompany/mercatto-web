@@ -372,19 +372,18 @@ $mainYellow: #FCD330;
                             }
                         }
                         .itemUser{
-                            
                             display: flex;
                             justify-content: center;
                             align-items: center;
                             .iconCart{
-                                margin-left: 30px;
+                                // margin-left: 30px;
                                 font-size: 20pt;
                                 color: #fff;
                             }
                             .profileUser{
                                 background-color: $mainGrey;
                                 cursor: pointer;
-                                margin: 15px;
+                                margin: 10px;
                                 svg{
                                     font-size: 15pt;
                                     color: $mainBlue;
@@ -484,7 +483,7 @@ $mainYellow: #FCD330;
                             margin: 5px;
                             svg{
                                 width: 20px;
-                                height: 20§                 px;
+                                height: 20px;
                             }
                         }
                     }

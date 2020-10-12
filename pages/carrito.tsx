@@ -1,7 +1,6 @@
 import React,{useEffect,useState} from 'react'
 //next
 import Link from 'next/link'
-import {useRouter} from 'next/router'
 //components
 import Layout from '../components/Layout';
 //antd
@@ -33,12 +32,10 @@ const carrito = (props:{url:string}):JSX.Element=>{
     const [Observaciones, setObservaciones] = useState<string>('')
     const [saveLocation, setSaveLocation] = useState(false)
     const [emptyCartModal, setEmptyCartModal] = useState(false)
-    
+    const [disabledSend, setDisabledSend] = useState(false)
     //context
     const {user,updateUser} = useAuth()
     
-    //router
-    const router = useRouter()
 
 
     useEffect(() => {
@@ -171,15 +168,17 @@ const carrito = (props:{url:string}):JSX.Element=>{
     }
  
     const okCart = ()=>{
+        const URL = 'https://gestion.mercatto.com.co'
         const date = new Date().getHours()
-
+        message.loading({content:"Generndo tu pedido",className: 'messageVerification',duration: 0, key:'send'})
+        setDisabledSend(true)
         actualCart.map(e=>{delete e._id;delete e.id})
         user.pedidos.push({
             carrito:(actualCart as Carrito[]),
             Terminado:false, 
             total: totalPrice
         }) 
-        axios.put(`${url}/users/${user._id}`,{
+        axios.put(`${URL}/users/${user._id}`,{
             carrito: [],
             direccion: saveLocation ? direccion : user.direccion,
             Pedidos:user.pedidos}, {
@@ -212,7 +211,6 @@ const carrito = (props:{url:string}):JSX.Element=>{
                         producto: (e.combo as ProductoCombo).nombre,
                         precio : e.precio,
                         peso: e.peso,
-                        imagen : ((e.combo as ProductoCombo).producto as Producto).imagenes.url
                     })
                 }else{
                     return ({
@@ -220,12 +218,11 @@ const carrito = (props:{url:string}):JSX.Element=>{
                         producto: (e.producto as Producto).nombre,
                         precio : e.precio,
                         peso: e.peso,
-                        imagen : (e.producto as Producto).imagenes.url
                     })
                 }
 
             })
-            axios.post(`${url}/pedidos`,{
+            axios.post(`${URL}/pedidos`,{
                 Carrito: carrito,
                 user: user._id ,
                 Entregado: false,
@@ -354,9 +351,6 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                     return (
                                         `
                                         <div class="element">
-                                            <div class="image">
-                                                <img src=${url}${e.imagen}}></img>
-                                            </div>
                                             <div class="data">
                                                 <div class="nombre"><b>Nombre:</b>${e.producto}</div>
                                                 <div class="precio"><b>Precio:</b>$${e.precio}</div>
@@ -375,18 +369,14 @@ const carrito = (props:{url:string}):JSX.Element=>{
                     {headers: {"Accept": "application/json"}}
                     ).then(e=>{
                         updateUser(res);
-                        alert('pedido realizado')
+                        setDisabledSend(false)
                         if (date>=15) {
-                            message.success({content:"Pedido realizado, pronto nos comunicaremos contigo, tu pedido llegara en las proximas 48 horas",className: 'messageVerification',duration: '30'})
+                            message.success({content:"Pedido realizado, pronto nos comunicaremos contigo, tu pedido llegara en las proximas 48 horas",className: 'messageVerification',duration: '30', key:'send'})
                         }else{
-                            message.success({content:"Pedido realizado, pronto nos comunicaremos contigo, tu pedido llegara en las proximas 24 horas",className: 'messageVerification',duration: '30'})
+                            message.success({content:"Pedido realizado, pronto nos comunicaremos contigo, tu pedido llegara en las proximas 24 horas",className: 'messageVerification',duration: '30', key:'send'})
                         }
 
-                    })
-
-
-
-               
+                    })               
             }).catch(err=>console.log(err))
         }).catch(err=>console.log(err))
     }
@@ -482,7 +472,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                     <button onClick={()=>setEmptyCartModal(true)} type="button" className="btn btn-primary btn-lg">
                                         Vaciar Carrito
                                     </button>
-                                    <button disabled={totalPrice>=30000 && direccion !== '' && direccion ?false:true} onClick={okCart} type="button" className="btn btn-primary btn-lg">
+                                    <button disabled={(totalPrice>=30000 && direccion !== '' && direccion ?false:true) || disabledSend} onClick={okCart} type="button" className="btn btn-primary btn-lg">
                                         Realizar pedido
                                     </button>
                                 </div>

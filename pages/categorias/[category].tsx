@@ -49,6 +49,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     const [openModalProduct, setOpenModalProduct] = useState(false)
     const [idProductModal, setIdProductModal] = useState<string>('')
     const [filterOption, setFilterOption] = useState<string>('')
+    const [visibleFilter, setVisibleFilter] = useState(false)
     //effect
     useEffect(() => {
         if (!firstCall) {
@@ -91,6 +92,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
 
     //functions
     const filterDataProducts = (_id:string) =>{
+        setVisibleFilter(false)
         if (_id === 'all') {
             setTextCategory(category.Categoria)
             if (filterOption==='highestPrice') {
@@ -238,6 +240,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     }
 
     const filter = (parameter:string) =>{
+        setVisibleFilter(false)
         var productsTemp = JSON.parse(JSON.stringify(dataProductsToShow))
         var d = Array.from(document.getElementsByClassName(parameter) as HTMLCollectionOf<HTMLElement>)
         switch (parameter) {
@@ -374,8 +377,8 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                             <div className='firstTarget'>
                                 <div className='textCategory'>
                                     <h1>{textCategory}</h1>
-                                    <Popover placement='bottomLeft' content={contentFilter}>
-                                        <span> <FilterFilled className='iconFilter' /> Filtrar</span>
+                                    <Popover visible={visibleFilter} placement='bottomLeft' content={contentFilter}>
+                                        <span onClick={()=>setVisibleFilter(true)}> <FilterFilled className='iconFilter' /> Filtrar</span>
                                     </Popover>
                                 </div>
                             </div>
