@@ -444,7 +444,7 @@ $mainBlue: #02205E;
 @media screen and (max-width: 414px) and (orientation : portrait) {
     .mainContent {
         .mainContainerCategory {
-            .categoriesTargets {
+            .categoriesTargets { 
                 height: 40% !important;
 
                 >div {
@@ -514,6 +514,36 @@ $mainBlue: #02205E;
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 350px) and (orientation : portrait){
+    .mainContent{
+        .mainContainerCategory{
+            height: 100vh;
+            .categoriesTargets{
+                >div{
+                    width: 310px;
+                    .categoryTarget{
+                        height: 100px !important;
+                        width: 80% !important;
+                    }
+                }
+
+            }
+            .offerBrand{
+                >div{
+                    width: 310px;
+                    .offer{
+                        .targetOffer{
+                            width: auto !important;
+                            height: 100px !important; 
+                        }
+                    }
+                }
+                
             }
         }
     }

@@ -446,6 +446,54 @@ $mainYellow: #FCD330;
     }
 }
 
+@media screen and (max-width: 350px) and (orientation : portrait) {
+    .mainLayout{
+        header{
+            .headerCel{
+                .containerUp{
+                    .containerLogo{
+                        img{
+                            width: 130px;
+                        }
+                    }
+                    .complement{
+                        .socialMediaIcons{
+                            a{
+                                svg{
+                                    width: 15px;
+                                    height: 15px;
+                                }
+                            }
+                        }
+                        .itemUser{
+                            .iconCart{
+                                font-size: 20px;
+                            }
+                            .cart{
+                                .ant-badge-count{
+                                    min-width: 15px;
+                                    height: 15px;
+                                    line-height: 15px;
+                                    padding: 0 3px;
+                                    font-size: 8pt;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .footer{
+        height: 30px !important;
+        >div{
+            span{
+                font-size: 0.8em !important;
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 896px) and (max-height: 414px) and (orientation : landscape){
     .mainLayout{
         height: auto;
