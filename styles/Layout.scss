@@ -125,12 +125,12 @@ $mainYellow: #FCD330;
     }
     button{
         border-radius: 50px ;
-        background-color: $mainBlue !important;
+        background-color: $mainBlue !important ;
         color: #ffffff;
         border: none;
     }
     button:active, button:focus{
-        background-color: $mainBlue;
+        background-color: $mainBlue !important;
         color: #ffffff; 
         outline: none;
     }
@@ -400,17 +400,14 @@ $mainYellow: #FCD330;
                         }
                         
                         .buttonsAuth{
-                            .profileUser{
-                                background-color: $mainGrey;
-                                cursor: pointer;
-                                margin: 5px;
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                svg{
-                                    font-size: 12pt;
-                                    color: $mainBlue;
-                                }
+                            button{
+                                background-color: #fff !important;
+                                color: $mainBlue !important;
+                                margin: 10px;
+                            }
+                            button:hover, button:focus{
+                                background-color: #fff !important;
+                                color: $mainBlue !important;  
                             }
                         }
                     }
@@ -446,6 +443,78 @@ $mainYellow: #FCD330;
                 }
             }
             
+        }
+    }
+}
+
+@media screen and (max-width: 896px) and (max-height: 414px) and (orientation : landscape){
+    .mainLayout{
+        height: auto;
+        min-height: 100vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        header{
+            z-index: 1000;
+            >div{
+                height: 50px;
+                .containerMainLogo{
+                    width: 20%;
+                    height: 50px ;
+                    img{
+                        width: 100px ;
+                    }
+                }
+                .searchBar{
+                    width: 30%;
+                    height: 50px;
+                    .ant-select{
+                        margin-top: 10px;
+                        height: 30px;
+                        .ant-input-affix-wrapper{
+                            height: 30px;
+                        }
+                    }
+                }
+                .menu{
+                    width: 50%;
+                    height: 50px;
+                    margin-top: 5px;
+                    .socialMediaIcons{
+                        a{
+                            margin: 5px;
+                            svg{
+                                width: 20px;
+                                height: 20§                 px;
+                            }
+                        }
+                    }
+                    button{
+                        font-size: 1;
+                        height: 25px;
+
+                    }
+                    .iconCart{
+                        margin-left: 30px;
+                        font-size: 20pt;
+                        color: #fff;
+                    }
+                    .profileUser{
+                        background-color: $mainGrey;
+                        cursor: pointer;
+                        margin: 15px;
+                        svg{
+                            font-size: 15pt;
+                            color: $mainBlue;
+                        }
+                    }
+
+                }
+
+            }
+        }
+        .mainContent{
+            top: 50px;
+            height: auto;
         }
     }
 }

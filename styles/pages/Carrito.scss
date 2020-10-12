@@ -301,6 +301,44 @@ $colorText : #5e5e5e;
     }
 }
 
+.modalEmptyCart{
+    width: 100%;
+    height: 150px;
+    background-color: #fff;
+    border-radius: 25px;
+    >div{
+        width: 100%;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span{
+            color: $mainBlue;
+            font-size: 1.2em;
+
+        }
+        button{
+            border-radius: 50px ;
+            background-color: $mainBlue !important ;
+            color: #ffffff;
+            border: none;
+            margin: 10px;
+            padding: 5px 10px 5px 10px;
+            font-size: 1.3em;
+        }
+        button:active, button:focus{
+            background-color: $mainBlue !important;
+            color: #ffffff; 
+            outline: none;
+        }
+        button:hover {
+            background-color: rgba($color: $mainBlue, $alpha: 1) !important;
+            color: #ffffff;
+        }
+    }
+}
+
 @media screen and (max-width: 1024px) and (orientation : portrait) {
     .carritoMain{
         width: 1000px;
@@ -359,7 +397,9 @@ $colorText : #5e5e5e;
 @media screen and (max-width: 414px) and (orientation : portrait){
     .carritoMain{
         width: 370px;
+        height: 130vh;
         .carritoLeft{
+            overflow: hidden;
             height: 50vh;
             .titleCarrito{
                 display: block;
@@ -373,6 +413,16 @@ $colorText : #5e5e5e;
             }
             .containerProducts{
                 padding: 1%;
+                .emptyCart{
+                    margin-top: 20px;
+                    h1{
+                        font-size: 2em;
+                    }
+                    button{
+                        padding: 10px;
+                        font-size: 1em;
+                    }
+                }
                 .productItem{
                     height: 100px;
                     .productInfo{
@@ -398,6 +448,64 @@ $colorText : #5e5e5e;
                 .buttons{
                     margin-bottom: 30px;
                 }
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 896px) and (max-height: 414px) and (orientation : landscape){
+    .carritoMain{
+        height:170vh;
+        width: 700px;
+        display: block;
+        .carritoLeft{
+            margin-bottom: 20px;
+           .containerProducts{
+               .emptyCart{
+                   margin-top: 20px;
+                   h1{
+                       font-size: 3em;
+                   }
+                   button{
+                       font-size: 1.5em;
+
+                   }
+               }
+               .productItem{
+                   margin-bottom: 15px;
+                   height: 75px;
+                   .productImg{
+                       img{
+                           width: 60%;
+                       }
+                   }
+                   .productInfo{
+                       >div{
+                           .priceDescount{
+                               font-size: 0.8em;
+                           }
+                       }
+                       h2{
+                           font-size: 1em;
+                       }
+                       .price{
+                           font-size: 1em;
+                       }
+                       .productDesc{
+                           font-size: 0.7em;
+                       }
+                   }
+               }
+               
+           } 
+        }
+        .carritoRight{
+            width: 100%;
+            height: auto;
+            .confirmCart{
+                padding: 2%;
+                display: flex;
             }
         }
     }

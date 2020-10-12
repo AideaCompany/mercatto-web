@@ -39,7 +39,7 @@ const ModalProduct = (props:PropsModal) => {
         if (window.matchMedia("(max-width: 835px)").matches) {
             setWidthModal(600)
         }else if (window.matchMedia("(max-width: 500px)").matches) {
-            setWidthModal(340)
+            setWidthModal(300)
         }
         setLoading(true)
         if (openModalProduct) {
@@ -165,12 +165,12 @@ const ModalProduct = (props:PropsModal) => {
                 Authorization: `Bearer ${user.jwt}`
             }
         }).then(res=>{
-            message.success({content:"Producto agregado al carrito",className: 'messageVerification',duration: '10'})
+            message.success({content:"Producto agregado al carrito",className: 'messageVerification',duration: '5'})
             updateUser(res)
         }).catch(err=>console.log(err))
     }
     return(
-        <Modal width={widthModal} centered onCancel={HandleClose} visible={openModalProduct}>
+        <Modal width={widthModal} centered closable={false} onCancel={HandleClose} visible={openModalProduct}>
             <div className='containerProductModal'>
                 {!loading?
                 <>

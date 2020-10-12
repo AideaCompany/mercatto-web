@@ -72,3 +72,21 @@ $colorText : #5e5e5e;
         }
     }
 }
+
+@media screen and (max-width: 896px) and (max-height: 414px) and (orientation : landscape){
+    .pedidosMain{
+        width: 700px;
+        .pedidosRight{
+            .pedidos{
+                .targetSubCategory{
+                    .productItem{
+                        height: 100px;
+                        >div{
+                            font-size: 1.3em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -33,7 +33,9 @@ $mainBlue: #02205E;
     }
     .containerForm{
         width: 400px;
-        min-height: 60vh;
+        height: 550px;
+        overflow-y: scroll;
+        
         background-color: #ffffff;
         border-radius: 25px;
         -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
@@ -120,7 +122,7 @@ $mainBlue: #02205E;
         .ant-modal-wrap{
             overflow: hidden !important;
             .containerForm{
-                width: 300px;
+                width: 100%;
             }
         }
 }

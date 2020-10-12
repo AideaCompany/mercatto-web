@@ -45,9 +45,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
   const router = useRouter()
   //state
   const [dataOfertaFinal, setDataOfertaFinal] = useState<Ofertas>()
-  const [colCategory, setColCategory] = useState<number>(3)
   const [arrowOffer, setArrowOffer] = useState<boolean>(true)
-  const [infinitySlider, setInfinitySlider] = useState(false)
   const [firstRender, setFirstRender] = useState(false)
 
   //effect
@@ -55,9 +53,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
     setFirstRender(true)
     setDataOfertaFinal(dataOfertas[0])
     if (window.matchMedia("(max-width: 414px)").matches){
-      setColCategory(1)
       setArrowOffer(false)
-      setInfinitySlider(true)
     }
 
   }, [])
@@ -79,10 +75,9 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                 draggable={false}  
                 infinite={true}
                 additionalTransfrom={0}
-                removeArrowOnDeviceType={["mobile"]}
                 responsive={{
                   desktop:{
-                    breakpoint:{max:3000, min: 768},
+                    breakpoint:{max:3000, min: 700},
                     items:3
                   },
                   mobile:{
@@ -93,7 +88,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                 }}
                 showDots={false}
                 slidesToSlide={1}
-                // swipeable
+                swipeable
               >
                   {dataCategoria?.map((categories)=>{
                     return(

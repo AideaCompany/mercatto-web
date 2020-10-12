@@ -1,44 +1,50 @@
 $mainGrey: #EEEEEE;
 $darkGrey: #6c6c6c;
 $mainBlue: #02205E;
-.mainContent{
-    .mainContainerCategory{
+
+.mainContent {
+    .mainContainerCategory {
         width: 100%;
         height: 100%;
 
-        .categoriesTargets{
+        .categoriesTargets {
             width: 100%;
             height: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            >div{   
-                h1{
+
+            >div {
+                h1 {
                     margin-left: 25px;
                     color: $mainBlue;
                 }
+
                 width: 1500px;
                 padding: 1%;
+
                 .sliderCategory {
-                    .categoryTarget:hover{
-                        -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                        -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                        box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+                    .categoryTarget:hover {
+                        -webkit-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.8);
+                        -moz-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.8);
+                        box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.8);
                     }
-                    .categoryTarget{
+
+                    .categoryTarget {
                         width: 450px;
                         margin: 10px 20px 10px 20px;
                         height: 200px;
                         border-radius: 25px;
                         cursor: grab;
-                        -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                        -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                        box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                        -webkit-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.4);
+                        -moz-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.4);
+                        box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.4);
                         position: relative;
-                        transition: 0.2s ease-in-out ;
+                        transition: 0.2s ease-in-out;
                         overflow: hidden;
                         background-color: #ffffff;
-                        img{
+
+                        img {
                             position: absolute;
                             top: 60%;
                             left: 0%;
@@ -46,13 +52,13 @@ $mainBlue: #02205E;
                             -webkit-transform: translate(0%, -50%);
                             width: 60%;
                         }
-            
-                        h2{
+
+                        h2 {
                             position: absolute;
                             top: 50%;
                             left: 77%;
                             transform: translate(-50%, -50%);
-                            -webkit-transform: translate(-50%, -50%); 
+                            -webkit-transform: translate(-50%, -50%);
                             color: $mainBlue;
                             font-size: 1.7vw;
                             width: 45%;
@@ -61,53 +67,58 @@ $mainBlue: #02205E;
                     }
                 }
             }
-    
+
         }
 
-        .offerBrand{
+        .offerBrand {
             width: 100%;
             height: 50%;
             display: flex;
             justify-content: center;
-           
-            >div{
+
+            >div {
                 width: 1500px;
                 height: 100%;
                 display: flex;
                 align-items: center;
                 padding: 1%;
-                >div{
+
+                >div {
                     width: 50%;
                     padding: 20px;
-                    h2{
-                        color: $mainBlue; 
+
+                    h2 {
+                        color: $mainBlue;
                     }
                 }
-                .offer{
-                    .alertDrag{
+
+                .offer {
+                    .alertDrag {
                         float: right;
                         margin: 0 1vw 0 0;
                     }
-                    .offerSlider{
-                        .targetOffer:hover{
-                            -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                            -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                            box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+
+                    .offerSlider {
+                        .targetOffer:hover {
+                            -webkit-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.8);
+                            -moz-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.8);
+                            box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.8);
                         }
-            
-                        .targetOffer{
+
+                        .targetOffer {
                             width: auto;
                             height: 30vh;
                             background: #ffffff;
                             border-radius: 25px;
-                            -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                            -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                            box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                            -webkit-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.4);
+                            -moz-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.4);
+                            box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.4);
                             position: relative;
                             overflow: hidden;
-                            margin:  20px;
+                            margin: 20px;
                             transition: 0.2s ease-in-out;
-                            .back{
+
+                            .back {
                                 border-radius: 50%;
                                 position: absolute;
                                 top: 50%;
@@ -116,18 +127,20 @@ $mainBlue: #02205E;
                                 -webkit-transform: translate(-50%, -50%);
                                 width: 20vw;
                                 height: 20vw;
-                                background: linear-gradient(270deg, rgba(2,32,94,1) 20%, rgba(11,70,189,1) 100%);
+                                background: linear-gradient(270deg, rgba(2, 32, 94, 1) 20%, rgba(11, 70, 189, 1) 100%);
                             }
-                            img{
+
+                            img {
                                 position: absolute;
                                 top: 70%;
                                 left: 20%;
                                 transform: translate(-50%, -50%);
-                                -webkit-transform: translate(-50%, -50%); 
+                                -webkit-transform: translate(-50%, -50%);
                                 z-index: 2;
                                 width: 40%;
                             }
-                            h2{
+
+                            h2 {
                                 position: absolute;
                                 transform: translate(-50%, -50%);
                                 -webkit-transform: translate(-50%, -50%);
@@ -137,63 +150,67 @@ $mainBlue: #02205E;
                                 text-align: center;
                                 color: $mainBlue;
                             }
-                            
+
                         }
                     }
-            
-                }
-                .brands{
-                    .sliderBrand{
 
-                        .targetBrand:hover{
-                            -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                            -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
-                            box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.8);
+                }
+
+                .brands {
+                    .sliderBrand {
+
+                        .targetBrand:hover {
+                            -webkit-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.8);
+                            -moz-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.8);
+                            box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.8);
                         }
-                        .targetBrand{
-                            width: 200px;
+
+                        .targetBrand {
+                            width: auto;
                             height: 200px;
                             background: #ffffff;
                             border-radius: 25px;
-                            -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                            -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                            box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                            -webkit-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.4);
+                            -moz-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.4);
+                            box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.4);
                             display: flex;
-                            margin: 10px;
+                            margin: 20px;
                             justify-content: center;
                             align-items: center;
                             overflow: hidden;
                             transition: 0.2s ease-in-out;
-                                img{
-                                    width: 60%;
-                                }
+
+                            img {
+                                width: 60%;
+                            }
                         }
                     }
-            
+
                 }
-            
+
             }
         }
     }
-        
+
 }
 
 //message verificacion
-.messageVerification{
-    position: absolute;
-    left: 5%;
-    margin-top: 90vh;
-    .ant-message-notice-content{
+.messageVerification {
+
+
+    .ant-message-notice-content {
         border-radius: 50px;
-        .ant-message-success{
+
+        .ant-message-success {
             display: flex;
             justify-content: center;
             align-items: center;
-            span{
+
+            span {
                 font-size: 1.5em;
             }
         }
-        
+
     }
 }
 
@@ -205,32 +222,36 @@ $mainBlue: #02205E;
     right: 0 !important;
 }
 
-.BrainhubCarousel__arrows{
-    span{
+.BrainhubCarousel__arrows {
+    span {
         width: 20%;
     }
 }
+
 @media screen and (max-width: 1440px) {
-    .mainContent{
-        .mainContainerCategory{
-            .categoriesTargets{
-                >div{
+    .mainContent {
+        .mainContainerCategory {
+            .categoriesTargets {
+                >div {
                     padding: 0 20px 0 20px;
                     width: 1300px;
-                    h1{
+
+                    h1 {
                         margin-left: 0;
-                        
+
                     }
-                    .categoryTarget{
+
+                    .categoryTarget {
                         width: 400px !important;
                         height: 200px !important;
                     }
                 }
             }
-            .offerBrand{
-                >div{
+
+            .offerBrand {
+                >div {
                     width: 1300px;
-                    
+
                 }
             }
         }
@@ -238,34 +259,39 @@ $mainBlue: #02205E;
 }
 
 @media screen and (max-width: 1112px) {
-    .mainContent{
-        .mainContainerCategory{
-            .categoriesTargets{
-                >div{
+    .mainContent {
+        .mainContainerCategory {
+            .categoriesTargets {
+                >div {
                     padding: 0 20px 0 20px;
                     width: 1000px;
-                    h1{
+
+                    h1 {
                         margin-left: 0;
-                        
+
                     }
-                    .categoryTarget{
+
+                    .categoryTarget {
                         width: 300px !important;
                         height: 200px !important;
                     }
                 }
             }
-            .offerBrand{
-                >div{
+
+            .offerBrand {
+                >div {
                     width: 1000px;
-                    .back{
+
+                    .back {
                         width: 30vw !important;
                         height: 30vw !important;
                         left: 5% !important;
                     }
                 }
             }
-            .brands{
-                .targetBrand{
+
+            .brands {
+                .targetBrand {
                     width: 150px !important;
                     height: 150px !important;
                 }
@@ -277,103 +303,110 @@ $mainBlue: #02205E;
 
 // tablets portrait
 @media screen and (max-width: 1024px) and (orientation : portrait) {
-    .mainContent{
-        .mainContainerCategory{
-            .categoriesTargets{
+    .mainContent {
+        .mainContainerCategory {
+            .categoriesTargets {
                 height: 33%;
-                >div{
-                    .BrainhubCarousel__container{
-                        .categoryTarget{
-                            h2{
+
+                >div {
+                    .BrainhubCarousel__container {
+                        .categoryTarget {
+                            h2 {
                                 font-size: 1.5em;
                             }
                         }
                     }
                 }
             }
-            .offerBrand{
+
+            .offerBrand {
                 height: 77%;
-                >div{
+
+                >div {
                     display: block;
-                    >div{
+
+                    >div {
                         width: 100%;
                         height: 50%;
                     }
-                    .offer{
 
-                            .targetOffer{
-                                height: 350px !important;
-                                .back{
-                                    width: 70vw !important;
-                                    height: 70vw !important;
-                                }
-                                img{
-                                    width: 50%;
-                                    top: 55%;
-                                    left: 30%;
-                                }
-                                h2{
-                                    font-size: 3em;
-                                }
+                    .offer {
+
+                        .targetOffer {
+                            height: 350px !important;
+
+                            .back {
+                                width: 70vw !important;
+                                height: 70vw !important;
                             }
-                        
+
+                            img {
+                                width: 50%;
+                                top: 55%;
+                                left: 30%;
+                            }
+
+                            h2 {
+                                font-size: 3em;
+                            }
+                        }
+
                     }
-                    .brands{
 
-                            .targetBrand{
-                                width: auto !important;
-                                height: 250px !important;
-                            }
-                        
+                    .brands {
+
+                        .targetBrand {
+                            width: auto !important;
+                            height: 250px !important;
+                        }
+
                     }
                 }
             }
         }
     }
 
-    
+
 }
 
-@media screen and (max-width: 834px) and (orientation : portrait){
-    .mainContent{
-        .mainContainerCategory{
-            .categoriesTargets{
-                >div{
+@media screen and (max-width: 834px) and (orientation : portrait) {
+    .mainContent {
+        .mainContainerCategory {
+            .categoriesTargets {
+                >div {
                     padding: 0 !important;
                     width: 800px;
-                    .categoryTarget{
+
+                    .categoryTarget {
                         width: auto !important;
                         height: 200px !important;
                     }
                 }
             }
-            .offerBrand{
-                >div{
-                    width: 800px;
-                    .offer{
-                            .targetOffer{
-                                height: 250px !important;
-                                .back{
-                                    width: 70vw !important;
-                                    height: 70vw !important;
-                                }
-                            }
-                        
-                    }
-                    .brands{
 
-                            .targetBrand{
-                                width: auto !important;
-                                height: 150px !important;
+            .offerBrand {
+                >div {
+                    width: 800px;
+
+                    .offer {
+                        .targetOffer {
+                            height: 250px !important;
+
+                            .back {
+                                width: 70vw !important;
+                                height: 70vw !important;
                             }
-                        
+                        }
+
                     }
-                }
-            }
-            .brands{
-                .targetBrand{
-                    width: 150px !important;
-                    height: 150px !important;
+
+                    .brands {
+                        .targetBrand {
+                            width: auto !important;
+                            height: 150px !important;
+                        }
+
+                    }
                 }
             }
         }
@@ -381,23 +414,26 @@ $mainBlue: #02205E;
 }
 
 @media screen and (max-width: 768px) and (orientation : portrait) {
-    .mainContent{
-        .mainContainerCategory{
-            .categoriesTargets{
-                >div{
+    .mainContent {
+        .mainContainerCategory {
+            .categoriesTargets {
+                >div {
                     padding: 0 10px 0 10px;
                     width: 700px;
-                    .categoryTarget{
+
+                    .categoryTarget {
                         width: 220px !important;
                         height: 170px !important;
-                        h2{
+
+                        h2 {
                             font-size: 1.3em !important;
                         }
                     }
                 }
             }
-            .offerBrand{
-                >div{
+
+            .offerBrand {
+                >div {
                     width: 700px;
                 }
             }
@@ -405,64 +441,125 @@ $mainBlue: #02205E;
     }
 }
 
-@media screen and (max-width: 414px) and (orientation : portrait){
-    .mainContent{
-        .mainContainerCategory{
-            .categoriesTargets{
+@media screen and (max-width: 414px) and (orientation : portrait) {
+    .mainContent {
+        .mainContainerCategory {
+            .categoriesTargets {
                 height: 40% !important;
-                >div{
-                    h1{
+
+                >div {
+                    h1 {
                         font-size: 2em;
-                    };
-                    width: 100%;
-                    .categoryTarget{
+                    }
+
+                    ;
+                    width: 370px;
+
+                    >div {
+                        padding: 10px 0 10px 0;
+                    }
+
+                    .categoryTarget {
                         width: auto !important;
                         height: 140px !important;
-                        margin: 10px !important;
-                        h2{
+                        margin: 5px 20px 0 20px !important;
+
+                        h2 {
                             font-size: 1.3em !important;
                         }
                     }
                 }
             }
-            .offerBrand{
-                >div{
-                    width: 360px;
+
+            .offerBrand {
+                >div {
+                    width: 370px;
                     padding: 0;
-                    >div{
-                        padding:10px 0 10px 0;
-                        h2{
+
+                    >div {
+                        padding: 10px 0 10px 0;
+
+                        h2 {
                             font-size: 1.5em;
                         }
                     }
-                    .offer{
-                        height: 40%;
-                            .targetOffer{
-                                width: auto !important;
-                                height: 140px !important;
-                                margin:  10px !important;
-                                .back{
-                                    width: 40vw !important;
-                                    height: 40vw !important;
-                                }
-                                img{
-                                    width: 50%;
-                                    top: 55%;
-                                    left: 30%;
-                                }
-                                h2{
-                                    font-size: 1.3em;
-                                }
+                    .offer {
+                        .targetOffer {
+                            width: auto !important;
+                            height: 140px !important;
+                            margin: 10px !important;
+
+                            .back {
+                                width: 40vw !important;
+                                height: 40vw !important;
                             }
-                        } 
-                    } 
-                    .brands{
-                            .targetBrand{
-                                width: 100px !important;
-                                height: 100px !important;
+
+                            img {
+                                width: 50%;
+                                top: 55%;
+                                left: 30%;
+                            }
+
+                            h2 {
+                                font-size: 1.3em;
                             }
                         }
                     }
+
+                    .brands {
+                        .targetBrand {
+                            margin: 10px !important;
+                            width: auto !important;
+                            height: 100px !important;
+                        }
+                    }
+                }
+            }
         }
+    }
+}
+
+@media screen and (max-width: 896px) and (max-height: 414px) and (orientation : landscape){
+    .mainContent{
+        .mainContainerCategory{
+            .categoriesTargets{
+                >div{
+                    width: 700px !important ;
+                    .categoryTarget{
+                        width: 200px !important;
+                        height: 100px !important;
+                    }
+                }
+            }
+
+            .offerBrand{
+                >div{
+                    width: 700px !important;
+                    >div{
+                        h2{
+                            font-size: 1.3em;
+                        }
+                    }
+                    .offer{
+                        .targetOffer{
+                            width: auto !important;
+                            height: 150px !important;
+                        }
+                    }
+
+                    .brands{
+                        .targetBrand{
+                            margin: 5px !important;
+                            width: 100px !important;
+                            height: 100px !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .react-multiple-carousel__arrow {
+        display: none;
     }
 }

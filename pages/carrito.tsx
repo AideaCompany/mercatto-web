@@ -32,7 +32,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
     const [direccion, setDireccion] = useState<string>('')
     const [Observaciones, setObservaciones] = useState<string>('')
     const [saveLocation, setSaveLocation] = useState(false)
-
+    const [emptyCartModal, setEmptyCartModal] = useState(false)
     
     //context
     const {user,updateUser} = useAuth()
@@ -77,12 +77,10 @@ const carrito = (props:{url:string}):JSX.Element=>{
 
     //functions
     const vaciarCarrito =  () => {
-        setactualCart([])
+        updateCart([])
+        HandleClose()
     }
 
-    useEffect(() => {
-        
-    }, [actualCart])
 
     const plus= async (pos)=>{
         actualCart[pos].cantidad +=1
@@ -128,18 +126,30 @@ const carrito = (props:{url:string}):JSX.Element=>{
         }
     }
 
-    const updateCart = async () =>{
-        await axios.put(`${url}/users/${user._id}`,{
-            carrito:actualCart
-        },{
-            headers:{
-                Authorization: `Bearer ${user.jwt}`  
-            }
-        }).then(res=>updateUser(res)).catch(err=>console.log(err))
+    const updateCart = async (carritoParameter?:Carrito[]) =>{
+        if (carritoParameter) {
+            await axios.put(`${url}/users/${user._id}`,{
+                carrito:carritoParameter
+            },{
+                headers:{
+                    Authorization: `Bearer ${user.jwt}`  
+                }
+            }).then(res=>updateUser(res)).catch(err=>console.log(err))
+        }else{
+            await axios.put(`${url}/users/${user._id}`,{
+                carrito:actualCart
+            },{
+                headers:{
+                    Authorization: `Bearer ${user.jwt}`  
+                }
+            }).then(res=>updateUser(res)).catch(err=>console.log(err))
+        }
+
     }
 
     const HandleClose = ()=>{
         setmodalVisible(false)
+        setEmptyCartModal(false)
         Modal.destroyAll()
     }
 
@@ -161,6 +171,8 @@ const carrito = (props:{url:string}):JSX.Element=>{
     }
  
     const okCart = ()=>{
+        const date = new Date().getHours()
+
         actualCart.map(e=>{delete e._id;delete e.id})
         user.pedidos.push({
             carrito:(actualCart as Carrito[]),
@@ -228,8 +240,6 @@ const carrito = (props:{url:string}):JSX.Element=>{
                     Authorization: `Bearer ${user.jwt}`
                 }
             }).then(async (rpt)=>{ 
-                console.log(user)
-                console.log(carritoMail)
                 axios.post(
                         "https://gestion.mercatto.com.co/email",
                         {
@@ -366,8 +376,12 @@ const carrito = (props:{url:string}):JSX.Element=>{
                     ).then(e=>{
                         console.log(e)
                         updateUser(res);
-                        message.success({content:"Pedido realizado",className: 'messageVerification',duration: '5'})
-                        router.push("/pedidos")
+                        if (date>=15) {
+                            message.success({content:"Pedido realizado, pronto nos comunicaremos contigo, tu pedido llegara en las proximas 48 horas",className: 'messageVerification',duration: '30'})
+                        }else{
+                            message.success({content:"Pedido realizado, pronto nos comunicaremos contigo, tu pedido llegara en las proximas 24 horas",className: 'messageVerification',duration: '30'})
+                        }
+
                     })
 
 
@@ -465,7 +479,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                 </div>
                                 <br/>
                                 <div>
-                                    <button onClick={()=>vaciarCarrito()} type="button" className="btn btn-primary btn-lg">
+                                    <button onClick={()=>setEmptyCartModal(true)} type="button" className="btn btn-primary btn-lg">
                                         Vaciar Carrito
                                     </button>
                                     <button disabled={totalPrice>=30000 && direccion !== '' && direccion ?false:true} onClick={okCart} type="button" className="btn btn-primary btn-lg">
@@ -479,7 +493,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                 </div>
             </div>
     </Layout>
-    <Modal centered onCancel={HandleClose} visible={modalVisible}>
+    <Modal closable={false} centered onCancel={HandleClose} visible={modalVisible}>
         {actualCart?
         <div className='containerForm'>
             {actualCart[toDelete]?.combo?
@@ -501,6 +515,22 @@ const carrito = (props:{url:string}):JSX.Element=>{
                 </div>
             </Form>
         </div>:null}
+    </Modal>
+    <Modal width={350} closable={false} centered onCancel={HandleClose} visible={emptyCartModal}>
+        {actualCart?
+        <>
+        <div className='modalEmptyCart'>
+            <div>
+                <span>¿Estás seguro que quieres vaciar el carrito?</span>
+            </div>
+            <div className='buttonsEmpty'>
+                <button onClick={HandleClose}>Cancelar</button>
+                <button onClick={vaciarCarrito}>Aceptar</button>
+            </div>
+        </div>
+
+        </>
+        :null}
     </Modal>
     </>
     )

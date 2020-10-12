@@ -53,7 +53,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
 
     //Effect
     useEffect(() => {
-        if (window.matchMedia("(max-width: 768px)").matches) {
+        if (window.matchMedia("(max-width: 768px)").matches || window.matchMedia('(max-width: 896px) and (max-height: 414px) and (orientation : landscape)').matches)  {
             setSizeProfile(30)
         }
         if (confirmed) {
@@ -205,7 +205,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                                     <>
                                     <div className='buttonsAuth'>
                                         <Dropdown overlay={menuAuth}>
-                                            <Avatar size={25} className='profileUser' icon={<LoginOutlined  />}/>
+                                            <Button className='buttonIn'>Ingresar</Button>
                                         </Dropdown>
                                     </div>
                                         
