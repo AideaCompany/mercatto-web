@@ -33,6 +33,8 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
     const [idProductModal, setIdProductModal] = useState<string>('')
     const [filterOption, setFilterOption] = useState<string>('')
     const [openFilter, setOpenFilter] = useState(false)
+    const [disableButtonsAdd, setDisableButtonsAdd] = useState(false)
+    const [classButton, setClassButton] = useState('')
     
     
 
@@ -93,6 +95,8 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
     const addCart = async (id:string, e)=>{
         e.stopPropagation();
         if (user.jwt) {
+            setDisableButtonsAdd(true)
+            setClassButton('disabledButton')
             var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
             var carrito: Carrito[] = user.carrito
             var index = tempCartProducts.findIndex(e=>e._id === id)
@@ -121,8 +125,11 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
 
     //remove Cart 
     const removeCart = async (id:string, e)=>{
+        
         e.stopPropagation();
         if (user.jwt) {
+            setDisableButtonsAdd(true)
+            setClassButton('disabledButton')
             var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
             var index = tempCartProducts.findIndex(e=>e._id === id)
             var carrito: Carrito[] = user.carrito
@@ -170,8 +177,10 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
             }
         }
         ).then(res=>{
-            updateUser(res)})
-        .catch(err=>{
+            updateUser(res)
+            setDisableButtonsAdd(false)
+            setClassButton('')
+        }).catch(err=>{
             console.log(err)
         })
     }
@@ -328,10 +337,10 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
                                                         {user.jwt?
                                                             <>
                                                                 <span>{getCountCart(product._id)}</span>
-                                                                <button onClick={(e)=>removeCart(product._id,e)} className='buttonCount'>
+                                                                <button disabled={disableButtonsAdd} onClick={(e)=>removeCart(product._id,e)} className={`buttonCount ${classButton}`}>
                                                                     <span>-</span>
                                                                 </button>
-                                                                <button onClick={(e)=>addCart(product._id, e)} className='buttonCount'>
+                                                                <button disabled={disableButtonsAdd} onClick={(e)=>addCart(product._id, e)} className={`buttonCount ${classButton}`}>
                                                                     <span>+</span>
                                                                 </button>
                                                             </>
