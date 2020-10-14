@@ -4,7 +4,7 @@ import Link from 'next/link'
 //components
 import Layout from '../components/Layout';
 //antd
-import { Modal ,Form, Button, message, Input, Checkbox} from 'antd';
+import { Modal ,Form, Button, message, Input, Checkbox, notification} from 'antd';
 import { CloseOutlined , CheckCircleTwoTone, WarningTwoTone} from '@ant-design/icons';
 //context
 import useAuth from '../providers/AuthProvider'
@@ -370,12 +370,29 @@ const carrito = (props:{url:string}):JSX.Element=>{
                     ).then(e=>{
                         updateUser(res);
                         setDisabledSend(false)
-                        if (date>=15) {
-                            message.success({content:"Pedido realizado, pronto nos comunicaremos contigo, tu pedido llegara en las proximas 48 horas",className: 'messageVerification',duration: '30', key:'send'})
-                        }else{
-                            message.success({content:"Pedido realizado, pronto nos comunicaremos contigo, tu pedido llegara en las proximas 24 horas",className: 'messageVerification',duration: '30', key:'send'})
-                        }
-
+                        message.destroy()
+                        notification['success']({
+                            className:'notificationCarrito',
+                            message:'Pedido realizado',
+                            description:(
+                                <div className='textNotification'>
+                                    <span>
+                                    Muchas gracias por tu pedido!
+                                    Tu pedido será entregado el día de mañana en el transcurso del día. 
+                                    Cualquier duda no dudes en contactarnos por nuestro chat de WhatsApp. 
+                                    </span>
+                                    <br/>
+                                    <br/>
+                                    <span>
+                                    Tomaremos tus pedidos de lunes a sábados en el horario 00hrs a 3 pm. Tu pedido te será entregado el día siguiente a la compra. 
+                                    Ten en cuenta que los días domingos y festivos no recibimos ni despachamos pedidos. Asi que el pedido que realices el día sábado te será entregado día lunes. 
+                                    </span>
+                                    <br/>
+                                    Gracias.
+                                </div>
+                            ),
+                            duration:0
+                        })
                     })               
             }).catch(err=>console.log(err))
         }).catch(err=>console.log(err))
