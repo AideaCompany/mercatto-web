@@ -50,6 +50,9 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     const [idProductModal, setIdProductModal] = useState<string>('')
     const [filterOption, setFilterOption] = useState<string>('')
     const [visibleFilter, setVisibleFilter] = useState(false)
+    const [disableButtonsAdd, setDisableButtonsAdd] = useState(false)
+    const [classButton, setClassButton] = useState('')
+
     //effect
     useEffect(() => {
         if (!firstCall) {
@@ -160,6 +163,8 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     const addCart = async (id:string, e) =>{
         e.stopPropagation();
         if (user.jwt) {
+            setDisableButtonsAdd(true)
+            setClassButton('disabledButton')
             var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
             var carrito: Carrito[] = user.carrito
             var isProdcut = user.carrito.findIndex(e=>(e.producto as Producto)?._id === id)
@@ -180,6 +185,8 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     const removeCart = async (id:string, e) =>{
         e.stopPropagation();
         if (user.jwt) {
+            setDisableButtonsAdd(true)
+            setClassButton('disabledButton')
             var tempCartProducts: Count[] = JSON.parse(JSON.stringify(productCart))
             var index = tempCartProducts.findIndex(e=>e._id === id)
             var carrito: Carrito[] = user.carrito
@@ -213,7 +220,8 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
             }
         }
         ).then(res=>{
-            
+            setDisableButtonsAdd(false)
+            setClassButton('')
             updateUser(res)})
         .catch(err=>{
             console.log(err)
@@ -324,7 +332,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                     <li onClick={()=>filterDataProducts('all')}>Todos</li>
                     {dataSubCategoria.map(subcategoria=>(
                         <li>
-                            <li onClick={()=>filterDataProducts(subcategoria._id)} key={subcategoria._id}>{subcategoria.titulo}</li>
+                            <li key={subcategoria._id} onClick={()=>filterDataProducts(subcategoria._id)}>{subcategoria.titulo}</li>
                         </li>
                     ))}
                 </ul>
@@ -405,10 +413,10 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                                                         {user.jwt?
                                                             <>
                                                                 <span>{getCountCart(producto._id)}</span>
-                                                                <button onClick={(e)=>removeCart(producto._id,e)} className='buttonCount'>
+                                                                <button disabled={disableButtonsAdd} onClick={(e)=>removeCart(producto._id,e)} className={`buttonCount ${classButton}`}>
                                                                     <span>-</span>
                                                                 </button>
-                                                                <button onClick={(e)=>addCart(producto._id, e)} className='buttonCount'>
+                                                                <button disabled={disableButtonsAdd} onClick={(e)=>addCart(producto._id, e)} className={`buttonCount ${classButton}`}>
                                                                     <span>+</span>
                                                                 </button>
                                                             </>

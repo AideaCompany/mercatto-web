@@ -74,6 +74,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                 className='sliderCategory'
                 draggable={false}  
                 infinite={true}
+                autoPlay={true}
                 additionalTransfrom={0}
                 responsive={{
                   desktop:{
@@ -83,7 +84,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                   mobile:{
                     breakpoint:{max:464, min: 0},
                     items:1,
-                    partialVisibilityGutter: 30
+                    // partialVisibilityGutter: 10
                   },
                 }}
                 showDots={false}
@@ -113,6 +114,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
               {firstRender?
                 <Carousel 
                 ssr 
+                autoPlay={true}
                 draggable={true}  
                 arrows={arrowOffer} 
                 infinite={true}   
@@ -144,6 +146,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                   firstRender?
                   <Carousel 
                   ssr 
+                  autoPlay={true}
                   draggable={true}  
                   arrows={arrowOffer} 
                   infinite={true}   
