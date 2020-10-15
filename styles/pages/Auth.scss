@@ -118,7 +118,8 @@ $mainBlue: #02205E;
     border-radius: 25px !important;
 }
 
-@media screen and (max-width: 414px) and (orientation : portrait){
+@media screen and (max-width: 414px) and (max-aspect-ratio: 13/9)
+{
         .ant-modal-wrap{
             overflow: hidden !important;
             .containerForm{

@@ -41,10 +41,11 @@ const Autocomplete = (props:PropsAutoComplete) =>{
                 option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
             }
             options={options} 
-            onChange={(e)=>setSearchWord(e)}>
+            onChange={(e)=>setSearchWord(e)}
+            >
             <Input onPressEnter={(e)=>{searchWord!== '' ? router.push(`/productos/${searchWord}`): null}} prefix={<SearchOutlined />}  placeholder={"Buscar"}></Input>
         </AutoComplete>
     )
 } 
 
-export default React.memo(Autocomplete)
+export default Autocomplete

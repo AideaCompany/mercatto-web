@@ -53,7 +53,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
 
     //Effect
     useEffect(() => {
-        if (window.matchMedia("(max-width: 768px)").matches || window.matchMedia('(max-width: 896px) and (max-height: 414px) and (orientation : landscape)').matches)  {
+        if (window.matchMedia("(max-width: 768px)").matches || window.matchMedia('(max-width: 896px) and (max-height: 414px) and (min-aspect-ratio: 13/9)').matches)  {
             setSizeProfile(30)
         }
         if (confirmed) {
@@ -70,7 +70,11 @@ const Layout = (props: propsLayout):JSX.Element =>{
             ).catch(err=>console.log(err))
         }
         
-        axios.get(`${urlBack}/productos`).then(res=>setDataProducts(res.data)).catch(err=>console.log(err))
+        axios.get(`${urlBack}/productos`).then(res=>{
+            console.log(res)
+            setDataProducts(res.data)
+            })
+            .catch(err=>console.log(err))
     }, [])
 
     useEffect(() => {
@@ -214,9 +218,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                             </div>
                         </div>
                         <div className='containerDown'>
-                            <div className='bar'>
                                 <Autocomplete dataProducts={dataProducts}/>
-                            </div>
                         </div>
                     </div>
                 </header>
