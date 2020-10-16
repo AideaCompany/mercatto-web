@@ -443,6 +443,14 @@ $mainYellow: #FCD330;
             
         }
     }
+    .footer{
+        height: 30px !important;
+        >div{
+            span{
+                font-size: 0.8em !important;
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 350px) and (max-aspect-ratio: 13/9)
@@ -488,7 +496,7 @@ $mainYellow: #FCD330;
         height: 30px !important;
         >div{
             span{
-                font-size: 0.8em !important;
+                font-size: 0.7em !important;
             }
         }
     }
