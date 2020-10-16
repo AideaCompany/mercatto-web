@@ -1,5 +1,7 @@
 import {useEffect, useState} from 'react'
 import Layout from '../../components/Layout';
+//next
+import {useRouter} from 'next/router'
 //axios
 import Axios from 'axios';
 //antD
@@ -38,10 +40,11 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
 
     //Providers
     const {user ,setModalAuthSignIn,updateUser } = useAuth()
+    const router = useRouter()
+
     //State
     const [dataProductsToShow, setDataProductsToShow] = useState<Producto[]>([])
     const [dataProducts, setDataProducts] = useState<Producto[]>([])
-    const [mainUrl, setMainUrl] = useState<string>('')
     const [textCategory, setTextCategory] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(true)
     const [productCart, setProductCart] = useState<Count[]>([])
@@ -57,7 +60,6 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
     useEffect(() => {
         if (!firstCall) {
             setTextCategory(category.Categoria)
-            setMainUrl(`${url}${category.portada.url}`)
             Axios.get(`${url}/productos?category=${category._id}`)
             .then(res=>{
                 var productTemp: Count[] = []
@@ -131,7 +133,6 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
             }
             const subcategory = dataSubCategoria.findIndex(e=>e._id===_id)
             setTextCategory(`${category.Categoria}: ${dataSubCategoria[subcategory].titulo}`)
-            setMainUrl(`${url}${dataSubCategoria[subcategory].portada.url}`)
             if (filterOption==='highestPrice') {
                 newProducts.sort(function (a,b) {
                     var valueA = a.precioDescuento;
@@ -450,10 +451,15 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
 
 export async function getServerSideProps (ctx) {
     const URL = process.env.URL_STRAPI;
-    const subCategoria = await fetch(`${URL}/sub-categorias?id=${ctx.query.id}`,{method: 'GET'})
-    const dataCategory = await fetch(`${URL}/categorias?id=${ctx.query.id}`,{method: 'GET'})
-    const dataCategoryJson  = await dataCategory.json()
-    const jsonSubCategoria = await subCategoria.json()
+    let subCategoria;
+    let dataCategory;
+    let dataCategoryJson;
+    let jsonSubCategoria;
+    subCategoria = await fetch(`${URL}/sub-categorias?id=${ctx.query.id}`,{method: 'GET'})
+    dataCategory = await fetch(`${URL}/categorias?id=${ctx.query.id}`,{method: 'GET'})
+    dataCategoryJson  = await dataCategory.json()
+    jsonSubCategoria = await subCategoria.json()
+
     return {props: {dataSubCategoria:jsonSubCategoria, url:URL, dataCategory: dataCategoryJson}}
 }
 

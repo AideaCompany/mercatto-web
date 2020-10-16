@@ -60,7 +60,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
             message.success({content:"Activación de cuenta concretada",className: 'messageVerification',duration: '5'})
             setModalAuthSignIn(true)
         }
-
+        
         if (code !== '' && code) {
             setModalResetPassword(true)
         }
