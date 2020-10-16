@@ -480,11 +480,15 @@ $mainBlue: #02205E;
 
                     .categoryTarget {
                         width: auto !important;
-                        height: 140px !important;
+                        height: 200px !important;
                         margin: 5px 20px 0 20px !important;
 
                         h2 {
-                            font-size: 1.3em !important;
+                            font-size: 1.5em !important;
+                        }
+                        img{
+                            width: 70% !important;
+                            left: -5% !important;
                         }
                     }
                 }
