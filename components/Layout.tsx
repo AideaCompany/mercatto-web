@@ -138,7 +138,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                         </div>
                         <div className='menu'>
                                 <div className='socialMediaIcons'>
-                                    <a className='socialIcon' target="_blank" href="/" ><FontAwesomeIcon icon={faFacebookF}/></a>
+                                    <a className='socialIcon' target="_blank" href="https://www.facebook.com/Mercatto-online-105327464693871/" ><FontAwesomeIcon icon={faFacebookF}/></a>
                                     <a className='socialIcon' target="_blank" href="https://www.instagram.com/mercattocali/"><FontAwesomeIcon icon={faInstagram} /></a>
                                     <a className='socialIcon' target="_blank" href="https://api.whatsapp.com/send?phone=573186352419" ><FontAwesomeIcon icon={faWhatsapp}/></a>
                                 </div>
@@ -183,7 +183,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                             </div>
                             <div className='complement'>
                                 <div className='socialMediaIcons'>
-                                    <a className='socialIcon' target="_blank" href="/" ><FontAwesomeIcon icon={faFacebookF}/></a>
+                                    <a className='socialIcon' target="_blank" href="https://www.facebook.com/Mercatto-online-105327464693871/" ><FontAwesomeIcon icon={faFacebookF}/></a>
                                     <a className='socialIcon' target="_blank" href="https://www.instagram.com/mercattocali/"><FontAwesomeIcon icon={faInstagram} /></a>
                                     <a className='socialIcon' target="_blank" href="https://api.whatsapp.com/send?phone=573186352419" ><FontAwesomeIcon icon={faWhatsapp}/></a>
                                 </div>
