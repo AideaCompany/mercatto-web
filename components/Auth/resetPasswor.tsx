@@ -1,12 +1,13 @@
-import React, {useState} from 'react'
+import React from 'react'
 //AntDesign 
-import {Form, Input, Button, Modal, Checkbox, message} from 'antd'
+import {Form, Input, Button, Modal, message} from 'antd'
 
 //axios
 import axios from 'axios'
 
 const ResetPasswordComponent = (props:{modalResetPassword:boolean ,setModalResetPassword, setModalAuthSignIn, urlBack:string, code:string, pathPublic:string}):JSX.Element =>{
-    const {modalResetPassword, setModalResetPassword , urlBack, setModalAuthSignIn, code, pathPublic} = props
+    const {modalResetPassword, setModalResetPassword , setModalAuthSignIn, code, pathPublic} = props
+    const URL = `https://gestion.mercatto.com.co`
     //functions
     const HandleClose = ()=>{
         setModalResetPassword(false)
@@ -14,8 +15,7 @@ const ResetPasswordComponent = (props:{modalResetPassword:boolean ,setModalReset
     }
 
     const submitForget = async (data)=>{
-        console.log(code)
-        axios.post(`${urlBack}/auth/reset-password`,{
+        axios.post(`${URL}/auth/reset-password`,{
             code: code,
             password: data.password,
             passwordConfirmation: data.passwordConfirmation

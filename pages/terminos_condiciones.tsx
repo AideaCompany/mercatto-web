@@ -16,7 +16,6 @@ const TerminosCondiciones = (props:{dataTerms: Terms})=>{
         var rawMarkUp = marked(dataTerms.terminos_condiciones, {sanitize: true})
         return rawMarkUp
     }
-    console.log(getMarkdownText)
 
 
     return(

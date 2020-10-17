@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 //AntDesign 
 import {Form, Input, Button, Modal, Checkbox, message} from 'antd'
-import { Modal as ModalMobile } from 'antd-mobile';
 //provider
 import useAuth from '../../providers/AuthProvider'
 //axios
@@ -10,6 +9,7 @@ import axios from 'axios'
 const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, setModalAuthSignUp, urlBack:string, pathPublic:string}):JSX.Element =>{
     const {modalAuthSignIn, setModalAuthSignIn, setModalAuthSignUp, urlBack, pathPublic} = props
 
+    const URL = `https://gestion.mercatto.com.co`
     //usestate
     const [errorMessage, setErrorMessage] = useState('')
     const [forgotPassword, setForgotPassword] = useState(false)
@@ -24,12 +24,12 @@ const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, set
     }
 
     const submitForm = async (data)=>{
-        login(data, urlBack, setModalAuthSignIn, setErrorMessage)
+        login(data, URL, setModalAuthSignIn, setErrorMessage)
     }
 
     const submitForget = async (data)=>{
         message.loading({content:'Cargando...', className:'messageVerification', key:"forget"})
-        axios.post(`${urlBack}/auth/forgot-password`,{
+        axios.post(`${URL}/auth/forgot-password`,{
             email: data.identifier
         }).then(res=>{
             message.success({content:'Revisa tu correo eléctronico para restaurar tu contraseña', className:'messageVerification', duration:5, key:"forget"})
@@ -76,7 +76,7 @@ const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, set
                     }
                     {!forgotPassword?
                     <>
-                        <a  href={`${urlBack}/connect/facebook`}>
+                        <a  href={`${URL}/connect/facebook`}>
                             <img className='facebookAuth' src={`${pathPublic}images/Layout/facebook.svg`} alt="facebook mercatto"/>
                         </a>
                         <br/>

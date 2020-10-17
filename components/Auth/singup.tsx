@@ -9,8 +9,9 @@ import {Form, Input, Button, Modal, Select} from 'antd'
 const {Option} = Select
 
 const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, setModalAuthSignIn, urlBack:string, pathPublic:string}):JSX.Element =>{
-    const {modalAuthSignUp, setModalAuthSignUp, setModalAuthSignIn, urlBack, pathPublic} = props
+    const {modalAuthSignUp, setModalAuthSignUp, setModalAuthSignIn, pathPublic} = props
 
+    const URL = `https://gestion.mercatto.com.co`
     //States
     const [okeyRegister, setOkeyRegister] = useState(false)
     //functions
@@ -21,7 +22,7 @@ const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, set
 
     const submitForm = async (data)=>{
         delete data.passwordTwo
-        await axios.post(`${urlBack}/auth/local/register`,{
+        await axios.post(`${URL}/auth/local/register`,{
             nombre: data.nombre,
             email: data.email,
             password: data.password,
@@ -97,7 +98,7 @@ const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, set
                             <Button onClick={()=>{setModalAuthSignIn(true);HandleClose()}}>Iniciar Sesión</Button>
                         </div>
                     </Form>
-                    <a  href={`${urlBack}/connect/facebook`}>
+                    <a  href={`${URL}/connect/facebook`}>
                         <img className='facebookAuth' src={`${pathPublic}images/Layout/facebook.svg`} alt="facebook mercatto"/>
                     </a>
                     <br/>
