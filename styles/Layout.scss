@@ -451,7 +451,12 @@ $mainYellow: #FCD330;
             }
         }
     }
+    .rc-virtual-list-holder {
+        max-height: 100px !important
+    
+    }
 }
+
 
 @media screen and (max-width: 350px) and (max-aspect-ratio: 13/9)
  {
