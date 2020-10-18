@@ -169,8 +169,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
  
     const okCart = ()=>{
         const URL = 'https://gestion.mercatto.com.co'
-        const date = new Date().getHours()
-        message.loading({content:"Generndo tu pedido",className: 'messageVerification',duration: 0, key:'send'})
+        message.loading({content:"Generando tu pedido",className: 'messageVerification',duration: 0, key:'send'})
         setDisabledSend(true)
         actualCart.map(e=>{delete e._id;delete e.id})
         user.pedidos.push({
@@ -456,6 +455,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
                         notification['success']({
                             className:'notificationCarrito',
                             message:'Pedido realizado',
+                            placement:'topLeft',
                             description:(
                                 <div className='textNotification'>
                                     <span>
@@ -464,16 +464,15 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                     Cualquier duda no dudes en contactarnos por nuestro chat de WhatsApp. 
                                     </span>
                                     <br/>
-                                    <br/>
-                                    <span>
+                                    Gracias.
+                                    {/* <span>
                                     Tomaremos tus pedidos de lunes a sábados en el horario 00hrs a 3 pm. Tu pedido te será entregado el día siguiente a la compra. 
                                     Ten en cuenta que los días domingos y festivos no recibimos ni despachamos pedidos. Asi que el pedido que realices el día sábado te será entregado día lunes. 
-                                    </span>
-                                    <br/>
-                                    Gracias.
+                                    </span> */}
+                                    
                                 </div>
                             ),
-                            duration:10
+                            duration:0
                         })
                     })               
             }).catch(err=>console.log(err))
@@ -491,6 +490,14 @@ const carrito = (props:{url:string}):JSX.Element=>{
                         :
                             <span><WarningTwoTone  twoToneColor="#eb2f96"/> Te faltan: <span>${formatNumber(30000-totalPrice)}</span> para completar el pedido mínimo</span>   
                         }
+                        <br/>
+                    </div>
+                    <div className='textCarrito'>
+                        <span>
+                            Tomaremos tus pedidos de lunes a sábados en el horario 00hrs a 3 pm. Tu pedido te será entregado el día siguiente a la compra. 
+                            <br/>
+                            Ten en cuenta que los días domingos y festivos no recibimos ni despachamos pedidos. Asi que el pedido que realices el día sábado te será entregado día lunes. 
+                        </span>
                     </div>
                     
                     <div className='containerProducts'>

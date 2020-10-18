@@ -47,6 +47,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
   const [dataOfertaFinal, setDataOfertaFinal] = useState<Ofertas>()
   const [arrowOffer, setArrowOffer] = useState<boolean>(true)
   const [firstRender, setFirstRender] = useState(false)
+  const [dots, setDots] = useState(false)
 
   //effect
   useEffect(() => {
@@ -54,7 +55,24 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
     setDataOfertaFinal(dataOfertas[0])
     if (window.matchMedia("(max-width: 414px)").matches){
       setArrowOffer(false)
+      setDots(true)
     }
+
+    const changeDots = () =>{
+      if (window.innerWidth > 414) {
+        setDots(false)
+      }else{
+        setDots(true)
+      }
+    }
+
+    window.addEventListener('resize', changeDots)
+
+
+    return () =>{
+      window.removeEventListener('resize', changeDots)
+    }
+
 
   }, [])
 
@@ -70,11 +88,12 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
               <Carousel 
                 ssr
                 partialVisbile={false}
+                
                 arrows={dataCategoria.length>3?true:false}
                 className='sliderCategory'
-                draggable={false}  
-                infinite={true}
-                autoPlay={true}
+                draggable={true}  
+                infinite={dataCategoria.length>3?true:false}
+                autoPlay={dataCategoria.length>3?true:false}
                 additionalTransfrom={0}
                 responsive={{
                   desktop:{
@@ -87,7 +106,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                     // partialVisibilityGutter: 10
                   },
                 }}
-                showDots={false}
+                showDots={dots}
                 slidesToSlide={1}
                 swipeable
               >

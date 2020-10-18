@@ -71,7 +71,6 @@ const Layout = (props: propsLayout):JSX.Element =>{
         }
         
         axios.get(`${urlBack}/productos`).then(res=>{
-            console.log(res)
             setDataProducts(res.data)
             })
             .catch(err=>console.log(err))
