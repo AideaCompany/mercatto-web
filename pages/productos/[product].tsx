@@ -10,7 +10,7 @@ import { FrownOutlined, FilterFilled} from '@ant-design/icons';
 import axios from 'axios'
 //context
 import useAuth from '../../providers/AuthProvider'
-import { Carrito ,Producto, ProductoCombo} from '../../utils/types';
+import { Carrito ,Ofertas,Producto, ProductoCombo} from '../../utils/types';
 //utils
 import {getNewPrice, formatNumber} from '../../utils/functions'
 
@@ -19,11 +19,11 @@ type Count = {
     _id: string
 }
 
-const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], titleInit: string, ofer?:boolean, brand?:string}) =>{
+const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], titleInit: string, ofer?:boolean, brand?:string, id_offer?:boolean}) =>{
     //context
     const {user ,setModalAuthSignIn,updateUser } = useAuth()
 
-    const {url,  dataProducts, titleInit, ofer , brand} = props
+    const {url,  dataProducts, titleInit, ofer , brand, id_offer} = props
     //state
     const [title, settitle] = useState<string>()
     const [dataProductsToShow, setDataProductsToShow] = useState<Producto[]>([])
@@ -82,10 +82,13 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
             
         }else if (brand !=='') {
             settitle(`Productos de la marca: ${brand}`)
+        }else if (id_offer) {
+            settitle(`Productos de la oferta: ${titleInit}`)
         }
         else{
             settitle(`Resultados de busqueda para: ${titleInit}`)
         }
+
         
     }, [user])
 
@@ -386,13 +389,23 @@ export async function getServerSideProps (ctx) {
         }else{
             dataProducts = await fetch(`${URL}/productos?${ctx.query.product}`,{method: 'GET'})
         }
+    }else if (ctx.query.id_offer) {
+        const tempData = await fetch(`${URL}/ofertas`)
+        const tempDataJson: Ofertas[] = await tempData.json()
+        const index = tempDataJson[0]?.Ofertas.findIndex(e=>e._id ===ctx.query.id_offer )
+        dataProducts = tempDataJson[0]?.Ofertas[index].ref.productos
     }else if (ctx.query.brand) {
             dataProducts = await fetch(`${URL}/productos?brand=${ctx.query.product}`,{method: 'GET'})
     }else{
         dataProducts = await fetch(`${URL}/productos?search_product=${ctx.query.product}`,{method: 'GET'})
     }
-    const jsonProducts = await dataProducts.json()
-    return {props: {url:URL, dataProducts: jsonProducts, titleInit: ctx.query.product, ofer: ctx.query.ofer? true : false, brand: ctx.query.brand? ctx.query.brand:""}}
+    var jsonProducts
+    if (dataProducts.lenght===0) {
+        jsonProducts = await dataProducts.json()  
+    }else{
+        jsonProducts = dataProducts
+    }
+    return {props: {url:URL, dataProducts: jsonProducts, titleInit: ctx.query.product, ofer: ctx.query.ofer? true : false, brand: ctx.query.brand? ctx.query.brand:"", id_offer:ctx.query.id_offer?true:false}}
 }
 
 export default ProductSearchComponent

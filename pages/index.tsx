@@ -6,6 +6,7 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 //provider
 import Carousel from 'react-multi-carousel';
+import { Producto, Ofertas, DataOfer } from '../utils/types';
 
 //types
 type Categorias = {
@@ -17,19 +18,6 @@ type Categorias = {
 }
 
 
-type Ofertas = {
-  _id: string
-  Ofertas: {
-    _id: string
-    ref: Ref
-  }[]
-}
-
-type Ref = {
-    _id: string
-    titulo: string
-    imagen: {url: string}
-}
 
 type Marcas = {
   _id: string
@@ -48,6 +36,8 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
   const [arrowOffer, setArrowOffer] = useState<boolean>(true)
   const [firstRender, setFirstRender] = useState(false)
   const [dots, setDots] = useState(false)
+  const [openModalProduct, setOpenModalProduct] = useState(false)
+  const [idProductModal, setIdProductModal] = useState<string>('')
 
   //effect
   useEffect(() => {
@@ -65,20 +55,29 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
         setDots(true)
       }
     }
-
+    
     window.addEventListener('resize', changeDots)
-
 
     return () =>{
       window.removeEventListener('resize', changeDots)
     }
-
-
   }, [])
+
+
+  const pushOffer = (oferta:DataOfer)=>{
+    if (oferta.ref.productos.length === 0) {
+      router.push({pathname:`/productos/${oferta.ref.titulo.toLowerCase()}`,query:{ofer:'yes'}})
+    }else if (oferta.ref.productos.length === 1) {
+      setIdProductModal(oferta.ref.productos[0]._id)
+      setOpenModalProduct(true)
+    }else{
+      router.push({pathname:`/productos/${oferta.ref.titulo.toLowerCase()}`,query:{id_offer: oferta._id}})
+    }
+  }
 
   return (
     <div>
-      <Layout tokenProvider={tokenProvider} logoWhite={false} pathPublic={'./'} code={code} confirmed={confirmed} urlBack={urlBack} title='Categorías' color='#8D8D8D' background='#EEEEEE'>
+      <Layout openModalProduct={openModalProduct} setOpenModalProduct={setOpenModalProduct} idProduct={idProductModal} tokenProvider={tokenProvider} logoWhite={false} pathPublic={'./'} code={code} confirmed={confirmed} urlBack={urlBack} title='Categorías' color='#8D8D8D' background='#EEEEEE'>
         <>
         <div className='mainContainerCategory'>
           {/* Category Targets */}
@@ -110,7 +109,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                 slidesToSlide={1}
                 swipeable
               >
-                  {dataCategoria?.map((categories)=>{
+                  {dataCategoria?.reverse()?.map((categories)=>{
                     return(
                       <Link key={categories._id} href={{pathname:`/categorias/${categories.Categoria.toLowerCase()}`, query:{id:categories._id}}}>
                         <a className={`${categories._id}`}>
@@ -119,8 +118,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                             <h2>{categories.Categoria}</h2>
                           </div>
                         </a>
-                      </Link>
-                        
+                      </Link> 
                   )})}
                 </Carousel>
             </div>
@@ -133,7 +131,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
               {firstRender?
                 <Carousel 
                 ssr 
-                autoPlay={true}
+                autoPlay={false}
                 draggable={true}  
                 arrows={arrowOffer} 
                 infinite={true}   
@@ -147,7 +145,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                 >
                     {dataOfertaFinal?.Ofertas?.map(oferta=> {
                       return(
-                      <div onClick={()=>router.push({pathname:`/productos/${oferta.ref.titulo.toLowerCase()}`,query:{ofer:'yes'}})} className='targetOffer'>
+                      <div onClick={()=>pushOffer(oferta)} className='targetOffer'>
                         <h2>{oferta.ref.titulo}</h2>
                         <img src={`${urlBack}${oferta.ref.imagen.url}`} alt={`Mercatto ${oferta.ref.titulo}`}/>
                         <div className='back'></div>
@@ -165,7 +163,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                   firstRender?
                   <Carousel 
                   ssr 
-                  autoPlay={true}
+                  autoPlay={false}
                   draggable={true}  
                   arrows={arrowOffer} 
                   infinite={true}   

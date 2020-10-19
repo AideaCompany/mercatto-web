@@ -54,3 +54,20 @@ export type typeUser = {
     direccion ? : string,
     username ? : string
 }
+
+export type Ofertas = {
+    _id: string
+    Ofertas:  DataOfer[]
+  }
+  
+export type DataOfer = {
+      _id: string
+      ref: Ref
+  }
+  
+export type Ref = {
+      _id: string
+      titulo: string
+      imagen: {url: string}
+      productos: Producto[]
+  }
