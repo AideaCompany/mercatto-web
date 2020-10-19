@@ -18,19 +18,18 @@ $colorText : #5e5e5e;
             width: 100%;
             margin: 0;
             height: 70vh;
-            overflow-y: scroll;
             background-color: #ffffff;
             border-radius: 25px;
             -webkit-box-shadow: 2px 6px 18px -6px rgba(78, 29, 29, 0.2);
             -moz-box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.2);
             box-shadow: 2px 6px 18px -6px rgba(0, 0, 0, 0.2);
+            padding: 2%;
             .targetSubCategory{
-                padding: 2em;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
+                overflow-y: scroll;
+                height: 100%;
+
                 .productItem{
+                    cursor: pointer;
                     background-color:$colorTarget;
                     display: flex;
                     align-items: center;
@@ -39,9 +38,9 @@ $colorText : #5e5e5e;
                     width: 100%;
                     height: 10vh;
                     border-radius: 25px;
-                    -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                    -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
-                    box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.4);
+                    -webkit-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.2);
+                    -moz-box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.2);
+                    box-shadow: 2px 6px 18px -6px rgba(0,0,0,0.2);
                     >div{
                         font-size: 1.5rem;
                         margin: 2%;
@@ -50,6 +49,51 @@ $colorText : #5e5e5e;
                 }
             }
         } 
+    }
+}
+
+.pedidoCarrito{
+    max-height: 400px;
+    width: 100%;
+    background-color: $colorTarget;
+    border-radius: 25px;
+    // overflow: hidden;
+    padding: 2%;
+    >div{
+        width: 100%;
+        height: 380px;
+        overflow-y: scroll;
+        padding: 2%;
+        .productTarget{
+            display: flex;
+            >div{
+                display: flex;
+                justify-content: left;
+                align-items: flex-start;
+                height: 70px;
+                .name{
+                    font-size: 1.3em;
+                }
+                
+            }
+            .nameProduct{
+                width: 50%;
+                display: block;
+                align-items: inherit;
+                justify-content: inherit;
+                span{
+                    width: 95%;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                    display: -webkit-box;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+            .cantidadProduct, .precioProduct{
+                width: 25%;
+            }
+        }
     }
 }
 

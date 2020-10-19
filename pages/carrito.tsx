@@ -465,14 +465,10 @@ const carrito = (props:{url:string}):JSX.Element=>{
                                     </span>
                                     <br/>
                                     Gracias.
-                                    {/* <span>
-                                    Tomaremos tus pedidos de lunes a sábados en el horario 00hrs a 3 pm. Tu pedido te será entregado el día siguiente a la compra. 
-                                    Ten en cuenta que los días domingos y festivos no recibimos ni despachamos pedidos. Asi que el pedido que realices el día sábado te será entregado día lunes. 
-                                    </span> */}
                                     
                                 </div>
                             ),
-                            duration:0
+                            duration:10
                         })
                     })               
             }).catch(err=>console.log(err))

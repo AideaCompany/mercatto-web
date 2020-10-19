@@ -400,7 +400,7 @@ export async function getServerSideProps (ctx) {
         dataProducts = await fetch(`${URL}/productos?search_product=${ctx.query.product}`,{method: 'GET'})
     }
     var jsonProducts
-    if (dataProducts.lenght===0) {
+    if (dataProducts.status) {
         jsonProducts = await dataProducts.json()  
     }else{
         jsonProducts = dataProducts

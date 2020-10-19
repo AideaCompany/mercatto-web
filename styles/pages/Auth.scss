@@ -33,7 +33,7 @@ $mainBlue: #02205E;
     }
     .containerForm{
         width: 400px;
-        height: 550px;
+        height: auto; 
         overflow-y: scroll;
         
         background-color: #ffffff;
@@ -124,6 +124,7 @@ $mainBlue: #02205E;
             overflow: hidden !important;
             .containerForm{
                 width: 100%;
+                height: 500px;
             }
         }
 }
