@@ -83,32 +83,46 @@ const carrito = (props:{url:string}):JSX.Element=>{
             <div className='pedidoCarrito'>
                 <div>
                     {carrito.map(producto=>{
+                        console.log(producto)
                         return(
                             <div key={producto._id} className='productTarget'>
                                 {producto.producto ? 
                                 <>
-                                    <div className='nameProduct'>
-                                        <span className='name'>{(producto.producto as Producto).nombre}</span>
-                                        <span className='description'>{(producto.producto as Producto).descripcion}</span>
-                                    </div>
-                                    <div className='cantidadProduct'>
-                                        <span>Cantidad: {producto.cantidad}</span>
-                                    </div>
-                                    <div className='precioProduct'>
-                                        <span>Precio: ${formatNumber(producto.precio)}</span>
-                                    </div>
+                                    {(producto.producto as Producto)?.nombre?
+                                    <>
+                                        <div className='nameProduct'>
+                                            <span className='name'>{(producto.producto as Producto).nombre}</span>
+                                            <span className='description'>{(producto.producto as Producto).descripcion}</span>
+                                        </div>
+                                        <div className='cantidadProduct'>
+                                            <span>Cantidad: {producto.cantidad}</span>
+                                        </div>
+                                        <div className='precioProduct'>
+                                            <span>Precio: ${formatNumber(producto.precio)}</span>
+                                        </div>
+                                    </>
+                                    :
+                                    null}
+
                                 </>
                                 :
                                 <>
-                                    <div className='nameProduct'>
-                                        <span className='name'>{(producto.combo as ProductoCombo).nombre}</span>
-                                    </div>
-                                    <div className='cantidadProduct'>
-                                        <span>Cantidad: {producto.cantidad}</span>
-                                    </div>
-                                    <div className='precioProduct'>
-                                        <span>Precio: ${formatNumber(producto.precio)}</span>
-                                    </div>
+                                    {(producto.combo as ProductoCombo)?.nombre
+                                    ?
+                                    <>
+                                        <div className='nameProduct'>
+                                            <span className='name'>{(producto.combo as ProductoCombo).nombre}</span>
+                                        </div>
+                                        <div className='cantidadProduct'>
+                                            <span>Cantidad: {producto.cantidad}</span>
+                                        </div>
+                                        <div className='precioProduct'>
+                                            <span>Precio: ${formatNumber(producto.precio)}</span>
+                                        </div>
+                                    </>
+                                    :
+                                    null}
+
                                 </>
 
                                 }
