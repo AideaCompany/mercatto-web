@@ -163,7 +163,7 @@ const carrito = (props:{url:string}):JSX.Element=>{
         }).then(res=>{  
 
             updateUser(res);
-            message.success({content:"Producto eliminado",className: 'messageVerification',duration: '10'})
+            message.success({content:"Producto eliminado",className: 'messageVerification',duration: '10', key:'deleteItem'})
         }).catch(err=>console.log(err))
     }
  
