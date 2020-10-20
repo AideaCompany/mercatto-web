@@ -409,7 +409,7 @@ $colorText : #5e5e5e;
 {
     .carritoMain{
         width: 370px;
-        height: 130vh;
+        height: auto;
         .carritoLeft{
             overflow: hidden;
             height: 50vh;
@@ -436,7 +436,7 @@ $colorText : #5e5e5e;
                     }
                 }
                 .productItem{
-                    height: 100px;
+                    // height: 100px;
                     .productInfo{
                         .price{
                             font-size: 1em;
