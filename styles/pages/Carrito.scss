@@ -188,6 +188,9 @@ $colorText : #5e5e5e;
                 .ant-checkbox-wrapper, .ant-input{
                     margin: 30px 0 0 20px;
                 }
+                .onlyCity{
+                    margin: 30px 0 0 20px;
+                }
                 .ant-checkbox{
                     .ant-checkbox-inner{
                         border-color: rgba($color: $mainBlue, $alpha: 0.5);
@@ -412,7 +415,7 @@ $colorText : #5e5e5e;
         height: auto;
         .carritoLeft{
             overflow: hidden;
-            height: 50vh;
+            height: auto;
             .titleCarrito{
                 display: block;
                 h1{
@@ -455,10 +458,11 @@ $colorText : #5e5e5e;
             }
         }
         .carritoRight{
+            margin-bottom: 50px;
             .confirmCart{
                 display: block;
                 .buttons{
-                    margin-bottom: 30px;
+                    margin-bottom: 10px;
                 }
             }
         }

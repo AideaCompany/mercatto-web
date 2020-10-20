@@ -558,7 +558,8 @@ const carrito = (props:{url:string}):JSX.Element=>{
                         <div className='confirmCart'>
                             <div className='info'>
                                 <Input value={direccion} placeholder='Dirección' onChange={(e)=>setDireccion(e.target.value)}></Input>
-                                <span>* Aplica solo para la ciudad de Cali.</span>
+                                <br/>
+                                <span className='onlyCity'>* Aplica solo para la ciudad de Cali.</span>
                                 <Checkbox checked={saveLocation} onChange={()=>setSaveLocation(!saveLocation)}>Guardar Dirección para futuras compras</Checkbox>
                                 <TextArea style={{resize: 'none'}} placeholder='Observaciones' onChange={(e)=>setObservaciones(e.target.value)}></TextArea>
                             </div>
