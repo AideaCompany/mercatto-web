@@ -6,7 +6,7 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 //provider
 import Carousel from 'react-multi-carousel';
-import { Producto, Ofertas, DataOfer } from '../utils/types';
+import { Ofertas, DataOfer } from '../utils/types';
 
 //types
 type Categorias = {
@@ -37,6 +37,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
   const [firstRender, setFirstRender] = useState(false)
   const [dots, setDots] = useState(false)
   const [openModalProduct, setOpenModalProduct] = useState(false)
+  const [arrowCategory, setarrowCategory] = useState<boolean>(false)
   const [idProductModal, setIdProductModal] = useState<string>('')
 
   //effect
@@ -48,13 +49,22 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
       setDots(true)
     }
 
+    
     const changeDots = () =>{
+      addArrowCategory()
       if (window.innerWidth > 414) {
         setDots(false)
       }else{
         setDots(true)
       }
     }
+
+    const addArrowCategory = () =>{
+      if (dataCategoria.length>3 && window.innerWidth > 414) {
+        setarrowCategory(true)
+      }
+    }
+    addArrowCategory()
     
     window.addEventListener('resize', changeDots)
 
@@ -88,7 +98,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                 ssr
                 partialVisbile={false}
                 
-                arrows={dataCategoria.length>3?true:false}
+                arrows={arrowCategory}
                 className='sliderCategory'
                 draggable={true}  
                 infinite={dataCategoria.length>3?true:false}
