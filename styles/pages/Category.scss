@@ -481,7 +481,7 @@ $colorText : #5e5e5e;
         padding: 20px;
         .categoryRight, .productRight{
             width: 370px !important;
-            height: 70vh;
+            height: auto;
             padding: 1%;
             >div{
                 .firstTarget{
@@ -494,7 +494,7 @@ $colorText : #5e5e5e;
                     }
                 }
                 .rowTarget{
-                    height: 270px;
+                    height: auto;
                     .mainTargetProduct{
                         padding: 2%;
                         .targetProduct{

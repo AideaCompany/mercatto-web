@@ -171,22 +171,12 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                   responsive={{
                     desktop:{
                       breakpoint:{max:3000, min: 0},
-                      items:1
+                      items:3
                     },
                   }}
                   >
                     {dataMarcas?.map(marca=>(
                       <div style={{display:'flex'}}>
-                      <Link href={{pathname:`/productos/${marca._id}`, query:{brand:marca.nombre}}}>
-                        <a key={marca._id} className='targetBrand'>
-                            <img src={`${urlBack}${marca.logo.url}`} alt={`Mercatto ${marca.nombre}`}/>
-                        </a>
-                      </Link>
-                      <Link href={{pathname:`/productos/${marca._id}`, query:{brand:marca.nombre}}}>
-                        <a key={marca._id} className='targetBrand'>
-                            <img src={`${urlBack}${marca.logo.url}`} alt={`Mercatto ${marca.nombre}`}/>
-                        </a>
-                      </Link>
                       <Link href={{pathname:`/productos/${marca._id}`, query:{brand:marca.nombre}}}>
                         <a key={marca._id} className='targetBrand'>
                             <img src={`${urlBack}${marca.logo.url}`} alt={`Mercatto ${marca.nombre}`}/>
