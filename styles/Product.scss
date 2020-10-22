@@ -34,7 +34,7 @@ $mainYellow: #FCD330;
             }
         }
         .productName{
-            height: 25%;
+            height: 20%;
             display: flex;
             justify-content: left;
             align-items: center;
@@ -42,9 +42,14 @@ $mainYellow: #FCD330;
                 font-weight: lighter;;
             }
         }
+        .productWeight{
+            p{
+                text-align: left;
+            }
+        }
 
         .productDescription{
-            height: 25%;
+            height: 20%;
             display: flex;
             align-items: center;
             p{

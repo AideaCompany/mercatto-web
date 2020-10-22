@@ -404,6 +404,9 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                                                     <div>
                                                         <p className='productName'>{producto.nombre}</p>
                                                     </div>
+                                                    <div>
+                                                        <p className='productWeight'>{producto.peso}</p>
+                                                    </div>
                                                     <div className='containerPrice'>
                                                         <span className='productPrice'>${formatNumber(producto.precioDescuento)}</span> {producto.descuento>0 ? <span className='productDescuento'>${formatNumber(producto.precio)}</span> : null}
                                                     </div>

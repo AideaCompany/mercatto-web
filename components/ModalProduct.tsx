@@ -186,6 +186,9 @@ const ModalProduct = (props:PropsModal) => {
                         <div className='productName'>
                             <h1>{dataProduct.nombre}</h1>
                         </div>
+                        <div className='productWeight'>
+                            <p>{dataProduct.peso}</p>
+                        </div>
                         <div className='productDescription'> 
                             <p>{dataProduct.descripcion}</p>
                         </div>

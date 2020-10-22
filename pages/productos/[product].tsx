@@ -330,6 +330,9 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
                                             <div>
                                                 <p className='productName'>{product.nombre}</p>
                                             </div>
+                                            <div>
+                                                <p className='productWeight'>{product.peso}</p>
+                                            </div>
                                             <div className='containerPrice'>
                                                 <span className='productPrice'>${formatNumber(product.precioDescuento)}</span> {product.descuento>0 ? <span className='productDescuento'>${formatNumber(product.precio)}</span> : null}
                                             </div>
