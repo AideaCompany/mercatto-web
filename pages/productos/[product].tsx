@@ -320,6 +320,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
                         </div>
                     <div className='row rowTarget'>
                         {dataProductsToShow.length >0 ? dataProductsToShow.map(product=>{
+                            console.log(product.peso)
                             return (
                             <div onClick={()=>openProduct(product._id)} className='col-lg-4 col-sm-4 col-6  col-md-4 mainTargetProduct' key={product._id}>
                                 <div className='targetProduct'>
@@ -330,9 +331,12 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
                                             <div>
                                                 <p className='productName'>{product.nombre}</p>
                                             </div>
-                                            <div>
-                                                <p className='productWeight'>{product.peso}</p>
-                                            </div>
+                                            
+                                            {product.peso  ? 
+                                                <div>
+                                                    <p className='productWeight'>{product.peso}</p>
+                                                </div>
+                                            :null}
                                             <div className='containerPrice'>
                                                 <span className='productPrice'>${formatNumber(product.precioDescuento)}</span> {product.descuento>0 ? <span className='productDescuento'>${formatNumber(product.precio)}</span> : null}
                                             </div>
