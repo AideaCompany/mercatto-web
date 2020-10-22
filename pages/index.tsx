@@ -37,7 +37,6 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
   const [firstRender, setFirstRender] = useState(false)
   const [dots, setDots] = useState(false)
   const [openModalProduct, setOpenModalProduct] = useState(false)
-  const [arrowCategory, setarrowCategory] = useState<boolean>(false)
   const [idProductModal, setIdProductModal] = useState<string>('')
 
   //effect
@@ -49,22 +48,18 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
       setDots(true)
     }
 
+    if (dataCategoria.length>3) {
+      setDots(true)
+    }
     
     const changeDots = () =>{
-      addArrowCategory()
-      if (window.innerWidth > 414) {
+      if (window.innerWidth > 414 ) {
         setDots(false)
       }else{
         setDots(true)
       }
     }
 
-    const addArrowCategory = () =>{
-      if (dataCategoria.length>3 && window.innerWidth > 414) {
-        setarrowCategory(true)
-      }
-    }
-    addArrowCategory()
     
     window.addEventListener('resize', changeDots)
 
@@ -97,12 +92,12 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
               <Carousel 
                 ssr
                 partialVisbile={false}
-                
-                arrows={arrowCategory}
                 className='sliderCategory'
                 draggable={true}  
                 infinite={dataCategoria.length>3?true:false}
-                autoPlay={dataCategoria.length>3?true:false}
+                autoPlay={false}
+                arrows={false}
+                
                 additionalTransfrom={0}
                 responsive={{
                   desktop:{

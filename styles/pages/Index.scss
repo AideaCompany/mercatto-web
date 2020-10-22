@@ -244,8 +244,13 @@ $mainBlue: #02205E;
 .react-multiple-carousel__arrow--right {
     right: 0 !important;
 }
+.react-multi-carousel-dot-list {
+    margin-top: 10px !important;
+}
 .react-multi-carousel-dot{
+    
     button{
+        
         border-color: $mainBlue !important;
     }
     button:hover{
