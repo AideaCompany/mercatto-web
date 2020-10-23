@@ -97,7 +97,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                 infinite={dataCategoria.length>3?true:false}
                 autoPlay={false}
                 arrows={false}
-                
+                autoPlaySpeed={5000}
                 additionalTransfrom={0}
                 responsive={{
                   desktop:{
@@ -136,7 +136,8 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
               {firstRender?
                 <Carousel 
                 ssr 
-                autoPlay={false}
+                autoPlay={true}
+                autoPlaySpeed={5000}
                 draggable={true}  
                 arrows={arrowOffer} 
                 infinite={true}   
@@ -168,7 +169,7 @@ function Home(props:{dataCategoria:Categorias[], dataOfertas?:Ofertas[], dataMar
                   firstRender?
                   <Carousel 
                   ssr 
-                  autoPlay={false}
+                  autoPlay={true}
                   draggable={true}  
                   arrows={arrowOffer} 
                   infinite={true}   
