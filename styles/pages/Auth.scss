@@ -124,7 +124,8 @@ $mainBlue: #02205E;
             overflow: hidden !important;
             .containerForm{
                 width: 100%;
-                height: 500px;
+                max-height: 600px;
+                overflow-y: scroll;
             }
         }
 }

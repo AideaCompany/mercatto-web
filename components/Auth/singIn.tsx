@@ -24,16 +24,17 @@ const SignInComponent = (props:{modalAuthSignIn:boolean ,setModalAuthSignIn, set
     }
 
     const submitForm = async (data)=>{
+        data.identifier =  data.identifier.toLowerCase()
         login(data, URL, setModalAuthSignIn, setErrorMessage)
     }
 
     const submitForget = async (data)=>{
         message.loading({content:'Cargando...', className:'messageVerification', key:"forget"})
         axios.post(`${URL}/auth/forgot-password`,{
-            email: data.identifier
+            email: data.identifier.toLowerCase()
         }).then(res=>{
             message.success({content:'Revisa tu correo eléctronico para restaurar tu contraseña', className:'messageVerification', duration:5, key:"forget"})
-        }).catch(err=>console.log(err))
+        }).catch(err=>message.error({content:'Algo malo ha sucedido', className:'messageVerification', duration:5, key:"forget"}))
     }
 
     return(

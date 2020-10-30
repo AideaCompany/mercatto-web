@@ -24,7 +24,7 @@ const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, set
         delete data.passwordTwo
         await axios.post(`${URL}/auth/local/register`,{
             nombre: data.nombre,
-            email: data.email,
+            email: data.email.toLowerCase(),
             password: data.password,
             tipo_identificacion: data.tipo_identificacion,
             identificacion: data.identificacion,
