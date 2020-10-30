@@ -313,7 +313,7 @@ const ProductSearchComponent = (props:{url:string, dataProducts: Producto[], tit
                             <div className='textCategory'>
                                 <h1>{title} </h1>
                                 <Popover visible={openFilter} placement='bottomLeft' content={contentFilter}>
-                                    <span onClick={()=>setOpenFilter(true)}> <FilterFilled className='iconFilter' /> Filtrar</span>
+                                    <span onClick={()=>setOpenFilter(!openFilter)}> <FilterFilled className='iconFilter' /> Filtrar</span>
                                 </Popover>
                             </div>
                                 

@@ -10,7 +10,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 //antD
 import { Badge, Avatar, Button, message, Menu, Dropdown} from 'antd'
-import {ShoppingCartOutlined, UserOutlined, PoweroffOutlined, LoginOutlined} from '@ant-design/icons';
+import {ShoppingCartOutlined, UserOutlined, PoweroffOutlined} from '@ant-design/icons';
 //Axios
 import axios from 'axios'
 //fontawesome
@@ -207,7 +207,7 @@ const Layout = (props: propsLayout):JSX.Element =>{
                                     :
                                     <>
                                     <div className='buttonsAuth'>
-                                        <Dropdown overlay={menuAuth}>
+                                        <Dropdown trigger={['click','hover', 'contextMenu']} overlay={menuAuth}>
                                             <Button className='buttonIn'>Ingresar</Button>
                                         </Dropdown>
                                     </div>

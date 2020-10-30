@@ -387,7 +387,7 @@ const CategoryComponent = (props:{dataSubCategoria:Sub_Categorias[], url:string,
                                 <div className='textCategory'>
                                     <h1>{textCategory}</h1>
                                     <Popover visible={visibleFilter} placement='bottomLeft' content={contentFilter}>
-                                        <span onClick={()=>setVisibleFilter(true)}> <FilterFilled className='iconFilter' /> Filtrar</span>
+                                        <span onClick={()=>setVisibleFilter(!visibleFilter)}> <FilterFilled className='iconFilter' /> Filtrar</span>
                                     </Popover>
                                 </div>
                             </div>
