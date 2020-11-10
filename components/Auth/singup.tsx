@@ -103,8 +103,9 @@ const SignUpcomponent = (props:{modalAuthSignUp:boolean ,setModalAuthSignUp, set
                     </a>
                     <br/>
                     <span>
+                      Al registrarte, estás aceptando automaticamente los terminos y condiciones
                       <Link href='/terminos_condiciones'>
-                        <a onClick={()=>setModalAuthSignUp(false)} >Políticas de privacidad</a>
+                        <a style={{textDecoration:'underline'}} onClick={()=>setModalAuthSignUp(false)} > Terminos y Condiciones</a>
                       </Link>
                       
                     </span>
