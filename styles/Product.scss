@@ -114,6 +114,10 @@ $mainYellow: #FCD330;
 
 @media screen and (max-width: 414px) and (max-aspect-ratio: 13/9)
 {
+    .ant-modal-content .containerProductModal::-webkit-scrollbar-thumb {
+        background: #6c6b6b;
+        border-radius: 5px; 
+        }
     .ant-modal-content .containerProductModal{
         width: 100%;
         display: block;
@@ -124,6 +128,7 @@ $mainYellow: #FCD330;
             
         }
         .imgProduct{
+            height: 40%;
             .off{
                 top: 50%;
             }
